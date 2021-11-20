@@ -8,8 +8,8 @@ import com.aybu9.aybualumni.page.repositories.CompanySectorRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CompanySectorManager implements CompanySectorService{
-    
+public class CompanySectorManager implements CompanySectorService {
+
     private final CompanySectorRepository companySectorRepository;
 
     public CompanySectorManager(CompanySectorRepository companySectorRepository) {
@@ -19,7 +19,7 @@ public class CompanySectorManager implements CompanySectorService{
     @Override
     public DataResult<CompanySector> get(Integer companySectorId) {
         var companySector = companySectorRepository.findById(companySectorId);
-        if (companySector.isEmpty()){
+        if (companySector.isEmpty()) {
             throw new CustomException("not found company sector");
         }
         return new SuccessDataResult<>(companySector.get(), "company sector returned");

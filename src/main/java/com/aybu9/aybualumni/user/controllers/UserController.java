@@ -41,14 +41,14 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-//    @GetMapping("/{userId}")
-//    public ResponseEntity<DataResult<User>> get(@PathVariable Long userId) {
-//        var result = userService.get(userId);
-//        if (!result.isSuccess()) {
-//            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
+    @GetMapping("/{userId}")
+    public ResponseEntity<DataResult<User>> get(@PathVariable Long userId) {
+        var result = userService.get(userId);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @GetMapping("/profile/{uniqueName}")
     public ResponseEntity<DataResult<User>> getByProfileUrl(@PathVariable String uniqueName, HttpServletRequest request) {

@@ -9,7 +9,6 @@ import com.aybu9.aybualumni.user.models.User;
 import org.springframework.security.core.Authentication;
 
 public interface AuthService {
-
     DataResult<AuthResponseDto> register(AuthRegisterDto authRegisterDto);
 
     DataResult<AuthResponseDto> login(AuthLoginDto authLoginDto);

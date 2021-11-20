@@ -14,14 +14,13 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthLoginDto {
-	
-	@NotBlank
-	@NotNull
-	@Email
-	@Size(min = 5, max = 255)
-	private String email;
+    @NotBlank
+    @NotNull
+    @Email
+    @Size(min = 5, max = 255)
+    private String email;
 
-	@NotBlank
-	@NotNull
-	private String password;
+    @NotBlank
+    @NotNull
+    private String password;
 }

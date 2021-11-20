@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyPageDto {
+public class CommunityPageDto {
     
     @NotBlank
     @NotNull
@@ -23,18 +23,13 @@ public class CompanyPageDto {
     @NotNull
     @NotBlank
     @Pattern(regexp = "^[a-z]+$", message = "URL yalnızca küçük harfler içerebilir")
-    private String pageUrl; // todo alumni.com/company/{pageUrl}
+    private String pageUrl;
 
     @Size(min = 2, max = 255)
-    //@URL // todo URL kontrolü burada değil database içerisinde okey ama burada sadece - kullanmaya izin ver regexp
-    //@Pattern(regexp = "^[a-z]+$", message = "URL yalnızca küçük harfler içerebilir")
     private String websiteUrl;
 
     @NotNull
-    private Integer companySectorId;
-
-    @NotNull
-    private Integer cityId;
+    private Integer communitySectorId;
 
     @Size(max = 255)
     private String slogan;

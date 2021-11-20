@@ -11,7 +11,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthRegisterDto {
-
     @NotBlank
     @NotNull
     @Size(min = 2, max = 255)
@@ -27,7 +26,7 @@ public class AuthRegisterDto {
     @NotBlank
     @Pattern(regexp = "^[a-z]+$", message = "URL yalnızca küçük harfler içerebilir")
     private String profileUrl; // todo alumni.com/users/profile/{profileUrl}
-    
+
     @NotBlank
     @NotNull
     @Email

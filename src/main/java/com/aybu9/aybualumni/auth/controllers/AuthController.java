@@ -1,8 +1,8 @@
 package com.aybu9.aybualumni.auth.controllers;
 
-import com.aybu9.aybualumni.auth.models.dtos.AuthResponseDto;
 import com.aybu9.aybualumni.auth.models.dtos.AuthLoginDto;
 import com.aybu9.aybualumni.auth.models.dtos.AuthRegisterDto;
+import com.aybu9.aybualumni.auth.models.dtos.AuthResponseDto;
 import com.aybu9.aybualumni.auth.services.AuthService;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
@@ -47,6 +47,6 @@ public class AuthController {
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(result, HttpStatus.FOUND);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

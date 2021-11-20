@@ -6,7 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PageRepository extends JpaRepository<Page, Long> {
+
     Page getByPageUrl(String pageUrl);
 
     Boolean existsByPageUrl(String pageUrl);
+
+    Boolean existsByPageUrlIsEndingWith(String uniqueName);
 }

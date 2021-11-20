@@ -11,7 +11,6 @@ import com.aybu9.aybualumni.core.result.SuccessResult;
 import com.aybu9.aybualumni.core.security.token.TokenService;
 import com.aybu9.aybualumni.user.models.User;
 import com.aybu9.aybualumni.user.services.UserService;
-import com.sun.security.auth.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -94,38 +93,6 @@ public class AuthManager implements AuthService, AuthenticationProvider {
         return onSuccessfulLogout(ACCESS_TOKEN);
     }
 
-    private DataResult<AuthResponseDto> onSuccessfulAuthentication(User user) {
-        var accessTokenDataResult = tokenService.createToken(user);
-        var accessToken = accessTokenDataResult.getData();
-        var token = accessToken.getToken();
-        var cookie = new Cookie(ACCESS_TOKEN, token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(request.isSecure());
-        cookie.setDomain(request.getServerName());
-        cookie.setPath("/");
-        cookie.setMaxAge(3590); // tokendan 10 saniye önce sil saniye cinsi
-        response.addCookie(cookie);
-        return new SuccessDataResult<>(new AuthResponseDto(accessToken, user), "authentication success");
-    }
-
-    private Result onSuccessfulLogout(String... cookiesToClear) { // todo refactor eidlmesi gerek 
-        Assert.notNull(cookiesToClear, "List of cookies cannot be null");
-        List<Function<HttpServletRequest, Cookie>> cookieList = new ArrayList<>();
-        for (String cookieName : cookiesToClear) {
-            cookieList.add((request) -> {
-                Cookie cookie = new Cookie(cookieName, (String) null);
-                String cookiePath = request.getContextPath() + "/";
-                cookie.setPath(cookiePath);
-                cookie.setMaxAge(0);
-                cookie.setSecure(request.isSecure());
-                return cookie;
-            });
-        }
-        cookieList.forEach((function) -> response.addCookie(function.apply(request)));
-        response.setHeader("Location", "/");
-        return new SuccessResult("logout success");
-    }
-
     @Override
     @Transactional
     public User getCurrentUser(Authentication authentication) {
@@ -145,5 +112,36 @@ public class AuthManager implements AuthService, AuthenticationProvider {
     @Override
     public boolean supports(Class<?> aClass) {
         return aClass.equals(UsernamePasswordAuthenticationToken.class);
+    }
+
+    private DataResult<AuthResponseDto> onSuccessfulAuthentication(User user) {
+        var accessTokenDataResult = tokenService.createToken(user);
+        var accessToken = accessTokenDataResult.getData();
+        var token = accessToken.getToken();
+        var cookie = new Cookie(ACCESS_TOKEN, token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(request.isSecure());
+        cookie.setDomain(request.getServerName());
+        cookie.setPath("/");
+        cookie.setMaxAge(3590); // tokendan 10 saniye önce sil saniye cinsi
+        response.addCookie(cookie);
+        return new SuccessDataResult<>(new AuthResponseDto(accessToken, user), "authentication success");
+    }
+
+    private Result onSuccessfulLogout(String... cookiesToClear) { // todo refactor eidlmesi gerek 
+        Assert.notNull(cookiesToClear, "List of cookies cannot be null");
+        List<Function<HttpServletRequest, Cookie>> cookieList = new ArrayList<>();
+        for (String cookieName : cookiesToClear) {
+            cookieList.add((request) -> {
+                Cookie cookie = new Cookie(cookieName, null);
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                return cookie;
+            });
+        }
+        cookieList.forEach((function) -> response.addCookie(function.apply(request)));
+
+        //response.setHeader("Location", "/");
+        return new SuccessResult("logout success");
     }
 }

@@ -71,8 +71,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 //.headers().frameOptions().disable()
-                .headers().frameOptions().sameOrigin() // https://stackoverflow.com/questions/28647136/how-to-disable-x-frame-options-response-header-in-spring-security
-                .and()
+                //.headers().frameOptions().disable() // https://stackoverflow.com/questions/28647136/how-to-disable-x-frame-options-response-header-in-spring-security
+                //.and()
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedEntryPoint())
                 .accessDeniedHandler(forbiddenAccessDeniedHandler())
@@ -85,6 +85,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfiguration.applyPermitDefaultValues();
         corsConfiguration.addAllowedMethod(HttpMethod.PUT);
         corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
+        corsConfiguration.addAllowedMethod(HttpMethod.GET);
+        corsConfiguration.addAllowedMethod(HttpMethod.POST);
+        corsConfiguration.addAllowedMethod(HttpMethod.HEAD);
         corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
         corsConfiguration.addAllowedMethod(HttpMethod.OPTIONS);
         corsConfiguration.addExposedHeader(HttpHeaders.CONTENT_DISPOSITION);

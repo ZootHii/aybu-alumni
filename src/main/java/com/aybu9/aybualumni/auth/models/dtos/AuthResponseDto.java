@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthResponseDto {
-	private AccessToken accessToken;
-	private User user;
+    private AccessToken accessToken;
+    private User user;
 }

@@ -31,7 +31,12 @@ public class CommunityPage {
     @OneToOne
     @JoinColumn(name = "community_sector_id", referencedColumnName = "id")
     private CommunitySector communitySector;
-    
+
+    public CommunityPage(Page page, CommunitySector communitySector) {
+        this.page = page;
+        this.communitySector = communitySector;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

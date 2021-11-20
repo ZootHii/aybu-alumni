@@ -46,9 +46,9 @@ public class AccessTokenAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         }
-//        if (Strings.isNullOrEmpty(token)) {
-//            token = request.getHeader(ACCESS_TOKEN); // IF WANNA USE HEADER
-//        }
+        if (Strings.isNullOrEmpty(token)) {
+            token = request.getHeader(ACCESS_TOKEN); // IF WANNA USE HEADER
+        }
         if (!Strings.isNullOrEmpty(token)) {
             var bodyDataResult = tokenService.getBodyFromToken(token);
             if (!bodyDataResult.isSuccess()) {
