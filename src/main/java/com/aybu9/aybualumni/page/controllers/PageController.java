@@ -26,7 +26,8 @@ public class PageController {
     }
 
     @PostMapping("{userId}/company")
-    public ResponseEntity<DataResult<CompanyPage>> createCompany(Authentication authentication, @Valid @RequestBody CompanyPageDto companyPageDto,
+    public ResponseEntity<DataResult<CompanyPage>> createCompany(Authentication authentication,
+                                                                 @Valid @RequestBody CompanyPageDto companyPageDto,
                                                                  @PathVariable Long userId) {
         var result = pageService.createCompany(authentication, companyPageDto, userId);
         if (!result.isSuccess()) {
@@ -51,7 +52,8 @@ public class PageController {
     }
 
     @PostMapping("{userId}/community")
-    public ResponseEntity<DataResult<CommunityPage>> createCommunity(Authentication authentication, @Valid @RequestBody CommunityPageDto communityPageDto,
+    public ResponseEntity<DataResult<CommunityPage>> createCommunity(Authentication authentication,
+                                                                     @Valid @RequestBody CommunityPageDto communityPageDto,
                                                                      @PathVariable Long userId) {
         var result = pageService.createCommunity(authentication, communityPageDto, userId);
         if (!result.isSuccess()) {

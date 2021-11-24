@@ -7,6 +7,7 @@ import com.aybu9.aybualumni.core.security.filter.AccessTokenAuthenticationFilter
 import com.aybu9.aybualumni.core.security.token.TokenService;
 import com.aybu9.aybualumni.user.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -57,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${security.secret}")
     protected String secret;
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -112,10 +113,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         pbkdf2PasswordEncoder.setAlgorithm(Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA512);
         return pbkdf2PasswordEncoder;
     }
-    
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(new AuthManager(userService, tokenService, request, response, passwordEncoder()));
     }
-    
+
 }

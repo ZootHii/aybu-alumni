@@ -13,6 +13,7 @@ import com.aybu9.aybualumni.user.models.User;
 import com.aybu9.aybualumni.user.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 import static com.aybu9.aybualumni.core.security.Constants.ACCESS_TOKEN;
@@ -105,6 +107,16 @@ public class AuthManager implements AuthService, AuthenticationProvider {
 
     @Override
     @Transactional
+    public User getCurrentUserAccessible(Authentication authentication, Long userId) {
+        var currentUser = getCurrentUser(authentication);
+        if (!Objects.equals(currentUser.getId(), userId)){
+            throw new AccessDeniedException("Forbidden Access Denied");
+        }
+        return currentUser;
+    }
+
+    @Override
+    @Transactional
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         return authentication;
     }
@@ -121,7 +133,7 @@ public class AuthManager implements AuthService, AuthenticationProvider {
         var cookie = new Cookie(ACCESS_TOKEN, token);
         cookie.setHttpOnly(true);
         cookie.setSecure(request.isSecure());
-        cookie.setDomain(request.getServerName());
+        cookie.setDomain("localhost");
         cookie.setPath("/");
         cookie.setMaxAge(3590); // tokendan 10 saniye önce sil saniye cinsi
         response.addCookie(cookie);

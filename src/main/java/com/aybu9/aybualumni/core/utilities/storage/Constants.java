@@ -1,4 +1,4 @@
-package com.aybu9.aybualumni.core.storage;
+package com.aybu9.aybualumni.core.utilities.storage;
 
 public class Constants {
     public static String STORAGE_BASE_URL = "https://aybu-alumni.s3.amazonaws.com";

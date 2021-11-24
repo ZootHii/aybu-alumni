@@ -1,10 +1,11 @@
-package com.aybu9.aybualumni.core.storage;
+package com.aybu9.aybualumni.core.utilities.storage;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.util.IOUtils;
 import com.aybu9.aybualumni.core.exception.CustomException;
+import com.aybu9.aybualumni.user.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import static com.aybu9.aybualumni.core.utilities.storage.Constants.*;
+import static com.aybu9.aybualumni.core.utilities.storage.Constants.STORAGE_BASE_URL;
 import static org.springframework.http.MediaType.*;
 
 @Service
@@ -127,11 +130,41 @@ public class FileStorage {
             throw new CustomException("provide an image jpeg, png, gif");
         }
     }
-    
-    public void checkIfEmptyOrNull(MultipartFile multipartFile){
-        if (multipartFile == null || multipartFile.isEmpty()){
-            throw new CustomException("image cannot be empty or null");
+
+    public void checkIfDocument(MultipartFile multipartFile) {
+        if (!Arrays.asList(APPLICATION_PDF_VALUE, APPLICATION_XML_VALUE).contains(multipartFile.getContentType())){
+            throw new CustomException("provide a document pdf, xml");
         }
     }
 
+    // TODO VİDEO MİME TYPE
+    public void checkIfVideo(MultipartFile multipartFile) {
+        if (!Arrays.asList("VİDEO İÇİN DÜZENLE").contains(multipartFile.getContentType())){
+            throw new CustomException("provide a document pdf, xml");
+        }
+    }
+
+    public void checkIfEmptyOrNull(MultipartFile multipartFile){
+        if (multipartFile == null || multipartFile.isEmpty()){
+            throw new CustomException("file cannot be empty or null");
+        }
+    }
+
+    public String saveFile(User user, MultipartFile multipartFile, String folderName) {
+        checkIfEmptyOrNull(multipartFile);
+        if(folderName.equals(FOLDER_NAME_IMAGES)){
+            checkIfImage(multipartFile);
+        } else if (folderName.equals(FOLDER_NAME_DOCUMENTS)){
+            checkIfDocument(multipartFile);
+        } else if (folderName.equals(FOLDER_NAME_VIDEOS)){
+            checkIfVideo(multipartFile);
+        }
+
+        var path = createPath(folderName, user.getId());
+        var fileName = createFileName(multipartFile);
+        var metadata = createMetadata(multipartFile);
+        var inputStream = getInputStream(multipartFile);
+        save(path, fileName, inputStream, multipartFile, metadata);
+        return String.format("%s/%s/%s/%s", STORAGE_BASE_URL, folderName, user.getId(), fileName);
+    }
 }

@@ -7,6 +7,10 @@ import com.aybu9.aybualumni.page.models.City;
 import com.aybu9.aybualumni.page.repositories.CityRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
+import static com.aybu9.aybualumni.core.result.Constants.GetAllSuccess;
+
 @Service
 public class CityManager implements CityService {
 
@@ -14,6 +18,11 @@ public class CityManager implements CityService {
 
     public CityManager(CityRepository cityRepository) {
         this.cityRepository = cityRepository;
+    }
+
+    @Override
+    public DataResult<Collection<City>> getAll() {
+        return new SuccessDataResult<>(cityRepository.findAll(), GetAllSuccess);
     }
 
     @Override

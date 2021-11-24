@@ -14,13 +14,11 @@ import com.aybu9.aybualumni.page.repositories.CompanyPageRepository;
 import com.aybu9.aybualumni.page.repositories.PageRepository;
 import com.aybu9.aybualumni.user.services.UserService;
 import com.google.common.base.Strings;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 @Service
 public class PageManager implements PageService {
@@ -85,7 +83,7 @@ public class PageManager implements PageService {
 
     @Override
     @Transactional // biri bitmeden bir sorun çıkarsa diğerini geri alıyor
-    public DataResult<CompanyPage> createCompany(Authentication authentication, CompanyPageDto companyPageDto, Long userId) { // TODO şehirler eklenebilir
+    public DataResult<CompanyPage> createCompany(Authentication authentication, CompanyPageDto companyPageDto, Long userId) {
         // userId al ve user ı bul
         // companypagedto oluştur
         // page ve companypage içerisindeki gerekli bilgileri al dto için
@@ -93,10 +91,7 @@ public class PageManager implements PageService {
         // alınan bilgileri page ve company page e set et ve oluştur
         // önce page oluştur oluşan page i company page e set ederek oluştur
 
-        var currentUser = authService.getCurrentUser(authentication);
-        if (!Objects.equals(currentUser.getId(), userId)) {
-            throw new AccessDeniedException("Forbidden Access Denied");
-        }
+        var currentUser = authService.getCurrentUserAccessible(authentication, userId);
         //var ownerUser = userService.get(userId).getData();
         var companySectorId = companyPageDto.getCompanySectorId();
         var cityId = companyPageDto.getCityId();
@@ -140,12 +135,11 @@ public class PageManager implements PageService {
     }
 
     @Override
+    @Transactional
     public DataResult<CommunityPage> createCommunity(Authentication authentication, CommunityPageDto communityPageDto, Long userId) {
 
-        var currentUser = authService.getCurrentUser(authentication);
-        if (!Objects.equals(currentUser.getId(), userId)) {
-            throw new AccessDeniedException("Forbidden Access Denied");
-        }
+        var currentUser = authService.getCurrentUserAccessible(authentication, userId);
+
         //var ownerUser = userService.get(userId).getData();
         var communitySectorId = communityPageDto.getCommunitySectorId();
         var communitySector = communitySectorService.get(communitySectorId).getData();

@@ -2,7 +2,6 @@ package com.aybu9.aybualumni.user.controllers;
 
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
-import com.aybu9.aybualumni.page.models.CompanyPage;
 import com.aybu9.aybualumni.user.models.User;
 import com.aybu9.aybualumni.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,13 +69,13 @@ public class UserController {
     }
 
     @PutMapping(
-            path = "{userId}/profile-photo",
+            path = "{userId}/profile-image",
             consumes = MULTIPART_FORM_DATA_VALUE,
             produces = APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Result> updateProfilePhoto(@PathVariable Long userId,
+    public ResponseEntity<Result> uploadProfileImage(@PathVariable Long userId,
                                                      @RequestParam("file") MultipartFile multipartFile, Authentication authentication) {
-        var result = userService.updateProfilePhoto(authentication, userId, multipartFile);
+        var result = userService.uploadProfileImage(authentication, userId, multipartFile);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
@@ -84,13 +83,27 @@ public class UserController {
     }
 
     @PutMapping(
-            path = "{userId}/cover-photo",
+            path = "{userId}/cover-image",
             consumes = MULTIPART_FORM_DATA_VALUE,
             produces = APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Result> updateCoverPhoto(Authentication authentication, @PathVariable Long userId,
+    public ResponseEntity<Result> uploadCoverImage(Authentication authentication, @PathVariable Long userId,
                                                    @RequestParam("file") MultipartFile multipartFile) {
-        var result = userService.updateCoverPhoto(authentication, userId, multipartFile);
+        var result = userService.uploadCoverImage(authentication, userId, multipartFile);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PutMapping( // todo put post emin değilim
+            path = "{userId}/resume",
+            consumes = MULTIPART_FORM_DATA_VALUE,
+            produces = APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Result> uploadResume(Authentication authentication, @PathVariable Long userId,
+                                                   @RequestParam("file") MultipartFile multipartFile) {
+        var result = userService.uploadResume(authentication, userId, multipartFile);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }

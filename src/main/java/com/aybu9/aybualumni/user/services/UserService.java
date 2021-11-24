@@ -26,9 +26,13 @@ public interface UserService {
 
     Result delete(Authentication authentication, Long userId);
     
-    Result updateProfilePhoto(Authentication authentication, Long userId, MultipartFile multipartFile);
-
-    Result updateCoverPhoto(Authentication authentication, Long userId, MultipartFile multipartFile);
+    // Result updatePassword() todo dto old and new password al userid al kontrol et eski doğruysaa değiştir çıkış yap
     
+    Result uploadProfileImage(Authentication authentication, Long userId, MultipartFile multipartFile);
+
+    Result uploadCoverImage(Authentication authentication, Long userId, MultipartFile multipartFile);
+
+    Result uploadResume(Authentication authentication, Long userId, MultipartFile multipartFile);
+
 //    DataResult<byte[]> downloadProfilePhoto(Long userId);
 }
