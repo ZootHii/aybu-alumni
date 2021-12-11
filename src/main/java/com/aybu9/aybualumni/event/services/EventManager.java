@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class EventManager implements EventService {
 
     private final EventRepository eventRepository;
-    
+
     public EventManager(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
-
+    
     @Override
     @Transactional
     public DataResult<Event> create(Event event) {

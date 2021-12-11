@@ -29,7 +29,7 @@ public class UserEvent {
     @OneToOne
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false, updatable = false)
     private Event event;
-    
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
     private User ownerUser;
@@ -37,7 +37,7 @@ public class UserEvent {
     // visible_to varchar // bağlantılar görebilir, herkes görebilir,
     @Column(columnDefinition = "VARCHAR DEFAULT 'EVERYONE'", nullable = false)
     private String visibility; // -> FRIENDSHIP / EVERYONE
-    
+
     @CreationTimestamp
     private Date createdAt;
 

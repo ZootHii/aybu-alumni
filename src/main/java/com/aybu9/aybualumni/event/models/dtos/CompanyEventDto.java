@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -23,28 +21,28 @@ public class CompanyEventDto {
     private String name;
 
     @Lob
-    @NotBlank
-    @NotNull
     private String description;
 
     @Size(max = 2048)
     private String fileUrl;
-    
+
     @NotNull
     private Boolean isOnline;
-    
-    //@NotNull // online ise önde şehir göstermeyelim değişecek
+
+    // online ise önde şehir göstermeyelim değişecek
     private Integer cityId;
-    
+
     @NotBlank
     @NotNull // online ise online url konacak
     @Size(max = 510)
     private String address;
 
+    @NotNull
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     @FutureOrPresent
     private Date startDateTime;
-
+    
+    @NotNull
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     @Future
     private Date endDateTime;
@@ -52,6 +50,6 @@ public class CompanyEventDto {
     @NotBlank
     @NotNull
     private String visibility;
-    
+
     private Collection<Long> eventSpeakerUsersIds;
 }

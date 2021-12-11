@@ -4,13 +4,10 @@ import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.event.models.CompanyEvent;
 import com.aybu9.aybualumni.event.models.dtos.CompanyEventDto;
 import com.aybu9.aybualumni.event.services.CompanyEventService;
-import com.aybu9.aybualumni.page.models.CompanyPage;
-import com.aybu9.aybualumni.page.models.dtos.CompanyPageDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.Collection;

@@ -34,6 +34,7 @@ public class Event {
     @Size(max = 255)
     private String name;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
     private User ownerUser;
@@ -50,9 +51,8 @@ public class Event {
     @NotNull
     private Boolean isOnline;
 
-    @NotNull
     @OneToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
     @Column(nullable = false)
@@ -61,11 +61,13 @@ public class Event {
     @Size(max = 2048)
     private String address; // online ise address zoom adresi online değilse normal kılavuz mahallesi
 
+    @NotNull
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm") // time zone eklenmesi gerekirse eğer Europe/Istanbul
     @FutureOrPresent // https://www.baeldung.com/javax-validation
     @Column(nullable = false)
     private Date startDateTime;
 
+    @NotNull
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm") // time zone eklenmesi gerekirse eğer Europe/Istanbul
     @Future // https://www.baeldung.com/javax-validation
     @Column(name = "end_date_time", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE CONSTRAINT end_greater_than_start CHECK (end_date_time > start_date_time)", nullable = false)
@@ -83,17 +85,13 @@ public class Event {
     @UpdateTimestamp
     private Date updatedAt;
 
-    public Event(String name, User ownerUser, String fileUrl, String description, Boolean isOnline, City city,
-                 String address, Date startDateTime, Date endDateTime, Set<User> eventSpeakerUsers) {
+    public Event(String name, User ownerUser, Boolean isOnline,
+                 String address, Date startDateTime, Date endDateTime) {
         this.name = name;
         this.ownerUser = ownerUser;
-        this.fileUrl = fileUrl;
-        this.description = description;
         this.isOnline = isOnline;
-        this.city = city;
         this.address = address;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.eventSpeakerUsers = eventSpeakerUsers;
     }
 }
