@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
+import java.util.Set;
 
 public interface UserService {
     
@@ -17,6 +18,8 @@ public interface UserService {
     DataResult<User> getByProfileUrl(String profileUrl);
 
     DataResult<User> getByEmail(String email);
+    
+    DataResult<Collection<User>> getAllByIdIn(Collection<Long> ids);
 
     Boolean existsByEmail(String email);
 

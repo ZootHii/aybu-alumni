@@ -75,11 +75,25 @@ public class Event {
     @JoinTable(name = "event_speakers",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users = new HashSet<>();
+    private Set<User> eventSpeakerUsers = new HashSet<>();
 
     @CreationTimestamp
     private Date createdAt;
 
     @UpdateTimestamp
     private Date updatedAt;
+
+    public Event(String name, User ownerUser, String fileUrl, String description, Boolean isOnline, City city,
+                 String address, Date startDateTime, Date endDateTime, Set<User> eventSpeakerUsers) {
+        this.name = name;
+        this.ownerUser = ownerUser;
+        this.fileUrl = fileUrl;
+        this.description = description;
+        this.isOnline = isOnline;
+        this.city = city;
+        this.address = address;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.eventSpeakerUsers = eventSpeakerUsers;
+    }
 }

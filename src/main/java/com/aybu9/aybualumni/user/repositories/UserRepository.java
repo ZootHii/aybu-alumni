@@ -4,6 +4,9 @@ import com.aybu9.aybualumni.user.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.Set;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     //@Query("SELECT User FROM User where User.email = ?1")
@@ -15,6 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     Boolean existsByProfileUrl(String profileUrl);
     
+    Set<User> getAllByIdIn(Set<Long> ids);
 
 //    @Query(nativeQuery = true)
 //    Collection<User> getFriends(Long userId);

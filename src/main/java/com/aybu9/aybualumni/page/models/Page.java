@@ -40,6 +40,7 @@ public class Page {
     @Size(max = 255)
     private String name;
     
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
     private User ownerUser;

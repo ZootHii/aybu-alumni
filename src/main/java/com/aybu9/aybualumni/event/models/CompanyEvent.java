@@ -43,4 +43,10 @@ public class CompanyEvent {
 
     @UpdateTimestamp
     private Date updatedAt;
+
+    public CompanyEvent(Event event, CompanyPage ownerCompanyPage, String visibility) {
+        this.event = event;
+        this.ownerCompanyPage = ownerCompanyPage;
+        this.visibility = visibility;
+    }
 }

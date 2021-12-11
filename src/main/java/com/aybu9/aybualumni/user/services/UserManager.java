@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import static com.aybu9.aybualumni.core.result.Constants.*;
 import static com.aybu9.aybualumni.core.utilities.storage.Constants.*;
@@ -75,6 +77,13 @@ public class UserManager implements UserService {
             throw new CustomException("User not found by email " + email);
         }
         return new SuccessDataResult<>(user, "found by email");
+    }
+
+    @Override
+    public DataResult<Collection<User>> getAllByIdIn(Collection<Long> ids) {
+        // TODO
+        var usersSet = userRepository.getAllByIdIn(new HashSet<>(ids));
+        return new SuccessDataResult<>(usersSet, "gell all by id in");
     }
 
     @Override

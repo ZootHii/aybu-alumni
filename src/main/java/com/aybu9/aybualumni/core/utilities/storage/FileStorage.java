@@ -157,6 +157,8 @@ public class FileStorage {
             checkIfDocument(multipartFile);
         } else if (folderName.equals(FOLDER_NAME_VIDEOS)){
             checkIfVideo(multipartFile);
+        } else {
+            throw new CustomException("folder name is not appropriate");
         }
 
         var path = createPath(folderName, user.getId());
