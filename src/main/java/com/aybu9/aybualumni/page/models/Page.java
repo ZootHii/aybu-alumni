@@ -72,12 +72,12 @@ public class Page {
 
     @Column(length = 2048)
     @Size(max = 2048)
-    @URL
+//    @URL
     private String logoPhotoUrl;
 
     @Column(length = 2048)
     @Size(max = 2048)
-    @URL
+//    @URL
     private String coverPhotoUrl;
     
 //    @NotNull

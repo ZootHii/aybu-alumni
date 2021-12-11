@@ -1,10 +1,15 @@
 package com.aybu9.aybualumni.page.models;
 
+import com.aybu9.aybualumni.post.models.CommunityPost;
+import com.aybu9.aybualumni.sector.models.CommunitySector;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,6 +37,12 @@ public class CommunityPage {
     @JoinColumn(name = "community_sector_id", referencedColumnName = "id")
     private CommunitySector communitySector;
 
+    @JsonIgnore
+    // set owned pages;
+    @OneToMany(mappedBy = "ownerCommunityPage")
+    @ToString.Exclude
+    private Set<CommunityPost> ownedCommunityPosts = new HashSet<>();
+    
     public CommunityPage(Page page, CommunitySector communitySector) {
         this.page = page;
         this.communitySector = communitySector;

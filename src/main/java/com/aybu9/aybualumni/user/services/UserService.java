@@ -23,6 +23,8 @@ public interface UserService {
     Boolean existsByProfileUrl(String profileUrl);
 
     DataResult<User> create(User user);
+    
+    DataResult<User> updateSave(User user);
 
     Result delete(Authentication authentication, Long userId);
     
@@ -31,8 +33,6 @@ public interface UserService {
     Result uploadProfileImage(Authentication authentication, Long userId, MultipartFile multipartFile);
 
     Result uploadCoverImage(Authentication authentication, Long userId, MultipartFile multipartFile);
-
-    Result uploadResume(Authentication authentication, Long userId, MultipartFile multipartFile);
 
 //    DataResult<byte[]> downloadProfilePhoto(Long userId);
 }

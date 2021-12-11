@@ -11,3 +11,5 @@ public class AybuAlumniApplication {
     }
 
 }
+
+// https://stackoverflow.com/questions/50082037/indexing-existing-relational-database-like-oracle-using-elasticsearch

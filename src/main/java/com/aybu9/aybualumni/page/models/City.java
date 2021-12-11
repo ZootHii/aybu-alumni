@@ -21,6 +21,7 @@ import java.util.Objects;
         })
 })
 public class City {
+    
     @Id
     @Column(updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

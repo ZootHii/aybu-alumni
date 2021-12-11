@@ -9,6 +9,7 @@ import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.core.result.SuccessDataResult;
 import com.aybu9.aybualumni.core.result.SuccessResult;
 import com.aybu9.aybualumni.core.security.token.TokenService;
+import com.aybu9.aybualumni.fake_obs.services.FakeOBSDataService;
 import com.aybu9.aybualumni.user.models.User;
 import com.aybu9.aybualumni.user.services.UserService;
 import org.slf4j.Logger;
@@ -40,13 +41,15 @@ public class AuthManager implements AuthService, AuthenticationProvider {
 
     private final UserService userService;
     private final TokenService tokenService;
+    private final FakeOBSDataService fakeOBSDataService;
     private final HttpServletRequest request;
     private final HttpServletResponse response;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthManager(UserService userService, TokenService tokenService, HttpServletRequest request, HttpServletResponse response, PasswordEncoder passwordEncoder) {
+    public AuthManager(UserService userService, TokenService tokenService, FakeOBSDataService fakeOBSDataService, HttpServletRequest request, HttpServletResponse response, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.tokenService = tokenService;
+        this.fakeOBSDataService = fakeOBSDataService;
         this.request = request;
         this.response = response;
         this.passwordEncoder = passwordEncoder;
@@ -63,8 +66,17 @@ public class AuthManager implements AuthService, AuthenticationProvider {
         var email = authRegisterDto.getEmail();
         var password = authRegisterDto.getPassword();
         var encodedPassword = passwordEncoder.encode(password);
+
+        var tcIdentityNumber = authRegisterDto.getTcIdentityNumber();
+        var fakeOBSData = fakeOBSDataService.get(tcIdentityNumber).getData();
+        var nameInCollege = fakeOBSData.getName();
+        var surnameInCollege = fakeOBSData.getSurname();
+        var grade = fakeOBSData.getGrade();
+        var department = fakeOBSData.getDepartment();
+
         var profileUrl = String.format("%s/%s", "http://localhost:4024/users/profile", authRegisterDto.getProfileUrl());
-        var userToRegister = new User(name, surname, email, encodedPassword, profileUrl);
+        var userToRegister = new User(name, surname, email, encodedPassword, profileUrl, nameInCollege,
+                surnameInCollege, grade, department);
         var userCreateDataResult = userService.create(userToRegister);
         var createdUser = userCreateDataResult.getData();
         return onSuccessfulAuthentication(createdUser);
@@ -75,15 +87,27 @@ public class AuthManager implements AuthService, AuthenticationProvider {
     public DataResult<AuthResponseDto> login(AuthLoginDto authLoginDto) {
         var email = authLoginDto.getEmail();
         var password = authLoginDto.getPassword();
+        var tcIdentityNumber = authLoginDto.getTcIdentityNumber();
+        var fakeOBSData = fakeOBSDataService.get(tcIdentityNumber).getData();
+        var nameInCollege = fakeOBSData.getName();
+        var surnameInCollege = fakeOBSData.getSurname();
+        var grade = fakeOBSData.getGrade();
+        var department = fakeOBSData.getDepartment();
 
         if (userService.existsByEmail(email)) {
             var user = userService.getByEmail(email).getData();
             if (passwordEncoder.matches(password, user.getPassword())) {
+                user.setNameInCollege(nameInCollege);
+                user.setSurnameInCollege(surnameInCollege);
+                user.setGrade(grade);
+                user.setDepartment(department);
+                var updatedUser = userService.updateSave(user).getData();
+                
                 Authentication authentication = new UsernamePasswordAuthenticationToken(email, user.getPassword());
                 // todo user içerisinde roller principal lar tanımlanacak ve o authoritiy ler kullanılacak bu sayede authenticated true olur
                 //Authentication authentication = new UsernamePasswordAuthenticationToken(email, user.getPassword(), authorities);
                 authenticate(authentication);
-                return onSuccessfulAuthentication(user);
+                return onSuccessfulAuthentication(updatedUser);
             }
         }
         throw new CustomException("check email and password");
@@ -109,7 +133,7 @@ public class AuthManager implements AuthService, AuthenticationProvider {
     @Transactional
     public User getCurrentUserAccessible(Authentication authentication, Long userId) {
         var currentUser = getCurrentUser(authentication);
-        if (!Objects.equals(currentUser.getId(), userId)){
+        if (!Objects.equals(currentUser.getId(), userId)) {
             throw new AccessDeniedException("Forbidden Access Denied");
         }
         return currentUser;

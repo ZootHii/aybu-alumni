@@ -5,9 +5,9 @@ import com.aybu9.aybualumni.core.exception.ForbiddenAccessDeniedHandler;
 import com.aybu9.aybualumni.core.exception.UnauthorizedEntryPoint;
 import com.aybu9.aybualumni.core.security.filter.AccessTokenAuthenticationFilter;
 import com.aybu9.aybualumni.core.security.token.TokenService;
+import com.aybu9.aybualumni.fake_obs.services.FakeOBSDataService;
 import com.aybu9.aybualumni.user.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +20,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -33,8 +31,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
@@ -49,6 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FakeOBSDataService fakeOBSDataService;
 
     @Autowired
     private HttpServletRequest request;
@@ -116,7 +115,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(new AuthManager(userService, tokenService, request, response, passwordEncoder()));
+        auth.authenticationProvider(new AuthManager(userService, tokenService, fakeOBSDataService, request, response, passwordEncoder()));
     }
 
 }

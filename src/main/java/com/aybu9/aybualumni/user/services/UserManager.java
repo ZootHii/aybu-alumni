@@ -8,13 +8,16 @@ import com.aybu9.aybualumni.core.result.SuccessDataResult;
 import com.aybu9.aybualumni.core.result.SuccessResult;
 import com.aybu9.aybualumni.core.utilities.storage.FileStorage;
 import com.aybu9.aybualumni.user.models.User;
+import com.aybu9.aybualumni.user.models.UserContactInfo;
 import com.aybu9.aybualumni.user.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,18 +34,20 @@ public class UserManager implements UserService {
     private final UserRepository userRepository;
     private final FileStorage fileStorage;
     private final AuthService authService;
-    
+    private final UserContactInfoService userContactInfoService;
+
     @Autowired
     @Lazy
-    public UserManager(UserRepository userRepository, FileStorage fileStorage, AuthService authService) {
+    public UserManager(UserRepository userRepository, FileStorage fileStorage, AuthService authService, UserContactInfoService userContactInfoService) {
         this.userRepository = userRepository;
         this.fileStorage = fileStorage;
         this.authService = authService;
+        this.userContactInfoService = userContactInfoService;
     }
 
     @Override
     public DataResult<Collection<User>> getAll() {
-        return new SuccessDataResult<>(userRepository.findAll(), GetAllSuccess);
+        return new SuccessDataResult<>(userRepository.findAll(Sort.by("id")), GetAllSuccess);
     }
 
     @Override
@@ -93,7 +98,15 @@ public class UserManager implements UserService {
         if (existsByEmail) {
             throw new CustomException("there is already a user with this email");
         }
+        var createdUserContactInfo = userContactInfoService.create(new UserContactInfo(user.getEmail())).getData();
+        user.setUserContactInfo(createdUserContactInfo);
         return new SuccessDataResult<>(userRepository.save(user), "user created");
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public DataResult<User> updateSave(User user) {
+        return new SuccessDataResult<>(userRepository.save(user), "save update success");
     }
 
     @Override
@@ -133,15 +146,6 @@ public class UserManager implements UserService {
         return new SuccessResult("cover photo upload success");
     }
 
-    @Override
-    @Transactional
-    public Result uploadResume(Authentication authentication, Long userId, MultipartFile multipartFile) {
-        var currentUser = authService.getCurrentUserAccessible(authentication, userId);
-        var coverPhotoUrl = fileStorage.saveFile(currentUser, multipartFile, FOLDER_NAME_DOCUMENTS);
-        currentUser.setCoverPhotoUrl(coverPhotoUrl);
-        userRepository.save(currentUser);
-        return new SuccessResult("cover photo upload success");
-    }
 
 //    private User checkIfAccessibleByUser(Authentication authentication, Long userId){
 //        var currentUser = authService.getCurrentUser(authentication);
@@ -150,7 +154,7 @@ public class UserManager implements UserService {
 //        }
 //        return currentUser;
 //    }
-    
+
 //    private String savePhoto(User user, MultipartFile multipartFile) {
 //        fileStorage.checkIfEmptyOrNull(multipartFile);
 //        fileStorage.checkIfImage(multipartFile);
@@ -179,7 +183,7 @@ public class UserManager implements UserService {
 //        fileStorage.save(path, fileName, inputStream, multipartFile, metadata);
 //        return String.format("%s/%s/%s/%s", STORAGE_BASE_URL, folderName, user.getId(), fileName);
 //    }
-    
+
 //    @Override
 //    public DataResult<byte[]> downloadProfilePhoto(Long userId) {
 //        var userDataResult = get(userId);

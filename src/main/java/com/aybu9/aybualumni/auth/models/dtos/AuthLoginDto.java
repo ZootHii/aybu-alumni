@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,12 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthLoginDto {
+    
+    @NotBlank
+    @NotNull
+    @Size(min = 11, max = 11)
+    private String tcIdentityNumber;
+
     @NotBlank
     @NotNull
     @Email
@@ -23,4 +30,5 @@ public class AuthLoginDto {
     @NotBlank
     @NotNull
     private String password;
+
 }

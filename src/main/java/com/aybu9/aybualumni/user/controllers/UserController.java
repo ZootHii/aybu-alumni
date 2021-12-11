@@ -3,6 +3,8 @@ package com.aybu9.aybualumni.user.controllers;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.user.models.User;
+import com.aybu9.aybualumni.user.models.dtos.UserContactInfoDto;
+import com.aybu9.aybualumni.user.services.UserContactInfoService;
 import com.aybu9.aybualumni.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Collection;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -25,10 +28,12 @@ public class UserController {
     // TODO: 1.11.2021 CONTROLLER RESPONSE ENTITIY DONECEK YADA DÖNMESEDE OLUR TARTIŞ İSMAİLLE
 
     private final UserService userService;
+    private final UserContactInfoService userContactInfoService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserContactInfoService userContactInfoService) {
         this.userService = userService;
+        this.userContactInfoService = userContactInfoService;
     }
 
     @GetMapping
@@ -96,14 +101,24 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PutMapping("{userId}/contact-info")
+    public ResponseEntity<Result> updateUserContactInfo(Authentication authentication, @PathVariable Long userId, 
+                                                        @Valid @RequestBody UserContactInfoDto userContactInfoDto) {
+        var result = userContactInfoService.update(authentication, userId, userContactInfoDto);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PutMapping( // todo put post emin değilim
-            path = "{userId}/resume",
+            path = "{userId}/contact-info/resume",
             consumes = MULTIPART_FORM_DATA_VALUE,
             produces = APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Result> uploadResume(Authentication authentication, @PathVariable Long userId,
-                                                   @RequestParam("file") MultipartFile multipartFile) {
-        var result = userService.uploadResume(authentication, userId, multipartFile);
+                                               @RequestParam("file") MultipartFile multipartFile) {
+        var result = userContactInfoService.uploadResume(authentication, userId, multipartFile);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }

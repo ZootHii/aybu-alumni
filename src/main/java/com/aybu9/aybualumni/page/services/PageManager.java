@@ -12,6 +12,8 @@ import com.aybu9.aybualumni.page.models.dtos.CompanyPageDto;
 import com.aybu9.aybualumni.page.repositories.CommunityPageRepository;
 import com.aybu9.aybualumni.page.repositories.CompanyPageRepository;
 import com.aybu9.aybualumni.page.repositories.PageRepository;
+import com.aybu9.aybualumni.sector.services.CommunitySectorService;
+import com.aybu9.aybualumni.sector.services.CompanySectorService;
 import com.aybu9.aybualumni.user.services.UserService;
 import com.google.common.base.Strings;
 import org.springframework.security.core.Authentication;

@@ -43,7 +43,6 @@ public class FileStorage {
         this.amazonS3 = amazonS3;
     }
 
-
     public void save(String path,
                        String fileName,
                        InputStream inputStream,
