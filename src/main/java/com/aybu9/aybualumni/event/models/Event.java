@@ -43,7 +43,7 @@ public class Event extends LongBaseModel {
     @Lob // size belirtmiyorsak lob
     private String description;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT false", nullable = false)
+    @Column(/*columnDefinition = "BOOLEAN DEFAULT false",*/ nullable = false)
     @NotNull
     private Boolean isOnline;
 

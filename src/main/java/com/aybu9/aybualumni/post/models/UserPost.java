@@ -5,6 +5,9 @@ import com.aybu9.aybualumni.user.models.User;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -28,6 +31,9 @@ public class UserPost extends LongBaseModel {
     private User ownerUser;
 
     // visible_to varchar // bağlantılar görebilir, herkes görebilir,
-    @Column(columnDefinition = "VARCHAR DEFAULT 'EVERYONE'", nullable = false)
+    @Column(/*columnDefinition = "VARCHAR(255) DEFAULT 'EVERYONE'",*/ nullable = false)
+    @Size(max = 255)
+    @NotBlank
+    @NotNull
     private String visibility; // -> FRIENDSHIP / EVERYONE
 }

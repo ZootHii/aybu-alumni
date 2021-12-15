@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,10 +32,14 @@ public class JobPost extends LongBaseModel {
     @JoinColumn(name = "job_title_id", referencedColumnName = "id")
     private JobTitle jobTitle;
 
-    @Column(columnDefinition = "VARCHAR DEFAULT 'OFFICE'", nullable = false) // todo denenecek geliyor mu default everyone
+    @Column(/*columnDefinition = "VARCHAR DEFAULT 'OFFICE'",*/ nullable = false)
+    @NotBlank
+    @NotNull
     private String workplaceType; // OFFICE, HYBRID, REMOTE
 
-    @Column(columnDefinition = "VARCHAR DEFAULT 'FULL TIME'", nullable = false) // todo denenecek geliyor mu default everyone
+    @Column(/*columnDefinition = "VARCHAR DEFAULT 'FULL TIME'",*/ nullable = false)
+    @NotBlank
+    @NotNull
     private String jobType; // FULL TIME, PART TIME, INTERNSHIP, DAILY 
 
     @JsonIgnore

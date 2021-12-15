@@ -33,7 +33,9 @@ public class FileStorage {
     // https://stackoverflow.com/questions/64888923/uploading-large-size-more-than-1-gb-file-on-amazon-s3-using-java-large-files
     // https://www.youtube.com/watch?v=w2JFAebvlEk
     // https://www.tutorialsbuddy.com/amazon-s3-download-files
-
+    // https://stackoverflow.com/questions/46442365/how-to-allow-only-a-specific-user-to-access-a-content-on-amazon-s3
+    // https://stackoverflow.com/questions/42373795/aws-s3-access-private-file-from-url
+    
     private final AmazonS3 amazonS3;
 
     @Value("${aws.bucket.name}")
@@ -138,8 +140,8 @@ public class FileStorage {
 
     // TODO VİDEO MİME TYPE
     public void checkIfVideo(MultipartFile multipartFile) {
-        if (!Arrays.asList("VİDEO İÇİN DÜZENLE").contains(multipartFile.getContentType())){
-            throw new CustomException("provide a document pdf, xml");
+        if (!Arrays.asList("video/mp4").contains(multipartFile.getContentType())){
+            throw new CustomException("provide a video mp4");
         }
     }
 

@@ -7,6 +7,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Getter
@@ -31,7 +34,10 @@ public class UserEvent extends LongBaseModel {
     private User ownerUser;
 
     // visible_to varchar // bağlantılar görebilir, herkes görebilir,
-    @Column(columnDefinition = "VARCHAR DEFAULT 'EVERYONE'", nullable = false)
+    @Column(/*columnDefinition = "VARCHAR(255) DEFAULT 'EVERYONE'",*/ nullable = false)
+    @Size(max = 255)
+    @NotBlank
+    @NotNull
     private String visibility; // -> FRIENDSHIP / EVERYONE
 
 }

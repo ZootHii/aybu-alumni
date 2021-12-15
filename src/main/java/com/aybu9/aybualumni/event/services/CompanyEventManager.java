@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.HashSet;
 
+import static com.aybu9.aybualumni.core.models.Constants.VISIBILITY_EVERYONE;
+
 @Service
 public class CompanyEventManager implements CompanyEventService {
 
@@ -64,6 +66,10 @@ public class CompanyEventManager implements CompanyEventService {
 
         var event = new Event(name, currentUser, isOnline, address, startDateTime, endDateTime);
 
+        if (Strings.isNullOrEmpty(visibility)) {
+            visibility = VISIBILITY_EVERYONE;
+        }
+        
         if (!Strings.isNullOrEmpty(fileUrl)) {
             event.setFileUrl(fileUrl);
         }
@@ -84,14 +90,12 @@ public class CompanyEventManager implements CompanyEventService {
         if (eventSpeakerUsersIds != null && !eventSpeakerUsersIds.isEmpty()) {
             var eventSpeakerUsers = new HashSet<>(userService.getAllByIdIn(eventSpeakerUsersIds).getData());
             event.setEventSpeakerUsers(eventSpeakerUsers);
-        } else {
-            event.setEventSpeakerUsers(null);
         }
 
         var createdEvent = eventService.create(event).getData();
-
+        
         var companyEvent = new CompanyEvent(createdEvent, currentUserCompanyPage, visibility);
-
+        
         var createdCompanyEvent = companyEventRepository.save(companyEvent);
         return new SuccessDataResult<>(createdCompanyEvent, "company event created success");
     }

@@ -5,6 +5,9 @@ import com.aybu9.aybualumni.page.models.CompanyPage;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -28,6 +31,9 @@ public class CompanyPost extends LongBaseModel {
     private CompanyPage ownerCompanyPage;
 
     // visible_to varchar // bağlantılar görebilir, herkes görebilir,
-    @Column(columnDefinition = "VARCHAR DEFAULT 'EVERYONE'", nullable = false)
+    @Column(/*columnDefinition = "VARCHAR(255) DEFAULT 'EVERYONE'",*/ nullable = false)
+    @Size(max = 255)
+    @NotBlank
+    @NotNull
     private String visibility; // -> EVERYONE / COMPANY_SECTOR // ya herkes ya da bu sectorde çalışan kişiler
 }

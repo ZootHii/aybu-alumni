@@ -46,9 +46,7 @@ public class CompanyEventDto {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     @Future
     private Date endDateTime;
-
-    @NotBlank
-    @NotNull
+    
     private String visibility;
 
     private Collection<Long> eventSpeakerUsersIds;

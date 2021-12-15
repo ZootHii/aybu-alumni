@@ -7,6 +7,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Getter
@@ -34,7 +37,10 @@ public class CommunityEvent extends LongBaseModel {
     private CommunityPage ownerCommunityPage;
 
     // visible_to varchar // bağlantılar görebilir, herkes görebilir,
-    @Column(columnDefinition = "VARCHAR DEFAULT 'EVERYONE'", nullable = false) // todo denenecek geliyor mu default everyone
+    @Column(/*columnDefinition = "VARCHAR(255) DEFAULT 'EVERYONE'",*/ nullable = false)
+    @Size(max = 255)
+    @NotBlank
+    @NotNull
     private String visibility; // -> EVERYONE / COMMUNITY_FOLLOWERS / COMMUNITY_MEMBERS / COMMUNITY_SECTOR // ya herkes ya da bu sectorde bulunan kişiler kulüp
     // FOLLOWERS = EVERYONE
 }
