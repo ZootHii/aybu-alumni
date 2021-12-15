@@ -1,17 +1,15 @@
 package com.aybu9.aybualumni.job_post.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
+import com.aybu9.aybualumni.job_post.models.job.JobSkill;
+import com.aybu9.aybualumni.job_post.models.job.JobTitle;
 import com.aybu9.aybualumni.page.models.City;
-import com.aybu9.aybualumni.page.models.Page;
-import com.aybu9.aybualumni.sector.models.CommunitySector;
 import com.aybu9.aybualumni.user.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,12 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "job_posts")
-public class JobPost {
-
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class JobPost extends LongBaseModel {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
@@ -59,9 +52,4 @@ public class JobPost {
     @Lob
     private String description;
 
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
 }

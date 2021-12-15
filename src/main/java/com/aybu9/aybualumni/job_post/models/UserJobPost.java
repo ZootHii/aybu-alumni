@@ -1,5 +1,6 @@
 package com.aybu9.aybualumni.job_post.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.page.models.CommunityPage;
 import com.aybu9.aybualumni.user.models.User;
 import lombok.*;
@@ -20,12 +21,7 @@ import java.util.Date;
                 "job_post_id"
         })
 })
-public class UserJobPost {
-    
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserJobPost extends LongBaseModel {
 
     @OneToOne
     @JoinColumn(name = "job_post_id", referencedColumnName = "id", nullable = false, updatable = false)
@@ -34,10 +30,4 @@ public class UserJobPost {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
     private User ownerUser;
-    
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
 }

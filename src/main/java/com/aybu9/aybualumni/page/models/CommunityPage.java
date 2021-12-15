@@ -1,14 +1,13 @@
 package com.aybu9.aybualumni.page.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.post.models.CommunityPost;
 import com.aybu9.aybualumni.sector.models.CommunitySector;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -22,12 +21,7 @@ import java.util.Set;
                 "page_id"
         })
 })
-public class CommunityPage {
-    
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CommunityPage extends LongBaseModel {
 
     @OneToOne
     @JoinColumn(name = "page_id", referencedColumnName = "id")
@@ -46,18 +40,5 @@ public class CommunityPage {
     public CommunityPage(Page page, CommunitySector communitySector) {
         this.page = page;
         this.communitySector = communitySector;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        CommunityPage that = (CommunityPage) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
     }
 }

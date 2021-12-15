@@ -50,7 +50,7 @@ public class UserContactInfoManager implements UserContactInfoService{
     public DataResult<UserContactInfo> update(Authentication authentication, Long userId, UserContactInfoDto userContactInfoDto) {
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
         var userContactInfoToUpdate = currentUser.getUserContactInfo();
-        userContactInfoMapper.updateUserContactInfoFromDto(userContactInfoDto, userContactInfoToUpdate);
+        userContactInfoMapper.updateUserContactInfoFromUserContactInfoDto(userContactInfoDto, userContactInfoToUpdate);
         var updatedUserContactInfo = userContactInfoRepository.save(userContactInfoToUpdate);
         return new SuccessDataResult<>(updatedUserContactInfo, "user contact info updated");
     }

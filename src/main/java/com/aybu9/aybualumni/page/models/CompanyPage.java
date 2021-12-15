@@ -1,14 +1,13 @@
 package com.aybu9.aybualumni.page.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.post.models.CompanyPost;
 import com.aybu9.aybualumni.sector.models.CompanySector;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -22,12 +21,7 @@ import java.util.Set;
                 "page_id"
         })
 })
-public class CompanyPage {
-    
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CompanyPage extends LongBaseModel {
 
     @OneToOne
     @JoinColumn(name = "page_id", referencedColumnName = "id", nullable = false, updatable = false)
@@ -51,18 +45,5 @@ public class CompanyPage {
         this.page = page;
         this.companySector = companySector;
         this.city = city;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        CompanyPage that = (CompanyPage) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
     }
 }

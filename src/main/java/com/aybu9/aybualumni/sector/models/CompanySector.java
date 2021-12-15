@@ -1,13 +1,15 @@
 package com.aybu9.aybualumni.sector.models;
 
+import com.aybu9.aybualumni.core.models.IntegerBaseModel;
 import lombok.*;
-import org.hibernate.Hibernate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -20,29 +22,12 @@ import java.util.Objects;
                 "name"
         })
 })
-public class CompanySector {
-    
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class CompanySector extends IntegerBaseModel {
 
     @Column(nullable = false)
     @NotBlank
     @NotNull
     @Size(max = 255)
     private String name;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        CompanySector that = (CompanySector) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
-    }
+    
 }

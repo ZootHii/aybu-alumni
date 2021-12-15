@@ -1,5 +1,6 @@
 package com.aybu9.aybualumni.event.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.page.models.CommunityPage;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,12 +23,7 @@ import java.util.Date;
                 "owner_community_page_id"
         })*/
 })
-public class CommunityEvent {
-    
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CommunityEvent extends LongBaseModel {
 
     @OneToOne
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false, updatable = false)
@@ -41,9 +37,4 @@ public class CommunityEvent {
     @Column(columnDefinition = "VARCHAR DEFAULT 'EVERYONE'", nullable = false) // todo denenecek geliyor mu default everyone
     private String visibility; // -> EVERYONE / COMMUNITY_FOLLOWERS / COMMUNITY_MEMBERS / COMMUNITY_SECTOR // ya herkes ya da bu sectorde bulunan kişiler kulüp
     // FOLLOWERS = EVERYONE
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
 }

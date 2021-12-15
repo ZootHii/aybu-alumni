@@ -1,5 +1,6 @@
 package com.aybu9.aybualumni.user.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.friendship.models.Friendship;
 import com.aybu9.aybualumni.page.models.CommunityPage;
 import com.aybu9.aybualumni.page.models.CompanyPage;
@@ -8,19 +9,13 @@ import com.aybu9.aybualumni.post.models.Post;
 import com.aybu9.aybualumni.post.models.UserPost;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -29,7 +24,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
-
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "email"
@@ -42,12 +36,7 @@ import java.util.Set;
         })
 })
 // todo roller authorities eklenecek
-public class User {
-
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends LongBaseModel {
 
     @Column(nullable = false, updatable = false) // column default length 255 
     @NotBlank
@@ -96,7 +85,7 @@ public class User {
     @NotBlank
     @NotNull
     @Size(max = 2048)
-    @URL
+//    @URL
     private String profileUrl;
     
     @Column(nullable = false)
@@ -156,42 +145,8 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "sender")
+    @ToString.Exclude
     Set<Friendship> friendships;
-    
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
-    
-
-    public User(String id, String email, String password, String name, String surname, String about, String profileUrl, String userContactInfo, String profilePhotoUrl, String coverPhotoUrl, String companyPage, String communityPage, String createdAt, String updatedAt) {
-        this.id = Long.valueOf(id);
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.about = about;
-        this.profileUrl = profileUrl;
-        if (userContactInfo != null){
-            this.userContactInfo.setId(Long.valueOf(userContactInfo));
-        }
-        this.profilePhotoUrl = profilePhotoUrl;
-        this.coverPhotoUrl = coverPhotoUrl;
-        if (companyPage != null){
-
-            this.companyPage.setId(Long.valueOf(companyPage));
-        }
-        if (communityPage != null){
-            this.communityPage.setId(Long.valueOf(communityPage));
-        }
-        if (createdAt != null){
-            this.createdAt = java.sql.Date.valueOf(createdAt);
-        }
-        if (updatedAt != null){
-            this.updatedAt = java.sql.Date.valueOf(updatedAt);
-        }
-    }
 
     public User(String name, String surname, String email, String password) {
         this.name = name;
@@ -219,19 +174,6 @@ public class User {
         this.surnameInCollege = surnameInCollege;
         this.grade = grade;
         this.department = department;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
-        return id != null && Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
     }
 }
 

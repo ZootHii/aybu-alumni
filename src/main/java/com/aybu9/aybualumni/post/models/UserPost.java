@@ -1,12 +1,10 @@
 package com.aybu9.aybualumni.post.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.user.models.User;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -19,12 +17,7 @@ import java.util.Date;
                 "post_id"
         })
 })
-public class UserPost {
-
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserPost extends LongBaseModel {
 
     @OneToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false, updatable = false)
@@ -37,10 +30,4 @@ public class UserPost {
     // visible_to varchar // bağlantılar görebilir, herkes görebilir,
     @Column(columnDefinition = "VARCHAR DEFAULT 'EVERYONE'", nullable = false)
     private String visibility; // -> FRIENDSHIP / EVERYONE
-    
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
 }

@@ -1,20 +1,15 @@
 package com.aybu9.aybualumni.page.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.user.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -27,12 +22,7 @@ import java.util.Objects;
                 "page_url"
         })
 })
-public class Page {
-    
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Page extends LongBaseModel {
 
     @Column(nullable = false) 
     @NotBlank
@@ -68,7 +58,7 @@ public class Page {
     @Size(max = 2048)
     @NotNull
     @NotBlank
-    @URL
+//    @URL
     private String pageUrl;
 
     @Column(length = 2048)
@@ -80,38 +70,10 @@ public class Page {
     @Size(max = 2048)
 //    @URL
     private String coverPhotoUrl;
-    
-//    @NotNull
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
 
     public Page(String name, User ownerUser, String pageUrl) {
         this.name = name;
         this.ownerUser = ownerUser;
         this.pageUrl = pageUrl;
-    }
-
-    public Page(String name, User ownerUser, String pageUrl, String websiteUrl, String slogan) {
-        this.name = name;
-        this.ownerUser = ownerUser;
-        this.pageUrl = pageUrl;
-        this.websiteUrl = websiteUrl;
-        this.slogan = slogan;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Page page = (Page) o;
-        return id != null && Objects.equals(id, page.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
     }
 }

@@ -1,5 +1,6 @@
 package com.aybu9.aybualumni.event.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.page.models.City;
 import com.aybu9.aybualumni.user.models.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,12 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "events")
-public class Event {
-
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Event extends LongBaseModel {
 
     @Column(nullable = false)
     @NotBlank
@@ -77,13 +73,8 @@ public class Event {
     @JoinTable(name = "event_speakers",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ToString.Exclude
     private Set<User> eventSpeakerUsers = new HashSet<>();
-
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
 
     public Event(String name, User ownerUser, Boolean isOnline,
                  String address, Date startDateTime, Date endDateTime) {

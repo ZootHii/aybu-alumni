@@ -1,5 +1,6 @@
 package com.aybu9.aybualumni.event.models;
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.user.models.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,12 +20,7 @@ import java.util.Date;
                 "event_id"
         })
 })
-public class UserEvent {
-
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserEvent extends LongBaseModel {
 
     @OneToOne
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false, updatable = false)
@@ -38,9 +34,4 @@ public class UserEvent {
     @Column(columnDefinition = "VARCHAR DEFAULT 'EVERYONE'", nullable = false)
     private String visibility; // -> FRIENDSHIP / EVERYONE
 
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
 }

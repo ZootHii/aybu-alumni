@@ -1,4 +1,4 @@
-package com.aybu9.aybualumni.job_post.models;
+package com.aybu9.aybualumni.core.models;
 
 import lombok.*;
 
@@ -9,12 +9,12 @@ import javax.persistence.*;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "job_titles")
-public class JobTitle {
-    
+@MappedSuperclass
+public class LongBaseModel extends BaseModel {
+
     @Id
     @Column(updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+
 }

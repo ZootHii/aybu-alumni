@@ -1,12 +1,13 @@
 package com.aybu9.aybualumni.user.models;
 
 
+import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
@@ -20,12 +21,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "user_contact_infos")
-public class UserContactInfo {
-    
-    @Id
-    @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserContactInfo extends LongBaseModel {
 
     @Column(length = 2048)
     @Size(max = 2048)
@@ -48,12 +44,6 @@ public class UserContactInfo {
     @JsonFormat(pattern = "dd-MM-yyyy")
     @PastOrPresent
     private Date birthday;
-    
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
     
     public UserContactInfo(String email) {
         this.email = email;

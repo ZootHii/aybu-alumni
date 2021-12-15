@@ -1,12 +1,9 @@
-package com.aybu9.aybualumni.sector.models;
+package com.aybu9.aybualumni.job_post.models.job;
 
 import com.aybu9.aybualumni.core.models.IntegerBaseModel;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,12 +14,8 @@ import javax.validation.constraints.Size;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "community_sectors", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {
-                "name"
-        })
-})
-public class CommunitySector extends IntegerBaseModel {
+@Table(name = "job_titles")
+public class JobTitle extends IntegerBaseModel {
 
     @Column(nullable = false)
     @NotBlank
