@@ -16,10 +16,10 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class AuthLoginDto {
     
-    @NotBlank
-    @NotNull
-    @Size(min = 11, max = 11)
-    private String tcIdentityNumber;
+//    @NotBlank
+//    @NotNull
+//    @Size(min = 11, max = 11)
+//    private String tcIdentityNumber;
 
     @NotBlank
     @NotNull

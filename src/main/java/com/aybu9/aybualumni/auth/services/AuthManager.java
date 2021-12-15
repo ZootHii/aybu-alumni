@@ -67,7 +67,7 @@ public class AuthManager implements AuthService, AuthenticationProvider {
         var password = authRegisterDto.getPassword();
         var encodedPassword = passwordEncoder.encode(password);
 
-        var tcIdentityNumber = authRegisterDto.getTcIdentityNumber();
+        var tcIdentityNumber = "11111111111";//authRegisterDto.getTcIdentityNumber();
         var fakeOBSData = fakeOBSDataService.get(tcIdentityNumber).getData();
         var nameInCollege = fakeOBSData.getName();
         var surnameInCollege = fakeOBSData.getSurname();
@@ -87,7 +87,7 @@ public class AuthManager implements AuthService, AuthenticationProvider {
     public DataResult<AuthResponseDto> login(AuthLoginDto authLoginDto) {
         var email = authLoginDto.getEmail();
         var password = authLoginDto.getPassword();
-        var tcIdentityNumber = authLoginDto.getTcIdentityNumber();
+        var tcIdentityNumber = "11111111111";//authRegisterDto.getTcIdentityNumber();
         var fakeOBSData = fakeOBSDataService.get(tcIdentityNumber).getData();
         var nameInCollege = fakeOBSData.getName();
         var surnameInCollege = fakeOBSData.getSurname();
