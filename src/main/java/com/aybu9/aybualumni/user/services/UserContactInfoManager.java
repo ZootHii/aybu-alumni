@@ -1,6 +1,7 @@
 package com.aybu9.aybualumni.user.services;
 
 import com.aybu9.aybualumni.auth.services.AuthService;
+import com.aybu9.aybualumni.core.exception.CustomException;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.core.result.SuccessDataResult;
@@ -59,7 +60,7 @@ public class UserContactInfoManager implements UserContactInfoService{
     @Transactional
     public Result uploadResume(Authentication authentication, Long userId, MultipartFile multipartFile) {
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
-        var resumeUrl = fileStorage.saveFile(currentUser, multipartFile, FOLDER_NAME_DOCUMENTS);
+        var resumeUrl = fileStorage.saveDocumentFile(currentUser, multipartFile);
         var currentUserContactInfo = currentUser.getUserContactInfo();
         currentUserContactInfo.setResumeUrl(resumeUrl);
         userContactInfoRepository.save(currentUserContactInfo);

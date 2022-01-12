@@ -85,7 +85,6 @@ public class TokenManager implements TokenService {
         }
     }
 
-
     @Override
     public Result validateToken(String token) {
         try {

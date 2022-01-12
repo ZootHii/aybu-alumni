@@ -139,7 +139,7 @@ public class UserManager implements UserService {
         // get metadata of the file
         // maybe we can crop the image 200x200
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
-        var profilePhotoUrl = fileStorage.saveFile(currentUser, multipartFile, FOLDER_NAME_IMAGES);
+        var profilePhotoUrl = fileStorage.saveImageFile(currentUser, multipartFile);
         currentUser.setProfilePhotoUrl(profilePhotoUrl);
         userRepository.save(currentUser);
         return new SuccessResult("profile photo upload success");
@@ -149,7 +149,7 @@ public class UserManager implements UserService {
     @Transactional
     public Result uploadCoverImage(Authentication authentication, Long userId, MultipartFile multipartFile) {
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
-        var coverPhotoUrl = fileStorage.saveFile(currentUser, multipartFile, FOLDER_NAME_IMAGES);
+        var coverPhotoUrl = fileStorage.saveImageFile(currentUser, multipartFile);
         currentUser.setCoverPhotoUrl(coverPhotoUrl);
         userRepository.save(currentUser);
         return new SuccessResult("cover photo upload success");

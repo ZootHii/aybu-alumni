@@ -23,8 +23,8 @@ public class CompanyEventDto {
     @Lob
     private String description;
 
-    @Size(max = 2048)
-    private String fileUrl;
+//    @Size(max = 2048)
+//    private String fileUrl;
 
     @NotNull
     private Boolean isOnline;

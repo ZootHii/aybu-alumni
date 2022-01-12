@@ -8,8 +8,8 @@ import com.aybu9.aybualumni.core.security.token.TokenService;
 import com.aybu9.aybualumni.fake_obs.services.FakeOBSDataService;
 import com.aybu9.aybualumni.user.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -20,11 +20,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,26 +40,26 @@ import javax.servlet.http.HttpServletResponse;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private TokenService tokenService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private FakeOBSDataService fakeOBSDataService;
-
-    @Autowired
-    private HttpServletRequest request;
-
-    @Autowired
-    private HttpServletResponse response;
-
     @Value("${security.secret}")
     protected String secret;
+
+    private final ObjectMapper objectMapper;
+    private final TokenService tokenService;
+    private final UserService userService;
+    private final FakeOBSDataService fakeOBSDataService;
+    private final HttpServletRequest request;
+    private final HttpServletResponse response;
+
+    public WebSecurityConfig(ObjectMapper objectMapper, TokenService tokenService, UserService userService,
+                             FakeOBSDataService fakeOBSDataService, HttpServletRequest request,
+                             HttpServletResponse response) {
+        this.objectMapper = objectMapper;
+        this.tokenService = tokenService;
+        this.userService = userService;
+        this.fakeOBSDataService = fakeOBSDataService;
+        this.request = request;
+        this.response = response;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -70,14 +73,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                //.headers().frameOptions().disable()
-                //.headers().frameOptions().disable() // https://stackoverflow.com/questions/28647136/how-to-disable-x-frame-options-response-header-in-spring-security
-                //.and()
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedEntryPoint())
                 .accessDeniedHandler(forbiddenAccessDeniedHandler())
                 .and()
-                .addFilterAfter(new AccessTokenAuthenticationFilter(tokenService, userService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAfter(new AccessTokenAuthenticationFilter(tokenService, userService),
+                        UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
     }
 
     private CorsConfigurationSource corsConfigurationSource() {
@@ -94,6 +96,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+    @Bean
+    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
     }
 
     @Bean
@@ -114,8 +126,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(new AuthManager(userService, tokenService, fakeOBSDataService, request, response, passwordEncoder()));
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(new AuthManager(userService, tokenService, fakeOBSDataService,
+                request, response, passwordEncoder()));
     }
-
 }

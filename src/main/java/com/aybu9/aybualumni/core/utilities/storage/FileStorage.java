@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,6 +46,7 @@ public class FileStorage {
         this.amazonS3 = amazonS3;
     }
 
+    @Transactional
     public void save(String path,
                        String fileName,
                        InputStream inputStream,
@@ -71,6 +73,7 @@ public class FileStorage {
         }
     }
 
+    @Transactional
     public byte[] download(String path, String key) {
         try {
             var object = amazonS3.getObject(path, key);
@@ -81,8 +84,9 @@ public class FileStorage {
             throw new CustomException("Failed to store file amazon s3");
         }
     }
-    
-    private File convertMultipartFileToFile(MultipartFile multipartFile) {
+
+    @Transactional
+    public File convertMultipartFileToFile(MultipartFile multipartFile) {
         try {
             var file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             var fileOutputStream = new FileOutputStream(file);
@@ -94,14 +98,17 @@ public class FileStorage {
         }
     }
 
+    @Transactional
     public String createPath(String folderName, Long userId) {
         return String.format("%s/%s/%s", bucketName, folderName, userId);
     }
 
+    @Transactional
     public String createFileName(MultipartFile multipartFile) {
         return String.format("%s.%s", UUID.randomUUID(), getExtension(multipartFile));
     }
 
+    @Transactional
     public Optional<Map<String, String>> createMetadata(MultipartFile multipartFile) {
         var now = new Date();
         Map<String, String> metadata = new HashMap<>();
@@ -113,6 +120,7 @@ public class FileStorage {
         return Optional.of(metadata);
     }
 
+    @Transactional
     public InputStream getInputStream(MultipartFile multipartFile) {
         try {
             return multipartFile.getInputStream();
@@ -122,16 +130,35 @@ public class FileStorage {
         }
     }
 
+    @Transactional
     public String getExtension(MultipartFile multipartFile) {
         return StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
     }
-    
+
+    @Transactional
+    public String getFolderName(MultipartFile multipartFile) {
+        String folderName = null;
+        if (Arrays.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(multipartFile.getContentType())){
+            folderName = FOLDER_NAME_IMAGES;
+        } else if (Arrays.asList(APPLICATION_PDF_VALUE, APPLICATION_XML_VALUE).contains(multipartFile.getContentType())){
+            folderName = FOLDER_NAME_DOCUMENTS;
+        } else if (Arrays.asList("video/mp4").contains(multipartFile.getContentType())){
+            folderName = FOLDER_NAME_VIDEOS;
+        }
+        if (folderName == null){
+            throw new CustomException("folder name is not appropriate");
+        }
+        return folderName;
+    }
+
+    @Transactional
     public void checkIfImage(MultipartFile multipartFile){
         if (!Arrays.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(multipartFile.getContentType())){
             throw new CustomException("provide an image jpeg, png, gif");
         }
     }
 
+    @Transactional
     public void checkIfDocument(MultipartFile multipartFile) {
         if (!Arrays.asList(APPLICATION_PDF_VALUE, APPLICATION_XML_VALUE).contains(multipartFile.getContentType())){
             throw new CustomException("provide a document pdf, xml");
@@ -139,30 +166,57 @@ public class FileStorage {
     }
 
     // TODO VİDEO MİME TYPE
+    @Transactional
     public void checkIfVideo(MultipartFile multipartFile) {
         if (!Arrays.asList("video/mp4").contains(multipartFile.getContentType())){
             throw new CustomException("provide a video mp4");
         }
     }
 
-    public void checkIfEmptyOrNull(MultipartFile multipartFile){
+//    @Transactional
+//    public void checkIfEmptyOrNull(MultipartFile multipartFile){
+//        if (multipartFile == null || multipartFile.isEmpty()){
+//            throw new CustomException("file cannot be empty or null");
+//        }
+//    }
+
+    @Transactional
+    public String saveFile(User user, MultipartFile multipartFile) {
         if (multipartFile == null || multipartFile.isEmpty()){
-            throw new CustomException("file cannot be empty or null");
+            return null;
         }
+        return getFileUrl(multipartFile, user);
     }
 
-    public String saveFile(User user, MultipartFile multipartFile, String folderName) {
-        checkIfEmptyOrNull(multipartFile);
-        if(folderName.equals(FOLDER_NAME_IMAGES)){
-            checkIfImage(multipartFile);
-        } else if (folderName.equals(FOLDER_NAME_DOCUMENTS)){
-            checkIfDocument(multipartFile);
-        } else if (folderName.equals(FOLDER_NAME_VIDEOS)){
-            checkIfVideo(multipartFile);
-        } else {
-            throw new CustomException("folder name is not appropriate");
+    @Transactional
+    public String saveImageFile(User user, MultipartFile multipartFile) {
+        if (multipartFile == null || multipartFile.isEmpty()){
+            return null;
         }
+        checkIfImage(multipartFile);
+        return getFileUrl(multipartFile, user);
+    }
 
+    @Transactional
+    public String saveVideoFile(User user, MultipartFile multipartFile) {
+        if (multipartFile == null || multipartFile.isEmpty()){
+            return null;
+        }
+        checkIfVideo(multipartFile);
+        return getFileUrl(multipartFile, user);
+    }
+
+    @Transactional
+    public String saveDocumentFile(User user, MultipartFile multipartFile) {
+        if (multipartFile == null || multipartFile.isEmpty()){
+            return null;
+        }
+        checkIfDocument(multipartFile);
+        return getFileUrl(multipartFile, user);
+    }
+
+    private String getFileUrl(MultipartFile multipartFile, User user) {
+        var folderName = getFolderName(multipartFile);
         var path = createPath(folderName, user.getId());
         var fileName = createFileName(multipartFile);
         var metadata = createMetadata(multipartFile);

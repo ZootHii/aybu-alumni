@@ -4,6 +4,7 @@ import com.aybu9.aybualumni.auth.services.AuthService;
 import com.aybu9.aybualumni.core.exception.CustomException;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.SuccessDataResult;
+import com.aybu9.aybualumni.core.utilities.storage.FileStorage;
 import com.aybu9.aybualumni.event.models.CompanyEvent;
 import com.aybu9.aybualumni.event.models.Event;
 import com.aybu9.aybualumni.event.models.dtos.CompanyEventDto;
@@ -14,6 +15,7 @@ import com.google.common.base.Strings;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -28,13 +30,17 @@ public class CompanyEventManager implements CompanyEventService {
     private final CityService cityService;
     private final UserService userService;
     private final EventService eventService;
+    private final FileStorage fileStorage;
 
-    public CompanyEventManager(CompanyEventRepository companyEventRepository, AuthService authService, CityService cityService, UserService userService, EventService eventService) {
+    public CompanyEventManager(CompanyEventRepository companyEventRepository, AuthService authService,
+                               CityService cityService, UserService userService, EventService eventService,
+                               FileStorage fileStorage) {
         this.companyEventRepository = companyEventRepository;
         this.authService = authService;
         this.cityService = cityService;
         this.userService = userService;
         this.eventService = eventService;
+        this.fileStorage = fileStorage;
     }
 
     @Override
@@ -45,7 +51,7 @@ public class CompanyEventManager implements CompanyEventService {
     @Override
     @Transactional
     public DataResult<CompanyEvent> create(Authentication authentication, Long userId,
-                                           CompanyEventDto companyEventDto) {
+                                           CompanyEventDto companyEventDto, MultipartFile multipartFile) {
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
         var currentUserCompanyPage = currentUser.getCompanyPage();
 
@@ -53,9 +59,9 @@ public class CompanyEventManager implements CompanyEventService {
             throw new CustomException("current user has no company");
         }
 
+        var fileUrl = fileStorage.saveFile(currentUser, multipartFile);
         var name = companyEventDto.getName();
         var description = companyEventDto.getDescription();
-        var fileUrl = companyEventDto.getFileUrl();
         var isOnline = companyEventDto.getIsOnline();
         var cityId = companyEventDto.getCityId();
         var address = companyEventDto.getAddress();

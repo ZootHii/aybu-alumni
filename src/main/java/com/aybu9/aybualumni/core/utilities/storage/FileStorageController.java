@@ -20,14 +20,13 @@ public class FileStorageController {
         this.authService = authService;
     }
 
-    @PostMapping("/save-file/{userId}/{folderName}")
+    @PostMapping("/save-file/{userId}")
     public ResponseEntity<String> saveFile(Authentication authentication,
                                            @PathVariable Long userId,
-                                           @RequestParam("file") MultipartFile multipartFile,
-                                           @PathVariable String folderName
+                                           @RequestParam("file") MultipartFile multipartFile
     ) {
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
-        var result = fileStorage.saveFile(currentUser, multipartFile, folderName);
+        var result = fileStorage.saveFile(currentUser, multipartFile);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
