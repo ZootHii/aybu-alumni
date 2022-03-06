@@ -14,8 +14,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/events/company")
-@CrossOrigin
+@RequestMapping("/api/events/company")
 public class CompanyEventController {
 
     private final CompanyEventService companyEventService;

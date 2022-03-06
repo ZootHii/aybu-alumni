@@ -9,6 +9,7 @@ import com.aybu9.aybualumni.post.models.Post;
 import com.aybu9.aybualumni.post.models.UserPost;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -21,6 +22,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@SuperBuilder
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -147,33 +149,5 @@ public class User extends LongBaseModel {
     @OneToMany(mappedBy = "sender")
     @ToString.Exclude
     Set<Friendship> friendships;
-
-    public User(String name, String surname, String email, String password) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(String name, String surname, String email, String password, String profileUrl) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.profileUrl = profileUrl;
-    }
-
-    public User(String name, String surname, String email, String password, String profileUrl, String nameInCollege, 
-                String surnameInCollege, String grade, String department) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.profileUrl = profileUrl;
-        this.nameInCollege = nameInCollege;
-        this.surnameInCollege = surnameInCollege;
-        this.grade = grade;
-        this.department = department;
-    }
 }
 

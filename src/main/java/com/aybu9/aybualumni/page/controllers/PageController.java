@@ -15,8 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/pages")
-@CrossOrigin
+@RequestMapping("/api/pages")
 public class PageController {
 
     private final PageService pageService;

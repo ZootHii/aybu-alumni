@@ -54,7 +54,6 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
                 "exception",
                 ex.getClass().getSimpleName()
         );
-
         return new ResponseEntity<>(exceptionDetails, badRequest);
     }
 }

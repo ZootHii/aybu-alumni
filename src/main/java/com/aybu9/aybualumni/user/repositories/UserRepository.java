@@ -4,15 +4,15 @@ import com.aybu9.aybualumni.user.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     //@Query("SELECT User FROM User where User.email = ?1")
-    User getByEmail(String email);
+    Optional<User> getByEmail(String email);
 
-    User getByProfileUrl(String profileUrl);
+    Optional<User> getByProfileUrl(String profileUrl);
     
     Boolean existsByEmail(String email);
     

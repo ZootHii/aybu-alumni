@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/cities")
-@CrossOrigin
+@RequestMapping("/api/cities")
 public class CityController {
 
     private final CityService cityService;

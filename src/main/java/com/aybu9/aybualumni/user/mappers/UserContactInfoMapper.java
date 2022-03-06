@@ -1,17 +1,21 @@
 package com.aybu9.aybualumni.user.mappers;
 
+import com.aybu9.aybualumni.user.One;
+import com.aybu9.aybualumni.user.OneDto;
 import com.aybu9.aybualumni.user.models.UserContactInfo;
 import com.aybu9.aybualumni.user.models.dtos.UserContactInfoDto;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface UserContactInfoMapper {
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateUserContactInfoFromUserContactInfoDto(UserContactInfoDto userContactInfoDto, @MappingTarget UserContactInfo userContactInfo);
-}
 
-// https://www.baeldung.com/spring-data-partial-update#1-mapping-strategy
-// https://www.baeldung.com/mapstruct
+    UserContactInfoMapper INSTANCE = Mappers.getMapper(UserContactInfoMapper.class);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateUserContactInfoFromUserContactInfoDto(UserContactInfoDto userContactInfoDto,
+                                                     @MappingTarget UserContactInfo userContactInfo);
+
+    @Mapping(target="id", source="one.id")
+    OneDto createOne (One one);
+}

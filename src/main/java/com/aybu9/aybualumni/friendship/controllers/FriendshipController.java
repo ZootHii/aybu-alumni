@@ -14,8 +14,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/friendships")
-@CrossOrigin
+@RequestMapping("/api/friendships")
 public class FriendshipController {
 
     private final FriendshipService friendshipService;

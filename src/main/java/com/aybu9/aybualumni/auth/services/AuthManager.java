@@ -75,8 +75,17 @@ public class AuthManager implements AuthService, AuthenticationProvider {
         var department = fakeOBSData.getDepartment();
 
         var profileUrl = String.format("%s/%s", "http://localhost:4024/users/profile", authRegisterDto.getProfileUrl());
-        var userToRegister = new User(name, surname, email, encodedPassword, profileUrl, nameInCollege,
-                surnameInCollege, grade, department);
+        var userToRegister = User.builder()
+                .name(name)
+                .surname(surname)
+                .email(email)
+                .password(encodedPassword)
+                .profileUrl(profileUrl)
+                .nameInCollege(nameInCollege)
+                .surnameInCollege(surnameInCollege)
+                .grade(grade)
+                .department(department)
+                .build();
         var userCreateDataResult = userService.create(userToRegister);
         var createdUser = userCreateDataResult.getData();
         return onSuccessfulAuthentication(createdUser);

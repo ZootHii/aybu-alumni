@@ -27,35 +27,37 @@ INSERT INTO user_contact_infos (email, phone_number)
 VALUES ('info@alumni.com', 5555555555)
 ON CONFLICT DO NOTHING;
 
+-- test passwords $2a$10$FhpytNGZFBfzx4AKhM9bx.25gZj1YqUcTOr5HYSW/oCvqUJQbh3Re = AybuAlumni@1
+
 INSERT INTO users (email, password, name, surname, profile_url, user_contact_info_id, grade, department,
                    name_in_college, surname_in_college)
-VALUES ('alumni@alumni.com', 'a281f808e216f0f4fd41a13fb21c80b4a00acebd9ebb42ecda49c0eff82833156551dce2076ea4f1',
+VALUES ('alumni@alumni.com', '$2a$10$FhpytNGZFBfzx4AKhM9bx.25gZj1YqUcTOr5HYSW/oCvqUJQbh3Re',
         'Alumni', 'Alumni', 'http://localhost:4024/users/profile/alumni', 1, '4.', 'Computer Engineering', 'Alumni',
         'Alumni')
 ON CONFLICT DO NOTHING;
 INSERT INTO users (email, password, name, surname, profile_url, grade, department, name_in_college, surname_in_college)
-VALUES ('test@test.com', 'a281f808e216f0f4fd41a13fb21c80b4a00acebd9ebb42ecda49c0eff82833156551dce2076ea4f1', 'Test',
+VALUES ('test@test.com', '$2a$10$FhpytNGZFBfzx4AKhM9bx.25gZj1YqUcTOr5HYSW/oCvqUJQbh3Re', 'Test',
         'Test', 'http://localhost:4024/users/profile/test', 'ALUMNI', 'Electric Electronic Engineering', 'Test', 'Test')
 ON CONFLICT DO NOTHING;
 INSERT INTO users (email, password, name, surname, profile_url, grade, department, name_in_college, surname_in_college)
-VALUES ('test1@test.com', 'a281f808e216f0f4fd41a13fb21c80b4a00acebd9ebb42ecda49c0eff82833156551dce2076ea4f1', 'Test',
+VALUES ('test1@test.com', '$2a$10$FhpytNGZFBfzx4AKhM9bx.25gZj1YqUcTOr5HYSW/oCvqUJQbh3Re', 'Test',
         'Test', 'http://localhost:4024/users/profile/test1', 'ALUMNI', 'Electric Electronic Engineering', 'Test',
         'Test')
 ON CONFLICT DO NOTHING;
 INSERT INTO users (email, password, name, surname, profile_url, grade, department, name_in_college, surname_in_college)
-VALUES ('test2@test.com', 'a281f808e216f0f4fd41a13fb21c80b4a00acebd9ebb42ecda49c0eff82833156551dce2076ea4f1', 'Test',
+VALUES ('test2@test.com', '$2a$10$FhpytNGZFBfzx4AKhM9bx.25gZj1YqUcTOr5HYSW/oCvqUJQbh3Re', 'Test',
         'Test', 'http://localhost:4024/users/profile/test2', 'ALUMNI', 'Electric Electronic Engineering', 'Test',
         'Test')
 ON CONFLICT DO NOTHING;
 INSERT INTO users (email, password, name, surname, profile_url, grade, department, name_in_college, surname_in_college)
-VALUES ('test3@test.com', 'a281f808e216f0f4fd41a13fb21c80b4a00acebd9ebb42ecda49c0eff82833156551dce2076ea4f1', 'Test',
+VALUES ('test3@test.com', '$2a$10$FhpytNGZFBfzx4AKhM9bx.25gZj1YqUcTOr5HYSW/oCvqUJQbh3Re', 'Test',
         'Test', 'http://localhost:4024/users/profile/test3', '4.', 'Computer Engineering', 'Alumni', 'Alumni')
 ON CONFLICT DO NOTHING;
 INSERT INTO users (email, password, name, surname, profile_url, grade, department, name_in_college, surname_in_college)
-VALUES ('test4@test.com', 'a281f808e216f0f4fd41a13fb21c80b4a00acebd9ebb42ecda49c0eff82833156551dce2076ea4f1', 'Test',
+VALUES ('test4@test.com', '$2a$10$FhpytNGZFBfzx4AKhM9bx.25gZj1YqUcTOr5HYSW/oCvqUJQbh3Re', 'Test',
         'Test', 'http://localhost:4024/users/profile/test4', '4.', 'Computer Engineering', 'Alumni', 'Alumni')
 ON CONFLICT DO NOTHING;
 INSERT INTO users (email, password, name, surname, profile_url, grade, department, name_in_college, surname_in_college)
-VALUES ('test5@test.com', 'a281f808e216f0f4fd41a13fb21c80b4a00acebd9ebb42ecda49c0eff82833156551dce2076ea4f1', 'Test',
+VALUES ('test5@test.com', '$2a$10$FhpytNGZFBfzx4AKhM9bx.25gZj1YqUcTOr5HYSW/oCvqUJQbh3Re', 'Test',
         'Test', 'http://localhost:4024/users/profile/test5', '4.', 'Computer Engineering', 'Alumni', 'Alumni')
 ON CONFLICT DO NOTHING;

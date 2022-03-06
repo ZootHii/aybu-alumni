@@ -21,8 +21,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
-@RequestMapping("/users")
-@CrossOrigin
+@RequestMapping("/api/users")
 public class UserController {
 
     // TODO: 1.11.2021 CONTROLLER RESPONSE ENTITIY DONECEK YADA DÖNMESEDE OLUR TARTIŞ İSMAİLLE

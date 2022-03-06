@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/core/file-storage")
-@CrossOrigin
+@RequestMapping("/api/core/file-storage")
 public class FileStorageController {
 
     private final FileStorage fileStorage;

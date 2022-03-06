@@ -22,6 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -60,13 +61,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.request = request;
         this.response = response;
     }
-
+    // https://stackoverflow.com/questions/46206213/how-to-allow-request-from-a-certain-url-with-spring-security
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/auths/login", "/auths/register", "/auths/logout").permitAll()
-                .anyRequest().authenticated()
+//                .antMatchers("/alumni/**", "/", "/index.html", "/static/css/**", "/static/js/**",
+//                        "/static/media/**", "/favicon.ico", "/AybuAlumniApplication.html",
+//                        "/auths/login", "/auths/register", "/auths/logout").permitAll()
+//                .anyRequest().authenticated()
+                .antMatchers("/api/**").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
@@ -85,12 +90,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.applyPermitDefaultValues();
-        corsConfiguration.addAllowedMethod(HttpMethod.PUT);
-        corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
+        corsConfiguration.addAllowedMethod(HttpMethod.HEAD);
         corsConfiguration.addAllowedMethod(HttpMethod.GET);
         corsConfiguration.addAllowedMethod(HttpMethod.POST);
-        corsConfiguration.addAllowedMethod(HttpMethod.HEAD);
+        corsConfiguration.addAllowedMethod(HttpMethod.PUT);
         corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
+        corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
         corsConfiguration.addAllowedMethod(HttpMethod.OPTIONS);
         corsConfiguration.addExposedHeader(HttpHeaders.CONTENT_DISPOSITION);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -120,9 +125,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        Pbkdf2PasswordEncoder pbkdf2PasswordEncoder = new Pbkdf2PasswordEncoder(secret);
-        pbkdf2PasswordEncoder.setAlgorithm(Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA512);
-        return pbkdf2PasswordEncoder;
+        //Pbkdf2PasswordEncoder pbkdf2PasswordEncoder = new Pbkdf2PasswordEncoder(secret);
+        //pbkdf2PasswordEncoder.setAlgorithm(Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA512);
+        //return pbkdf2PasswordEncoder;
+        return new BCryptPasswordEncoder();
     }
 
     @Override

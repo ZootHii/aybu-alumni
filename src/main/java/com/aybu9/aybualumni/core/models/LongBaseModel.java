@@ -1,12 +1,14 @@
 package com.aybu9.aybualumni.core.models;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @ToString
+@SuperBuilder
 @RequiredArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass

@@ -63,19 +63,17 @@ public class UserManager implements UserService {
 
     @Override
     public DataResult<User> getByProfileUrl(String profileUrl) {
-        var user = userRepository.getByProfileUrl(profileUrl);
-        if (user == null) {
-            throw new CustomException("User not found by profile url " + profileUrl);
-        }
+        var user = userRepository.getByProfileUrl(profileUrl).orElseThrow(
+                () -> new CustomException("User not found by profile url " + profileUrl)
+        );
         return new SuccessDataResult<>(user, "found user by profile url");
     }
 
     @Override
     public DataResult<User> getByEmail(String email) {
-        var user = userRepository.getByEmail(email);
-        if (user == null) {
-            throw new CustomException("User not found by email " + email);
-        }
+        var user = userRepository.getByEmail(email).orElseThrow(
+                () -> new CustomException("User not found by email " + email)
+        );
         return new SuccessDataResult<>(user, "found by email");
     }
 
