@@ -2,8 +2,6 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Card, Dropdown, Image, Menu } from "semantic-ui-react";
-import ApiRequests from "../utils/ApiRequests";
 
 export default function ProfileSign() {
 

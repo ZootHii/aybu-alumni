@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ApiRequests from "../utils/ApiRequests";
-import JobPost from "../layouts/JobPost";
-import EventPost from "../layouts/EventPost";
+import Navbar from "./Navbar"
 
 export class Home extends Component {
   handleLogout = () => {
@@ -18,18 +17,16 @@ export class Home extends Component {
   render() {
     return (
       <div>
-      {/* <Navi/>
-      <ProfileSign/> */}
-      {/* <Post/> */}
-       <JobPost/>
-       <EventPost/>
-        <button
+        {/* <button
           type="submit"
           class="btn btn-primary logout-btn"
           onClick={this.handleLogout}
         >
           Logout
-        </button>
+          
+        </button> */
+        }
+        <Navbar/>
       </div>
     );
   }
