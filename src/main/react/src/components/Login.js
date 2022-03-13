@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ApiRequests from "../utils/ApiRequests";
 import { FiLogIn } from "react-icons/fi";
 import AybuLogo from "../pics/alumni-logo-white.png";
-import { Link } from "react-router-dom";
 
 export class Login extends Component {
   constructor(props) {
@@ -27,34 +26,37 @@ export class Login extends Component {
 
   handleLogin = (e) => {
     e.preventDefault();
-    console.log(this.state.email);
-    console.log(this.state.password);
 
-    ApiRequests.checkUser(this.state.email, this.state.password)
-      .then((res) => {
-        console.log(res);
-        localStorage.setItem("Token", res.data.data.accessToken.token);
-        this.setState({ user: res.data.data.user });
-        localStorage.setItem("user", JSON.stringify(this.state.user));
-        this.props.history.push("/homepage");
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err.response.data.message);
-        this.setState({ error: err.response.data.message });
+    this.props.history.push("/homepage");
 
-        var x = document.getElementById("email");
-        var y = document.getElementById("password");
-        if (err.response.data.message) {
-          x.value = "";
-          x.classList.add("error-input");
+    // console.log(this.state.email);
+    // console.log(this.state.password);
 
-          this.setState({ email: "", password: "" });
-          y.value = "";
-          y.classList.add("error-input");
-        }
-      });
+    // ApiRequests.checkUser(this.state.email, this.state.password)
+    //   .then((res) => {
+    //     console.log(res);
+    //     localStorage.setItem("Token", res.data.data.accessToken.token);
+    //     this.setState({ user: res.data.data.user });
+    //     localStorage.setItem("user", JSON.stringify(this.state.user));
+    //     window.location.reload();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response.data.message);
+    //     this.setState({ error: err.response.data.message });
+
+    //     var x = document.getElementById("email");
+    //     var y = document.getElementById("password");
+    //     if (err.response.data.message) {
+    //       x.value = "";
+    //       x.classList.add("error-input");
+
+    //       this.setState({ email: "", password: "" });
+    //       y.value = "";
+    //       y.classList.add("error-input");
+    //     }
+    //   });
   };
+  
 
   render() {
     const { error, email, password } = this.state;
@@ -113,7 +115,7 @@ export class Login extends Component {
                         <input
                           type="email"
                           class={`form-control ${
-                            error && email == "" ? "error-input" : ""
+                            error && email === "" ? "error-input" : ""
                           }`}
                           id="email"
                           placeholder={`${error ? `${error}` : "Email"}`}
@@ -137,7 +139,7 @@ export class Login extends Component {
                         <input
                           type="password"
                           class={`form-control ${
-                            error && password == "" ? "error-input" : ""
+                            error && password === "" ? "error-input" : ""
                           }`}
                           id="password"
                           placeholder={`${error ? `${error}` : "Password"}`}

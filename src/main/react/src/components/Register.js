@@ -133,7 +133,7 @@ export class Register extends Component {
                         <input
                           type="email"
                           class={`form-control ${
-                            error.email && email == "" ? "error-input" : ""
+                            error.email && email === "" ? "error-input" : ""
                           }`}
                           id="email"
                           autoComplete="off"
@@ -160,7 +160,7 @@ export class Register extends Component {
                         <input
                           type="password"
                           class={`form-control ${
-                            error.password && password == ""
+                            error.password && password === ""
                               ? "error-input"
                               : ""
                           }`}
@@ -192,7 +192,7 @@ export class Register extends Component {
                         <input
                           type="text"
                           class={`form-control ${
-                            error.name && name == "" ? "error-input" : ""
+                            error.name && name === "" ? "error-input" : ""
                           }`}
                           id="name"
                           autoComplete="off"
@@ -208,7 +208,7 @@ export class Register extends Component {
                         <input
                           type="text"
                           class={`form-control ${
-                            error.surname && surname == "" ? "error-input" : ""
+                            error.surname && surname === "" ? "error-input" : ""
                           }`}
                           id="surname"
                           autoComplete="off"
@@ -235,7 +235,7 @@ export class Register extends Component {
                         <input
                           type="text"
                           class={`form-control ${
-                            error.profileUrl && pageUrl == ""
+                            error.profileUrl && pageUrl === ""
                               ? "error-input"
                               : ""
                           }`}
