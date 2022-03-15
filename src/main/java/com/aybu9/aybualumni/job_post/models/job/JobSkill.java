@@ -17,14 +17,14 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "job_skills")
 public class JobSkill extends IntegerBaseModel {
-    
+
     @Column(nullable = false)
     @NotBlank
     @NotNull
     @Size(max = 255)
     private String name;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "owner_job_post_id", referencedColumnName = "id", nullable = false)
-    private JobPost ownerJobPost;
+//
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "owner_job_post_id", referencedColumnName = "id", nullable = false)
+//    private JobPost ownerJobPost;
 }

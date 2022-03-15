@@ -5,8 +5,6 @@ import com.aybu9.aybualumni.page.models.City;
 import com.aybu9.aybualumni.user.models.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -70,7 +68,7 @@ public class Event extends LongBaseModel {
     private Date endDateTime; // startdate time dan ileri olacak
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "event_speakers",
+    @JoinTable(name = "events_users",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     @ToString.Exclude
