@@ -2,13 +2,9 @@ package com.aybu9.aybualumni.job_post.models;
 
 import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.page.models.CommunityPage;
-import com.aybu9.aybualumni.post.models.Post;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Getter
 @Setter

@@ -3,14 +3,11 @@ package com.aybu9.aybualumni.event.models;
 import com.aybu9.aybualumni.core.models.LongBaseModel;
 import com.aybu9.aybualumni.page.models.CommunityPage;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 @Getter
 @Setter

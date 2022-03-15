@@ -13,14 +13,14 @@ public class AmazonWebServicesConfig {
     // TODO: 31.10.2021  https://medium.com/analytics-vidhya/aws-s3-with-java-using-spring-boot-7f6fcf734aec
     // TODO: 31.10.2021  https://reflectoring.io/spring-boot-s3/
 
-    // Access Key ID: AKIA4WWEA4TL546JU4QP
-    // Secret Access Key: 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
+    // Access Key ID: AKIATVHBTWIJPX5CXT3J
+    // Secret Access Key: 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
 
     @Bean
     public AmazonS3 amazonS3() {
         AWSCredentials awsCredentials = new BasicAWSCredentials(
-                "AKIA4WWEA4TL546JU4QP",
-                "/kiMBrd/hhqnbOd30kqq3UfklLfhA/aX3Z9PLtxF"
+                "AKIATVHBTWIJPX5CXT3J",
+                "K99rPnGkTvbYF6f6HVsmuUZzJyZzQiJ5bkKLyAsz"
         );
         return AmazonS3ClientBuilder
                 .standard()

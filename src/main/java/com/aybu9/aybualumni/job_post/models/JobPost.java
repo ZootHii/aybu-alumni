@@ -42,15 +42,17 @@ public class JobPost extends LongBaseModel {
     @NotNull
     private String jobType; // FULL TIME, PART TIME, INTERNSHIP, DAILY 
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "ownerJobPost")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "job_posts_job_skills",
+            joinColumns = @JoinColumn(name = "job_post_id"),
+            inverseJoinColumns = @JoinColumn(name = "job_skill_id"))
     @ToString.Exclude
     private Set<JobSkill> jobSkills = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
-    
+
     @Column(length = 2048)
     @Size(max = 2048)
     private String fileUrl; // pdf excel resim video falan gibi
@@ -58,4 +60,9 @@ public class JobPost extends LongBaseModel {
     @Lob
     private String description;
 
+    public JobPost(User ownerUser, String workplaceType, String jobType) {
+        this.ownerUser = ownerUser;
+        this.workplaceType = workplaceType;
+        this.jobType = jobType;
+    }
 }
