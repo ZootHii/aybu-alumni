@@ -1,0 +1,12 @@
+.header {
+  width: 1920px;
+}
+
+.header img {
+  border-radius: 10px;
+}
+
+.header .search {
+  max-height: 30px;
+}
+/*# sourceMappingURL=header.css.map */

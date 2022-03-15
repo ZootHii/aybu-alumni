@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import ApiRequests from "../utils/ApiRequests";
-import Navbar from "./Navbar"
+import Header from "./Header";
 
 export class Home extends Component {
   handleLogout = () => {
-    ApiRequests.logOut().then(res => {
-            console.log(res.data)
-        }).catch(err => {
-            console.log(err.response)
-        })
+    ApiRequests.logOut()
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
 
     localStorage.clear();
-    this.props.history.push('/login');
+    this.props.history.push("/login");
   };
 
   render() {
@@ -24,9 +26,8 @@ export class Home extends Component {
         >
           Logout
           
-        </button> */
-        }
-        <Navbar/>
+        </button> */}
+        <Header />
       </div>
     );
   }
