@@ -1,6 +1,11 @@
-.logout-btn {
-  position: absolute;
-  right: 0;
-  margin: 50px;
+:root {
+  --alumni-blue-color: #00295a;
+  --alumni-blue-color-opacity: hsla(213, 100%, 18%, 0.5);
+  --alumni-gray: #f3f3f3;
+  --almuni-border-color: #acacac98;
+}
+
+.home-nav {
+  background-color: var(--alumni-blue-color);
 }
 /*# sourceMappingURL=home.css.map */

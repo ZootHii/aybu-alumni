@@ -1,12 +1,51 @@
-.header {
-  width: 1920px;
+:root {
+  --alumni-blue-color: #00295a;
+  --alumni-blue-color-opacity: hsla(213, 100%, 18%, 0.5);
+  --alumni-gray: #f3f3f3;
+  --almuni-border-color: #acacac98;
 }
 
-.header img {
-  border-radius: 10px;
+.navbar-page {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5%;
 }
 
-.header .search {
-  max-height: 30px;
+.navbar-page .MuiBox-root header {
+  background-color: var(--alumni-blue-color);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.navbar-page .MuiBox-root header .css-96uuyl {
+  margin-left: -27px;
+  margin-right: 50px;
+}
+
+.navbar-page .MuiBox-root header .MuiBox-root {
+  float: right;
+}
+
+.navbar-page .navbar-nav-container {
+  margin-right: 30px;
+}
+
+.navbar-page .navbar-nav-container .MuiButton-root {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-page .navbar-nav-container .MuiIconButton-root {
+  padding: 0;
+}
+
+.navbar-page .navbar-nav-container .navbar-nav-icons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 /*# sourceMappingURL=header.css.map */
