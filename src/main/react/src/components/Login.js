@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FiLogIn } from "react-icons/fi";
 import AybuLogo from "../pics/alumni-logo-white.png";
+import ApiRequests from "../utils/ApiRequests";
 
 export class Login extends Component {
   constructor(props) {
@@ -19,41 +20,40 @@ export class Login extends Component {
     this.props.history.push("/register");
   };
 
-  // isSuccessLogin = () => {
-  //   this.setState({is_success : this.error.data.success})
-  // };
+  isSuccessLogin = () => {
+    this.setState({ is_success: this.error.data.success });
+  };
 
   handleLogin = (e) => {
     e.preventDefault();
 
-    this.props.history.push("/homepage");
+    console.log(this.state.email);
+    console.log(this.state.password);
 
-    // console.log(this.state.email);
-    // console.log(this.state.password);
+    ApiRequests.checkUser(this.state.email, this.state.password)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("Token", res.data.data.accessToken.token);
+        this.setState({ user: res.data.data.user });
+        localStorage.setItem("user", JSON.stringify(this.state.user));
+        this.props.history.push("/homepage");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        this.setState({ error: err.response.data.message });
 
-    // ApiRequests.checkUser(this.state.email, this.state.password)
-    //   .then((res) => {
-    //     console.log(res);
-    //     localStorage.setItem("Token", res.data.data.accessToken.token);
-    //     this.setState({ user: res.data.data.user });
-    //     localStorage.setItem("user", JSON.stringify(this.state.user));
-    //     window.location.reload();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response.data.message);
-    //     this.setState({ error: err.response.data.message });
+        var x = document.getElementById("email");
+        var y = document.getElementById("password");
+        if (err.response.data.message) {
+          x.value = "";
+          x.classList.add("error-input");
 
-    //     var x = document.getElementById("email");
-    //     var y = document.getElementById("password");
-    //     if (err.response.data.message) {
-    //       x.value = "";
-    //       x.classList.add("error-input");
-
-    //       this.setState({ email: "", password: "" });
-    //       y.value = "";
-    //       y.classList.add("error-input");
-    //     }
-    //   });
+          this.setState({ email: "", password: "" });
+          y.value = "";
+          y.classList.add("error-input");
+        }
+      });
   };
 
   render() {

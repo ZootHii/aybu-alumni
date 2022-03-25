@@ -1,7 +1,5 @@
 const AuthToken = () => {
-    
-    return {Authorization: localStorage.getItem("Token")}
+  return { Access_Token: localStorage.getItem("Token") };
+};
 
-}
-
-export default AuthToken
+export default AuthToken;

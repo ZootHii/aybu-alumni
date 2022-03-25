@@ -27,9 +27,6 @@ export class Home extends Component {
           Logout
           
         </button> */}
-        <div className="home-nav">
-          <Header />
-        </div>
       </div>
     );
   }

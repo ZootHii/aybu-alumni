@@ -6,7 +6,7 @@ public class Constants {
 
     public static final String LOCATION = "Location";
 
-    public static final String ACCESS_TOKEN = "Access-Token";
+    public static final String ACCESS_TOKEN = "Access_Token";
     
     public static final String CONTENT_TYPE = "Content-Type";
 
