@@ -17,10 +17,10 @@ import java.util.Collection;
 
 @Service
 public class FriendshipManager implements FriendshipService {
-    
+
     private final FriendshipRepository friendshipRepository;
     private final UserService userService;
-    
+
     public FriendshipManager(FriendshipRepository friendshipRepository, UserService userService) {
         this.friendshipRepository = friendshipRepository;
         this.userService = userService;
@@ -28,13 +28,11 @@ public class FriendshipManager implements FriendshipService {
 
     @Override
     public DataResult<Friendship> getById(Long friendshipId) {
-        var friendship = friendshipRepository.findById(friendshipId);
-        if (friendship.isEmpty()) {
-            throw new CustomException("Friendship not found by id");
-        }
-        return new SuccessDataResult<>(friendship.get(), "found by id");
+        var friendship = friendshipRepository.findById(friendshipId)
+                .orElseThrow(() -> new CustomException("Friendship not found by id"));
+        return new SuccessDataResult<>(friendship, "found by id");
     }
-    
+
     @Override
     public Boolean existsBySenderIdAndReceiverId(Long senderId, Long receiverId) {
         return friendshipRepository.existsBySenderIdAndReceiverId(senderId, receiverId);
@@ -58,7 +56,7 @@ public class FriendshipManager implements FriendshipService {
         var friend = userService.get(receiverId).getData();
         // check if there is already a request
         var existsBySenderIdAndReceiverId = existsBySenderIdAndReceiverId(senderId, receiverId);
-        if (existsBySenderIdAndReceiverId){
+        if (existsBySenderIdAndReceiverId) {
             throw new CustomException("there is already a friendship");
         }
         var friendship = new Friendship(user, friend, false);
@@ -88,12 +86,11 @@ public class FriendshipManager implements FriendshipService {
         Friendship friendship;
         // check if there is a friendship
         // get friendship by userId and friendId
-        if (existsBySenderIdAndReceiverId(senderId, receiverId)){
+        if (existsBySenderIdAndReceiverId(senderId, receiverId)) {
             friendship = getBySenderIdAndReceiverId(senderId, receiverId).getData();
-        } else if (existsBySenderIdAndReceiverId(receiverId, senderId)){
+        } else if (existsBySenderIdAndReceiverId(receiverId, senderId)) {
             friendship = getBySenderIdAndReceiverId(receiverId, senderId).getData();
-        }
-        else {
+        } else {
             throw new CustomException("there is no friendship");
         }
         friendshipRepository.deleteById(friendship.getId());
@@ -101,8 +98,8 @@ public class FriendshipManager implements FriendshipService {
     }
 
     @Override
-    public DataResult<Collection<User>> getFriendshipsByUserId(Long userId){
-    // check user exisst
+    public DataResult<Collection<User>> getFriendshipsByUserId(Long userId) {
+        // check user exisst
         userService.get(userId);
 //        var objectMapper = new ObjectMapper();
 //        Query query = entityManager.createNativeQuery(
@@ -115,17 +112,17 @@ public class FriendshipManager implements FriendshipService {
     }
 
     @Override
-    public DataResult<Collection<Friendship>> getFriendshipRequestsIncomingByUserId(Long userId){
+    public DataResult<Collection<Friendship>> getFriendshipRequestsIncomingByUserId(Long userId) {
         // check user exissst
         userService.get(userId);
         return new SuccessDataResult<>(friendshipRepository.getFriendshipRequestsIncomingByUserId(userId), "get received pending friendship requests");
     }
 
     @Override
-    public DataResult<Collection<Friendship>> getFriendshipRequestsOutgoingByUserId(Long userId){
+    public DataResult<Collection<Friendship>> getFriendshipRequestsOutgoingByUserId(Long userId) {
         // check user exisst
         userService.get(userId);
         return new SuccessDataResult<>(friendshipRepository.getFriendshipRequestsOutgoingByUserId(userId), "get pending friendship requests ");
     }
-    
+
 }

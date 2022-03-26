@@ -27,10 +27,8 @@ public class CityManager implements CityService {
 
     @Override
     public DataResult<City> get(Integer companySectorId) {
-        var city = cityRepository.findById(companySectorId);
-        if (city.isEmpty()) {
-            throw new CustomException("not found city");
-        }
-        return new SuccessDataResult<>(city.get(), "city returned");
+        var city = cityRepository.findById(companySectorId)
+                .orElseThrow(() -> new CustomException("not found city"));
+        return new SuccessDataResult<>(city, "city returned");
     }
 }

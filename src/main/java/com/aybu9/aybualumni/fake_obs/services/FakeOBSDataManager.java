@@ -5,9 +5,6 @@ import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.SuccessDataResult;
 import com.aybu9.aybualumni.fake_obs.models.FakeOBSData;
 import com.aybu9.aybualumni.fake_obs.repositories.FakeOBSDataRepository;
-import com.aybu9.aybualumni.sector.models.CommunitySector;
-import com.aybu9.aybualumni.sector.repositories.CommunitySectorRepository;
-import com.aybu9.aybualumni.sector.services.CommunitySectorService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,10 +29,8 @@ public class FakeOBSDataManager implements FakeOBSDataService {
     @Override
     @Transactional
     public DataResult<FakeOBSData> get(String tcIdentityNumber) {
-        var fakeOBSData = fakeOBSDataRepository.findById(tcIdentityNumber);
-        if (fakeOBSData.isEmpty()) {
-            throw new CustomException("not found obs data");
-        }
-        return new SuccessDataResult<>(fakeOBSData.get(), "obs data returned");
+        var fakeOBSData = fakeOBSDataRepository.findById(tcIdentityNumber)
+                .orElseThrow(() -> new CustomException("not found obs data"));
+        return new SuccessDataResult<>(fakeOBSData, "obs data returned");
     }
 }

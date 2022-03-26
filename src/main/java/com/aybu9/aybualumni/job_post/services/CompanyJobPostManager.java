@@ -75,8 +75,7 @@ public class CompanyJobPostManager implements CompanyJobPostService {
 //            visibility = VISIBILITY_EVERYONE;
 //        }
 
-        var jobTitle = jobTitleRepository
-                .findById(jobTitleId)
+        var jobTitle = jobTitleRepository.findById(jobTitleId)
                 .orElseThrow(() -> new CustomException("not found job title"));
         jobPost.setJobTitle(jobTitle);
 

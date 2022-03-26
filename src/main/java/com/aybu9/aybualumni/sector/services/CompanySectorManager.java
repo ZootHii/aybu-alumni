@@ -27,10 +27,8 @@ public class CompanySectorManager implements CompanySectorService {
 
     @Override
     public DataResult<CompanySector> get(Integer companySectorId) {
-        var companySector = companySectorRepository.findById(companySectorId);
-        if (companySector.isEmpty()) {
-            throw new CustomException("not found company sector");
-        }
-        return new SuccessDataResult<>(companySector.get(), "company sector returned");
+        var companySector = companySectorRepository.findById(companySectorId)
+                .orElseThrow(() -> new CustomException("not found company sector"));
+        return new SuccessDataResult<>(companySector, "company sector returned");
     }
 }

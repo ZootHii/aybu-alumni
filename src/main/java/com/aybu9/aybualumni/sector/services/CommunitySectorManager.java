@@ -27,8 +27,7 @@ public class CommunitySectorManager implements CommunitySectorService {
 
     @Override
     public DataResult<CommunitySector> get(Integer communitySectorId) {
-        var communitySector = communitySectorRepository
-                .findById(communitySectorId)
+        var communitySector = communitySectorRepository.findById(communitySectorId)
                 .orElseThrow(() -> new CustomException("not found community sector"));
         return new SuccessDataResult<>(communitySector, "community sector returned");
     }
