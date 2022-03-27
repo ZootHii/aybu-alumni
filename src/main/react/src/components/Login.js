@@ -36,7 +36,7 @@ export class Login extends Component {
         localStorage.setItem("Token", res.data.data.accessToken.token);
         this.setState({ user: res.data.data.user });
         localStorage.setItem("user", JSON.stringify(this.state.user));
-        this.props.history.push("/homepage");
+        this.props.history.push("/");
         window.location.reload();
       })
       .catch((err) => {

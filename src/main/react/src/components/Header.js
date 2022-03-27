@@ -24,6 +24,8 @@ import WorkHistoryOutlinedIcon from "@mui/icons-material/WorkHistoryOutlined";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import "../css/header.css";
 import { Avatar } from "@mui/material";
+import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const pages = [
   { name: "HOMEPAGE", icon: <HomeOutlinedIcon /> },
@@ -76,7 +78,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function secondarySearchAppBar() {
+export default function secondarySearchAppBar({ props }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -94,6 +96,15 @@ export default function secondarySearchAppBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  // const handleProfile = () => {
+  //   handleProfilee();
+  // };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -117,8 +128,9 @@ export default function secondarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 

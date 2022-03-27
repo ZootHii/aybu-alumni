@@ -86,6 +86,12 @@ class ApiRequests {
       { headers: AuthToken() }
     );
   }
+
+  getFriends(id) {
+    return axios.get(API_URL + "api/friendships/" + id, {
+      headers: AuthToken(),
+    });
+  }
 }
 
 export default new ApiRequests();

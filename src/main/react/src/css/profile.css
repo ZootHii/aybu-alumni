@@ -1,5 +1,5 @@
 .profile-container {
-  width: 60%;
+  width: 58%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 0.5%;
@@ -10,7 +10,7 @@
 }
 
 .profile-container .profile-container-information {
-  width: 60%;
+  width: 70%;
 }
 
 .profile-container .profile-container-information .profile-container-header {
@@ -85,10 +85,10 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 40%;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  width: 30%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
 }
 
 .profile-container .profile-container-friends .MuiList-root {
@@ -101,5 +101,18 @@
 .profile-container .profile-container-friends .MuiList-root .MuiAvatar-root {
   width: 30px;
   height: 30px;
+}
+
+.profile-container .profile-container-friends .friends-li {
+  background-color: white;
+  margin-left: 5px;
+  border-radius: 10px;
+  margin-right: 5px;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.profile-container .profile-container-friends .friends-li .MuiListItemAvatar-root {
+  margin-top: 0 !important;
 }
 /*# sourceMappingURL=profile.css.map */
