@@ -1,6 +1,7 @@
 package com.aybu9.aybualumni.job_post.controllers;
 
 import com.aybu9.aybualumni.core.result.DataResult;
+import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.job_post.models.CompanyJobPost;
 import com.aybu9.aybualumni.job_post.models.dtos.CompanyJobPostDto;
 import com.aybu9.aybualumni.job_post.services.CompanyJobPostService;
@@ -34,14 +35,25 @@ public class CompanyJobPostController {
 
     @PostMapping("/{userId}")
     public ResponseEntity<DataResult<CompanyJobPost>> create(Authentication authentication,
-                                                           @PathVariable Long userId,
-                                                           @Valid @RequestPart("companyJobPostDto")
-                                                                         CompanyJobPostDto companyJobPostDto,
-                                                           @RequestPart(value = "file", required = false)
-                                                                   MultipartFile multipartFile
+                                                             @PathVariable Long userId,
+                                                             @Valid @RequestPart("companyJobPostDto")
+                                                                     CompanyJobPostDto companyJobPostDto,
+                                                             @RequestPart(value = "file", required = false)
+                                                                     MultipartFile multipartFile
     ) {
         var result =
                 companyJobPostService.create(authentication, userId, companyJobPostDto, multipartFile);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{userId}/{jobPostId}")
+    public ResponseEntity<Result> delete(Authentication authentication,
+                                         @PathVariable Long userId,
+                                         @PathVariable Long jobPostId) {
+        var result = companyJobPostService.delete(authentication, userId, jobPostId);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }

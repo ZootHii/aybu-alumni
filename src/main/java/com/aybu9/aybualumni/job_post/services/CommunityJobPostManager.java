@@ -6,10 +6,10 @@ import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.core.result.SuccessDataResult;
 import com.aybu9.aybualumni.core.utilities.storage.FileStorage;
-import com.aybu9.aybualumni.job_post.models.CompanyJobPost;
+import com.aybu9.aybualumni.job_post.models.CommunityJobPost;
 import com.aybu9.aybualumni.job_post.models.JobPost;
-import com.aybu9.aybualumni.job_post.models.dtos.CompanyJobPostDto;
-import com.aybu9.aybualumni.job_post.repositories.CompanyJobPostRepository;
+import com.aybu9.aybualumni.job_post.models.dtos.CommunityJobPostDto;
+import com.aybu9.aybualumni.job_post.repositories.CommunityJobPostRepository;
 import com.aybu9.aybualumni.job_post.repositories.JobSkillRepository;
 import com.aybu9.aybualumni.job_post.repositories.JobTitleRepository;
 import com.aybu9.aybualumni.page.services.CityService;
@@ -23,9 +23,9 @@ import java.util.Collection;
 import java.util.HashSet;
 
 @Service
-public class CompanyJobPostManager implements CompanyJobPostService {
+public class CommunityJobPostManager implements CommunityJobPostService {
 
-    private final CompanyJobPostRepository companyJobPostRepository;
+    private final CommunityJobPostRepository communityJobPostRepository;
     private final AuthService authService;
     private final CityService cityService;
     private final JobPostService jobPostService;
@@ -33,11 +33,11 @@ public class CompanyJobPostManager implements CompanyJobPostService {
     private final JobSkillRepository jobSkillRepository;
     private final FileStorage fileStorage;
 
-    public CompanyJobPostManager(CompanyJobPostRepository companyJobPostRepository, AuthService authService,
-                                 CityService cityService, JobPostService jobPostService,
-                                 JobTitleRepository jobTitleRepository, JobSkillRepository jobSkillRepository,
-                                 FileStorage fileStorage) {
-        this.companyJobPostRepository = companyJobPostRepository;
+    public CommunityJobPostManager(CommunityJobPostRepository communityJobPostRepository, AuthService authService,
+                                   CityService cityService, JobPostService jobPostService,
+                                   JobTitleRepository jobTitleRepository, JobSkillRepository jobSkillRepository,
+                                   FileStorage fileStorage) {
+        this.communityJobPostRepository = communityJobPostRepository;
         this.authService = authService;
         this.cityService = cityService;
         this.jobPostService = jobPostService;
@@ -47,34 +47,30 @@ public class CompanyJobPostManager implements CompanyJobPostService {
     }
 
     @Override
-    public DataResult<Collection<CompanyJobPost>> getAll() {
-        return new SuccessDataResult<>(companyJobPostRepository.findAll(), "get all success");
+    public DataResult<Collection<CommunityJobPost>> getAll() {
+        return new SuccessDataResult<>(communityJobPostRepository.findAll(), "get all success");
     }
 
     @Override
     @Transactional
-    public DataResult<CompanyJobPost> create(Authentication authentication, Long userId,
-                                             CompanyJobPostDto companyJobPostDto, MultipartFile multipartFile) {
+    public DataResult<CommunityJobPost> create(Authentication authentication, Long userId,
+                                               CommunityJobPostDto communityJobPostDto, MultipartFile multipartFile) {
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
-        var currentUserCompanyPage = currentUser.getCompanyPage();
+        var currentUserCommunityPage = currentUser.getCommunityPage();
 
-        if (currentUserCompanyPage == null) {
-            throw new CustomException("current user has no company");
+        if (currentUserCommunityPage == null) {
+            throw new CustomException("current user has no community");
         }
 
         var fileUrl = fileStorage.saveFile(currentUser, multipartFile);
-        var description = companyJobPostDto.getDescription();
-        var jobTitleId = companyJobPostDto.getJobTitleId();
-        var jobSkillsIds = companyJobPostDto.getJobSkillsIds();
-        var cityId = companyJobPostDto.getCityId();
-        var workplaceType = companyJobPostDto.getWorkplaceType();
-        var jobType = companyJobPostDto.getJobType();
+        var description = communityJobPostDto.getDescription();
+        var jobTitleId = communityJobPostDto.getJobTitleId();
+        var jobSkillsIds = communityJobPostDto.getJobSkillsIds();
+        var cityId = communityJobPostDto.getCityId();
+        var workplaceType = communityJobPostDto.getWorkplaceType();
+        var jobType = communityJobPostDto.getJobType();
 
         var jobPost = new JobPost(currentUser, workplaceType, jobType);
-
-//        if (Strings.isNullOrEmpty(visibility)) {
-//            visibility = VISIBILITY_EVERYONE;
-//        }
 
         var jobTitle = jobTitleRepository.findById(jobTitleId)
                 .orElseThrow(() -> new CustomException("not found job title"));
@@ -83,10 +79,6 @@ public class CompanyJobPostManager implements CompanyJobPostService {
         if (!Strings.isNullOrEmpty(fileUrl)) {
             jobPost.setFileUrl(fileUrl);
         }
-
-//        if (!isOnline && cityId == null) {
-//            throw new CustomException("City must be selected in face to face events");
-//        }
 
         if (cityId != null) {
             var city = cityService.get(cityId).getData();
@@ -104,10 +96,10 @@ public class CompanyJobPostManager implements CompanyJobPostService {
 
         var createdJobPost = jobPostService.create(jobPost).getData();
 
-        var companyJobPost = new CompanyJobPost(createdJobPost, currentUserCompanyPage);
+        var communityJobPost = new CommunityJobPost(createdJobPost, currentUserCommunityPage);
 
-        var createdCompanyJobPost = companyJobPostRepository.save(companyJobPost);
-        return new SuccessDataResult<>(createdCompanyJobPost, "company job post created success");
+        var createdCommunityJobPost = communityJobPostRepository.save(communityJobPost);
+        return new SuccessDataResult<>(createdCommunityJobPost, "community job post created success");
     }
 
     @Override
