@@ -5,7 +5,17 @@
   --almuni-border-color: #acacac98;
 }
 
-.page-box {
+.content-page {
+  width: 100%;
+}
+
+.login-page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.login-page .page-box {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -13,13 +23,13 @@
 }
 
 @media (max-width: 768px) {
-  .page-box {
+  .login-page .page-box {
     display: unset;
     height: 100vh;
   }
 }
 
-.page-box .mobile-logo {
+.login-page .page-box .mobile-logo {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -31,18 +41,18 @@
 }
 
 @media (min-width: 769px) {
-  .page-box .mobile-logo {
+  .login-page .page-box .mobile-logo {
     display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .page-box .mobile-logo {
+  .login-page .page-box .mobile-logo {
     height: 20%;
   }
 }
 
-.page-box .mobile-logo .mobile-img {
+.login-page .page-box .mobile-logo .mobile-img {
   background-color: #00295a;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -53,52 +63,52 @@
 }
 
 @media (max-width: 768px) {
-  .page-box .mobile-logo .mobile-img {
+  .login-page .page-box .mobile-logo .mobile-img {
     padding: 34px 0 34px 0;
   }
 }
 
 @media (max-height: 700px) {
-  .page-box .mobile-logo .mobile-img {
+  .login-page .page-box .mobile-logo .mobile-img {
     padding: 20px 0 20px 0;
   }
 }
 
 @media (max-height: 650px) {
-  .page-box .mobile-logo .mobile-img {
+  .login-page .page-box .mobile-logo .mobile-img {
     padding: 15px 0 15px 0;
   }
 }
 
 @media (max-height: 600px) {
-  .page-box .mobile-logo .mobile-img {
+  .login-page .page-box .mobile-logo .mobile-img {
     padding: 10px 0 10px 0;
   }
 }
 
-.page-box .mobile-logo .mobile-img img {
+.login-page .page-box .mobile-logo .mobile-img img {
   width: 250px;
 }
 
 @media (max-height: 410px) {
-  .page-box .mobile-logo .mobile-img img {
+  .login-page .page-box .mobile-logo .mobile-img img {
     height: 75px;
   }
 }
 
-.page-box .mobile-footer-box {
+.login-page .page-box .mobile-footer-box {
   background-color: #00295a;
   color: white;
 }
 
 @media (min-width: 769px) {
-  .page-box .mobile-footer-box {
+  .login-page .page-box .mobile-footer-box {
     display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .page-box .mobile-footer-box {
+  .login-page .page-box .mobile-footer-box {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -109,7 +119,7 @@
   }
 }
 
-.page-box .mobile-footer-box .m-footer {
+.login-page .page-box .mobile-footer-box .m-footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -119,35 +129,35 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-.page-box .mobile-footer-box .m-footer p {
+.login-page .page-box .mobile-footer-box .m-footer p {
   margin: auto;
 }
 
 @media (max-width: 1100px) {
-  .page-box .mobile-footer-box .m-footer p {
+  .login-page .page-box .mobile-footer-box .m-footer p {
     font-size: 0.9em;
   }
 }
 
 @media (max-width: 960px) {
-  .page-box .mobile-footer-box .m-footer p {
+  .login-page .page-box .mobile-footer-box .m-footer p {
     font-size: 0.8em;
   }
 }
 
 @media (max-width: 850px) {
-  .page-box .mobile-footer-box .m-footer p {
+  .login-page .page-box .mobile-footer-box .m-footer p {
     font-size: 0.7em;
   }
 }
 
 @media (max-width: 450px) {
-  .page-box .mobile-footer-box .m-footer p {
+  .login-page .page-box .mobile-footer-box .m-footer p {
     font-size: 0.7rem;
   }
 }
 
-.page-box .left-box {
+.login-page .page-box .left-box {
   background-color: #00295a;
   width: 30%;
   height: 100%;
@@ -161,18 +171,18 @@
 }
 
 @media (max-width: 1600px) {
-  .page-box .left-box {
+  .login-page .page-box .left-box {
     width: 45%;
   }
 }
 
 @media (max-width: 768px) {
-  .page-box .left-box {
+  .login-page .page-box .left-box {
     display: none;
   }
 }
 
-.page-box .left-box .img-box {
+.login-page .page-box .left-box .img-box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -182,57 +192,57 @@
   margin-top: 50px;
 }
 
-.page-box .left-box .img-box img {
+.login-page .page-box .left-box .img-box img {
   width: 250px;
 }
 
-.page-box .left-box .left-text-box {
+.login-page .page-box .left-box .left-text-box {
   color: white;
   margin: auto;
 }
 
 @media (max-width: 768px) {
-  .page-box .left-box .left-text-box {
+  .login-page .page-box .left-box .left-text-box {
     display: none;
   }
 }
 
-.page-box .left-box .left-text-box .left-text-content {
+.login-page .page-box .left-box .left-text-box .left-text-content {
   margin: 10px 30px 10px 30px;
 }
 
-.page-box .left-box .left-text-box .left-text-content h2 {
+.login-page .page-box .left-box .left-text-box .left-text-content h2 {
   color: #fff;
   font-size: 1.7rem;
   font-weight: 500;
 }
 
 @media (max-width: 850px) {
-  .page-box .left-box .left-text-box .left-text-content h2 {
+  .login-page .page-box .left-box .left-text-box .left-text-content h2 {
     font-size: 1.5rem;
   }
 }
 
 @media (max-width: 800px) {
-  .page-box .left-box .left-text-box .left-text-content h2 {
+  .login-page .page-box .left-box .left-text-box .left-text-content h2 {
     font-size: 1.4rem;
   }
 }
 
 @media (max-height: 550px) {
-  .page-box .left-box .left-text-box .left-text-content h2 {
+  .login-page .page-box .left-box .left-text-box .left-text-content h2 {
     font-size: 1.2rem;
   }
 }
 
 @media (max-height: 500px) {
-  .page-box .left-box .left-text-box .left-text-content h2 {
+  .login-page .page-box .left-box .left-text-box .left-text-content h2 {
     font-size: 1rem;
     margin-top: 10px;
   }
 }
 
-.page-box .left-box .left-text-box .left-text-content p {
+.login-page .page-box .left-box .left-text-box .left-text-content p {
   font-size: 1.1rem;
   font-weight: 200;
   margin: 2.5rem 0 3.5rem;
@@ -241,29 +251,29 @@
 }
 
 @media (max-width: 850px) {
-  .page-box .left-box .left-text-box .left-text-content p {
+  .login-page .page-box .left-box .left-text-box .left-text-content p {
     font-size: 1rem;
   }
 }
 
 @media (max-height: 550px) {
-  .page-box .left-box .left-text-box .left-text-content p {
+  .login-page .page-box .left-box .left-text-box .left-text-content p {
     margin: 2rem 0 2rem;
   }
 }
 
 @media (max-height: 500px) {
-  .page-box .left-box .left-text-box .left-text-content p {
+  .login-page .page-box .left-box .left-text-box .left-text-content p {
     font-size: 1rem;
     margin-top: 10px;
   }
 }
 
-.page-box .left-box .footer-box {
+.login-page .page-box .left-box .footer-box {
   color: white;
 }
 
-.page-box .left-box .footer-box .footer-p-box {
+.login-page .page-box .left-box .footer-box .footer-p-box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -274,24 +284,24 @@
 }
 
 @media (max-width: 1100px) {
-  .page-box .left-box .footer-box .footer-p-box p {
+  .login-page .page-box .left-box .footer-box .footer-p-box p {
     font-size: 0.9em;
   }
 }
 
 @media (max-width: 960px) {
-  .page-box .left-box .footer-box .footer-p-box p {
+  .login-page .page-box .left-box .footer-box .footer-p-box p {
     font-size: 0.8em;
   }
 }
 
 @media (max-width: 850px) {
-  .page-box .left-box .footer-box .footer-p-box p {
+  .login-page .page-box .left-box .footer-box .footer-p-box p {
     font-size: 0.7em;
   }
 }
 
-.page-box .right-box {
+.login-page .page-box .right-box {
   width: 70%;
   height: 100vh;
   background-color: white;
@@ -307,114 +317,114 @@
 }
 
 @media (max-width: 768px) {
-  .page-box .right-box {
+  .login-page .page-box .right-box {
     width: 100%;
   }
 }
 
 @media (max-height: 550px) and (max-width: 1500px) {
-  .page-box .right-box {
+  .login-page .page-box .right-box {
     width: 100%;
     height: 100vh;
   }
 }
 
 @media (max-width: 768px) and (max-width: 450px) {
-  .page-box .right-box {
+  .login-page .page-box .right-box {
     width: 100%;
     height: 75%;
   }
 }
 
 @media (max-height: 550px) and (max-width: 600px) {
-  .page-box .right-box {
+  .login-page .page-box .right-box {
     width: 100%;
     height: 100%;
   }
 }
 
-.page-box .right-box .register-show {
+.login-page .page-box .right-box .register-show {
   display: block;
   visibility: visible;
 }
 
-.page-box .right-box .register-hide {
+.login-page .page-box .right-box .register-hide {
   display: none;
   visibility: hidden;
 }
 
-.page-box .right-box .login-show {
+.login-page .page-box .right-box .login-show {
   display: block;
   visibility: visible;
 }
 
-.page-box .right-box .login-hide {
+.login-page .page-box .right-box .login-hide {
   display: none;
   visibility: hidden;
 }
 
-.page-box .right-box .login-container {
+.login-page .page-box .right-box .login-container {
   max-width: 550px;
   width: 100%;
 }
 
 @media (max-width: 950px) {
-  .page-box .right-box .login-container {
+  .login-page .page-box .right-box .login-container {
     max-width: 500px;
   }
 }
 
 @media (max-width: 850px) {
-  .page-box .right-box .login-container {
+  .login-page .page-box .right-box .login-container {
     max-width: 480px;
   }
 }
 
 @media (max-width: 800px) {
-  .page-box .right-box .login-container {
+  .login-page .page-box .right-box .login-container {
     max-width: 430px;
   }
 }
 
 @media (max-width: 768px) {
-  .page-box .right-box .login-container {
+  .login-page .page-box .right-box .login-container {
     max-width: 400px;
   }
 }
 
 @media (max-width: 450px) {
-  .page-box .right-box .login-container {
+  .login-page .page-box .right-box .login-container {
     max-width: 350px;
   }
 }
 
 @media (max-width: 360px) {
-  .page-box .right-box .login-container {
+  .login-page .page-box .right-box .login-container {
     width: 320px;
   }
 }
 
 @media (max-width: 340px) {
-  .page-box .right-box .login-container {
+  .login-page .page-box .right-box .login-container {
     width: 300px;
   }
 }
 
-.page-box .right-box .login-container .card .card-header {
+.login-page .page-box .right-box .login-container .card .card-header {
   background-color: white;
   color: var(--alumni-blue-color);
 }
 
-.page-box .right-box .login-container .card .card-header .card-title {
+.login-page .page-box .right-box .login-container .card .card-header .card-title {
   text-align: center;
   font-size: 1.5rem;
 }
 
-.page-box .right-box .login-container .card .card-body {
+.login-page .page-box .right-box .login-container .card .card-body {
   padding: 1.25rem;
 }
 
-.page-box .right-box .login-container .card .card-body label {
+.login-page .page-box .right-box .login-container .card .card-body label {
   color: var(--alumni-blue-color);
   font-size: 1rem;
   font-weight: 400;
@@ -422,49 +432,49 @@
   width: 90px;
 }
 
-.page-box .right-box .login-container .card .card-body input {
+.login-page .page-box .right-box .login-container .card .card-body input {
   height: 35px;
   background-color: var(--alumni-gray);
   border: 1px solid var(--almuni-border-color);
   border-radius: 5px !important;
 }
 
-.page-box .right-box .login-container .card .card-body input:active {
+.login-page .page-box .right-box .login-container .card .card-body input:active {
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
   border: 1px solid var(--almuni-border-color);
 }
 
-.page-box .right-box .login-container .card .card-body input:focus {
+.login-page .page-box .right-box .login-container .card .card-body input:focus {
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
   border: 1px solid var(--almuni-border-color);
 }
 
-.page-box .right-box .login-container .card .card-body .error-input {
+.login-page .page-box .right-box .login-container .card .card-body .error-input {
   border: 1px solid red !important;
   font-style: italic;
   -webkit-transition: 0ms;
   transition: 0ms;
 }
 
-.page-box .right-box .login-container .card .card-body .error-input::-webkit-input-placeholder {
+.login-page .page-box .right-box .login-container .card .card-body .error-input::-webkit-input-placeholder {
   color: red !important;
 }
 
-.page-box .right-box .login-container .card .card-body .error-input:-ms-input-placeholder {
+.login-page .page-box .right-box .login-container .card .card-body .error-input:-ms-input-placeholder {
   color: red !important;
 }
 
-.page-box .right-box .login-container .card .card-body .error-input::-ms-input-placeholder {
+.login-page .page-box .right-box .login-container .card .card-body .error-input::-ms-input-placeholder {
   color: red !important;
 }
 
-.page-box .right-box .login-container .card .card-body .error-input::placeholder {
+.login-page .page-box .right-box .login-container .card .card-body .error-input::placeholder {
   color: red !important;
 }
 
-.page-box .right-box .login-container .card .card-body .login-button {
+.login-page .page-box .right-box .login-container .card .card-body .login-button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -482,47 +492,47 @@
 }
 
 @media (max-width: 360px) {
-  .page-box .right-box .login-container .card .card-body .login-button {
+  .login-page .page-box .right-box .login-container .card .card-body .login-button {
     margin-top: 10px;
     height: 34px;
   }
 }
 
 @media (max-width: 340px) {
-  .page-box .right-box .login-container .card .card-body .login-button {
+  .login-page .page-box .right-box .login-container .card .card-body .login-button {
     margin-top: 10px;
     height: 30px;
   }
 }
 
-.page-box .right-box .login-container .card .card-body .login-button:active {
+.login-page .page-box .right-box .login-container .card .card-body .login-button:active {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 
-.page-box .right-box .login-container .card .card-body .login-button:focus {
+.login-page .page-box .right-box .login-container .card .card-body .login-button:focus {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 
-.page-box .right-box .login-container .card .card-footer {
+.login-page .page-box .right-box .login-container .card .card-footer {
   background-color: var(--alumni-gray);
 }
 
-.page-box .right-box .login-container .card .register-content {
+.login-page .page-box .right-box .login-container .card .register-content {
   text-align: right;
   background-color: var(--alumni-gray);
   margin: 0;
 }
 
-.page-box .right-box .login-container .card .register-content .sign-up-btn {
+.login-page .page-box .right-box .login-container .card .register-content .sign-up-btn {
   border: none;
   color: var(--alumni-blue-color);
   text-shadow: 0px 1px 3px var(--alumni-blue-color-opacity);
   background-color: var(--alumni-gray);
 }
 
-.page-box .right-box .login-container .card .register-content a {
+.login-page .page-box .right-box .login-container .card .register-content a {
   text-decoration: none;
   margin-left: 0.75rem;
   text-shadow: 0px 1px 3px var(--alumni-blue-color-opacity);

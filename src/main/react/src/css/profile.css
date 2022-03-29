@@ -1,0 +1,118 @@
+.profile-container {
+  width: 58%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5%;
+  border-radius: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.profile-container .profile-container-information {
+  width: 70%;
+}
+
+.profile-container .profile-container-information .profile-container-header {
+  border-bottom: 1px solid #fff;
+  border-radius: 10px;
+  -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.profile-container .profile-container-information .profile-container-header img {
+  border-radius: 10px;
+  width: 100%;
+  height: 125px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.profile-container .profile-container-information .profile-container-body {
+  background-color: #1d2226;
+  border-radius: 10px;
+}
+
+.profile-container .profile-container-information .profile-container-body .card {
+  border: none;
+  position: relative;
+  top: -80px;
+  left: 45px;
+  background-color: transparent;
+  color: white;
+  line-height: 3px;
+}
+
+.profile-container .profile-container-information .profile-container-body .card .card-title {
+  font-size: 24px;
+}
+
+.profile-container .profile-container-information .profile-container-body .card p {
+  font-size: 13px;
+}
+
+.profile-container .profile-container-information .profile-container-body .MuiIconButton-root {
+  position: relative;
+  left: 180px;
+  z-index: 9999;
+  top: -125px;
+  background-color: #000;
+}
+
+.profile-container .profile-container-information .profile-container-body .MuiIconButton-root svg {
+  color: #fff;
+  width: 20px;
+  height: 20px;
+}
+
+.profile-container .profile-container-information .profile-container-body .MuiAvatar-root {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  left: 62.5px;
+  top: -62.5px;
+  border: 2px solid #fff;
+  padding: 5px;
+}
+
+.profile-container .profile-container-information .profile-container-body .MuiAvatar-root img {
+  border-radius: 50px;
+  width: 150px;
+  height: 150px;
+}
+
+.profile-container .profile-container-friends {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 30%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+}
+
+.profile-container .profile-container-friends .MuiList-root {
+  background-color: #1d2226;
+  border-radius: 10px;
+  width: 70%;
+  color: #fff;
+}
+
+.profile-container .profile-container-friends .MuiList-root .MuiAvatar-root {
+  width: 30px;
+  height: 30px;
+}
+
+.profile-container .profile-container-friends .friends-li {
+  background-color: white;
+  margin-left: 5px;
+  border-radius: 10px;
+  margin-right: 5px;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.profile-container .profile-container-friends .friends-li .MuiListItemAvatar-root {
+  margin-top: 0 !important;
+}
+/*# sourceMappingURL=profile.css.map */

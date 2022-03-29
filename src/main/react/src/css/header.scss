@@ -1,10 +1,43 @@
-.header {
-  width: 1920px;
+:root {
+  --alumni-blue-color: #00295a;
+  --alumni-blue-color-opacity: hsla(213, 100%, 18%, 0.5);
+  --alumni-gray: #f3f3f3;
+  --almuni-border-color: #acacac98;
+}
 
-  img {
-    border-radius: 10px;
+.navbar-page {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5%;
+  .MuiBox-root {
+    header {
+      background-color: #001126;
+      box-shadow: none;
+
+      .css-96uuyl {
+        margin-left: -27px;
+        margin-right: 50px;
+      }
+
+      .MuiBox-root {
+        float: right;
+      }
+    }
   }
-  .search {
-    max-height: 30px;
+
+  .navbar-nav-container {
+    margin-right: 30px;
+    .MuiButton-root {
+      margin: 0;
+      padding: 0;
+    }
+    .MuiIconButton-root {
+      padding: 0;
+    }
+    .navbar-nav-icons {
+      display: flex;
+      justify-content: center;
+    }
   }
 }

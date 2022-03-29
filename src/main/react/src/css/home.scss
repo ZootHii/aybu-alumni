@@ -1,5 +1,186 @@
-.logout-btn {
-  position: absolute;
-  right: 0;
-  margin: 50px;
+:root {
+  --alumni-blue-color: #00295a;
+  --alumni-blue-color-opacity: hsla(213, 100%, 18%, 0.5);
+  --alumni-gray: #f3f3f3;
+  --almuni-border-color: #acacac98;
+}
+.home-nav {
+  background-color: #001126;
+}
+
+.home-container {
+  width: 58%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5%;
+  border-radius: 15px;
+  display: flex;
+
+  .home-container-left {
+    width: 25%;
+    background-color: #00295a;
+    border-radius: 10px;
+
+    .profile-container-header {
+      border-bottom: 1px solid #fff;
+      border-radius: 10px;
+
+      img {
+        border-radius: 10px;
+        width: 100%;
+        height: 80px;
+        object-fit: cover;
+      }
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+
+    .profile-container-body {
+      background-color: #1d2226;
+      border-radius: 10px;
+      .card {
+        border: none;
+        position: relative;
+        top: -60px;
+        left: 0px;
+        background-color: transparent;
+        color: white;
+        line-height: 3px;
+        .card-title {
+          font-size: 20px;
+          text-align: center;
+        }
+        .card-subtitle {
+          font-size: 13px;
+          text-align: center;
+        }
+        p {
+          font-size: 13px;
+        }
+      }
+
+      .MuiAvatar-root {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        left: 100px;
+        top: -60px;
+        border: 2px solid #fff;
+        padding: 5px;
+
+        img {
+          border-radius: 50px;
+          width: 80px;
+          height: 80px;
+        }
+      }
+    }
+  }
+
+  .home-container-middle {
+    width: 50%;
+    margin-left: 15px;
+    margin-right: 15px;
+
+    .card {
+      background-color: #1d2226;
+      border-radius: 10px;
+      .col-2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+
+        .MuiAvatar-root {
+          border: 2px solid #fff;
+
+          img {
+            border-radius: 50px;
+            border-color: var(--almuni-border-color) !important;
+          }
+        }
+      }
+      .col-10 {
+        .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+          left: 7px;
+        }
+        .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+          color: var(--almuni-border-color) !important;
+        }
+        .MuiFormControl-root {
+          width: 100%;
+
+          .MuiInputLabel-root {
+            color: #fff;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 1%;
+          }
+          .MuiOutlinedInput-root {
+            border-radius: 50px;
+
+            .MuiOutlinedInput-notchedOutline {
+              border-color: var(--almuni-border-color) !important;
+            }
+          }
+        }
+      }
+      .col-12 {
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+      }
+      .home-container-post-icons-btn {
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        border: none;
+        margin-right: 30px;
+        margin-left: 30px;
+
+        &:focus,
+        &:active {
+          box-shadow: none;
+        }
+
+        &:hover {
+          background-color: #464a4d;
+        }
+
+        svg {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  .home-container-right {
+    width: 25%;
+
+    .profile-container-friends {
+      width: 100%;
+      .MuiList-root {
+        background-color: #1d2226;
+        border-radius: 10px;
+        width: 100%;
+        color: #fff;
+
+        .MuiAvatar-root {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      .friends-li {
+        background-color: transparent;
+        margin-left: 5px;
+        border-radius: 10px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        .MuiListItemAvatar-root {
+          margin-top: 0 !important;
+        }
+      }
+    }
+  }
 }
