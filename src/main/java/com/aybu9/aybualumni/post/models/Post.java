@@ -27,4 +27,8 @@ public class Post extends LongBaseModel {
 
     @Lob // size belirtmiyorsak lob
     private String description;
+
+    public Post(User ownerUser) {
+        this.ownerUser = ownerUser;
+    }
 }
