@@ -9,13 +9,18 @@ import com.aybu9.aybualumni.post.models.Post;
 import com.aybu9.aybualumni.post.models.UserPost;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.repositories.UserPostRepository;
+import com.aybu9.aybualumni.user.models.User;
 import com.google.common.base.Strings;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static com.aybu9.aybualumni.core.models.Constants.VISIBILITY_EVERYONE;
 
@@ -38,6 +43,14 @@ public class UserPostManager implements UserPostService {
     @Override
     public DataResult<Collection<UserPost>> getAll() {
         return new SuccessDataResult<>(userPostRepository.findAll(), "get all success");
+    }
+
+    @Override
+    public DataResult<Collection<UserPost>> getLast3ByUser(Authentication authentication, Long userId) {
+        authService.getCurrentUserAccessible(authentication, userId);
+        var last3Post = userPostRepository
+                .getTopsByOwnerUser(userId, PageRequest.of(0, 3)).getContent();
+        return new SuccessDataResult<>(last3Post, "last 3 post get success");
     }
 
     @Override

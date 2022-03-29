@@ -33,6 +33,16 @@ public class UserPostController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/{userId}/last3")
+    public ResponseEntity<DataResult<Collection<UserPost>>> getLast3ByUser(Authentication authentication,
+                                                                   @PathVariable Long userId) {
+        var result = userPostService.getLast3ByUser(authentication, userId);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/{userId}")
     public ResponseEntity<DataResult<UserPost>> create(Authentication authentication,
                                                        @PathVariable Long userId,

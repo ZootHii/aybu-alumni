@@ -13,6 +13,8 @@ public interface UserPostService {
 
     DataResult<Collection<UserPost>> getAll();
 
+    DataResult<Collection<UserPost>> getLast3ByUser(Authentication authentication, Long userId);
+
     DataResult<UserPost> create(Authentication authentication, Long userId, PostDto postDto,
                                     MultipartFile multipartFile);
 
