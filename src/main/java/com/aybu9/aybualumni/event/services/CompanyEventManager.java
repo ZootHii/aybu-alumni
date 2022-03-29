@@ -75,7 +75,7 @@ public class CompanyEventManager implements CompanyEventService {
         if (Strings.isNullOrEmpty(visibility)) {
             visibility = VISIBILITY_EVERYONE;
         }
-        
+
         if (!Strings.isNullOrEmpty(fileUrl)) {
             event.setFileUrl(fileUrl);
         }
@@ -99,9 +99,9 @@ public class CompanyEventManager implements CompanyEventService {
         }
 
         var createdEvent = eventService.create(event).getData();
-        
+
         var companyEvent = new CompanyEvent(createdEvent, currentUserCompanyPage, visibility);
-        
+
         var createdCompanyEvent = companyEventRepository.save(companyEvent);
         return new SuccessDataResult<>(createdCompanyEvent, "company event created success");
     }

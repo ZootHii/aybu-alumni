@@ -15,11 +15,10 @@ public class EventManager implements EventService {
     public EventManager(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
-    
+
     @Override
     @Transactional
     public DataResult<Event> create(Event event) {
         return new SuccessDataResult<>(eventRepository.save(event), "event create success");
     }
-
 }
