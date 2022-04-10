@@ -1,5 +1,6 @@
 package com.aybu9.aybualumni.friendship.services;
 
+import com.aybu9.aybualumni.auth.services.AuthService;
 import com.aybu9.aybualumni.core.exception.CustomException;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
@@ -9,6 +10,7 @@ import com.aybu9.aybualumni.friendship.models.Friendship;
 import com.aybu9.aybualumni.user.models.User;
 import com.aybu9.aybualumni.friendship.repositories.FriendshipRepository;
 import com.aybu9.aybualumni.user.services.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +22,13 @@ public class FriendshipManager implements FriendshipService {
 
     private final FriendshipRepository friendshipRepository;
     private final UserService userService;
+    private final AuthService authService;
 
-    public FriendshipManager(FriendshipRepository friendshipRepository, UserService userService) {
+    public FriendshipManager(FriendshipRepository friendshipRepository, UserService userService,
+                             AuthService authService) {
         this.friendshipRepository = friendshipRepository;
         this.userService = userService;
+        this.authService = authService;
     }
 
     @Override
@@ -51,8 +56,8 @@ public class FriendshipManager implements FriendshipService {
 
     @Override
     @Transactional
-    public DataResult<Friendship> sendFriendshipRequest(Long senderId, Long receiverId) { // sender, receiver
-        var user = userService.get(senderId).getData();
+    public DataResult<Friendship> sendFriendshipRequest(Authentication authentication, Long senderId, Long receiverId) {
+        var user = authService.getCurrentUserAccessible(authentication, senderId);
         var friend = userService.get(receiverId).getData();
         // check if there is already a request
         var existsBySenderIdAndReceiverId = existsBySenderIdAndReceiverId(senderId, receiverId);
@@ -66,8 +71,8 @@ public class FriendshipManager implements FriendshipService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public DataResult<Friendship> acceptFriendshipRequest(Long receiverId, Long senderId) { // receiver, sender -> receiver accept eden
-        userService.get(receiverId);
+    public DataResult<Friendship> acceptFriendshipRequest(Authentication authentication, Long receiverId, Long senderId) {
+        authService.getCurrentUserAccessible(authentication, receiverId);
         userService.get(senderId);
         // check if there is a friendship
         // get friendship by userId and friendId
@@ -80,15 +85,17 @@ public class FriendshipManager implements FriendshipService {
 
     @Override
     @Transactional
-    public Result deleteFriendshipRequest(Long receiverId, Long senderId) {
+    public Result deleteFriendshipRequest(Authentication authentication, Long receiverId, Long senderId) {
         userService.get(receiverId);
         userService.get(senderId);
         Friendship friendship;
         // check if there is a friendship
         // get friendship by userId and friendId
         if (existsBySenderIdAndReceiverId(senderId, receiverId)) {
+            authService.getCurrentUserAccessible(authentication, senderId);
             friendship = getBySenderIdAndReceiverId(senderId, receiverId).getData();
         } else if (existsBySenderIdAndReceiverId(receiverId, senderId)) {
+            authService.getCurrentUserAccessible(authentication, receiverId);
             friendship = getBySenderIdAndReceiverId(receiverId, senderId).getData();
         } else {
             throw new CustomException("there is no friendship");
@@ -98,31 +105,32 @@ public class FriendshipManager implements FriendshipService {
     }
 
     @Override
-    public DataResult<Collection<User>> getFriendshipsByUserId(Long userId) {
-        // check user exisst
-        userService.get(userId);
-//        var objectMapper = new ObjectMapper();
-//        Query query = entityManager.createNativeQuery(
-//                "SELECT users.id, users.email, users.password, users.name, users.surname FROM users \n" +
-//                        "WHERE users.id IN (SELECT (CASE WHEN user_id=1 THEN friend_id ELSE user_id END) AS friend_id FROM friendships WHERE (user_id=1 OR friend_id=1) AND is_accepted = true)\n" +
-//                        "ORDER BY users.id ASC;",
-//                "Mapping.UserDto");
-//        var result = query.getResultList();
+    public DataResult<Collection<User>> getFriendshipsByUserId(Authentication authentication, Long userId) {
+        authService.getCurrentUserAccessible(authentication, userId);
         return new SuccessDataResult<>(friendshipRepository.getFriendshipsByUserId(userId), "get friends");
     }
 
     @Override
-    public DataResult<Collection<Friendship>> getFriendshipRequestsIncomingByUserId(Long userId) {
-        // check user exissst
-        userService.get(userId);
-        return new SuccessDataResult<>(friendshipRepository.getFriendshipRequestsIncomingByUserId(userId), "get received pending friendship requests");
+    public DataResult<Long> getFriendsCountByUserId(Authentication authentication, Long userId) {
+        var friendships = getFriendshipsByUserId(authentication, userId).getData();
+        var friendsCount = (long) friendships.size();
+        return new SuccessDataResult<>(friendsCount, "get friends count");
     }
 
     @Override
-    public DataResult<Collection<Friendship>> getFriendshipRequestsOutgoingByUserId(Long userId) {
-        // check user exisst
-        userService.get(userId);
-        return new SuccessDataResult<>(friendshipRepository.getFriendshipRequestsOutgoingByUserId(userId), "get pending friendship requests ");
+    public DataResult<Collection<Friendship>> getFriendshipRequestsIncomingByUserId(Authentication authentication,
+                                                                                    Long userId) {
+        authService.getCurrentUserAccessible(authentication, userId);
+        return new SuccessDataResult<>(friendshipRepository.getFriendshipRequestsIncomingByUserId(userId),
+                "get received pending friendship requests");
+    }
+
+    @Override
+    public DataResult<Collection<Friendship>> getFriendshipRequestsOutgoingByUserId(Authentication authentication,
+                                                                                    Long userId) {
+        authService.getCurrentUserAccessible(authentication, userId);
+        return new SuccessDataResult<>(friendshipRepository.getFriendshipRequestsOutgoingByUserId(userId),
+                "get pending friendship requests ");
     }
 
 }

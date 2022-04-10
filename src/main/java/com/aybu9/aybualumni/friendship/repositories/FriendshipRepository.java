@@ -13,13 +13,6 @@ import java.util.Collection;
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     
     // friends of user ----
-    /*SELECT U.* 
-            From users AS U 
-            WHERE U.id IN (
-                        SELECT (CASE WHEN F.user_id=1 THEN F.friend_id ELSE F.user_id END)
-                        FROM friendships AS F
-                        WHERE ((F.user_id = 1 OR F.friend_id = 1) AND F.is_accepted = true))
-            ORDER BY U.id*/
     @Query("SELECT U " +
             "From User AS U " +
             "WHERE U.id IN (" +
@@ -28,24 +21,8 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
                             "WHERE ((F.sender.id = ?1 OR F.receiver.id = ?1) AND F.isAccepted = true)) " +
             "ORDER BY U.id")
     Collection<User> getFriendshipsByUserId(Long userId);
-    
-    // kullanıcıya gelen ve bekleyen istekler ----
-    /*SELECT U.*
-            From users AS U 
-            WHERE U.id IN (
-                        SELECT (CASE WHEN F.friend_id=4 THEN F.user_id ELSE 0 END)
-                        FROM friendships AS F
-                        WHERE ((F.user_id = 4 OR F.friend_id = 4) AND F.is_accepted = false))
-            ORDER BY U.id*/
-//    @Query("SELECT U " +
-//            "From User AS U " +
-//            "WHERE U.id IN (" +
-//                        "SELECT (CASE WHEN F.friend.id= ?1 THEN F.user.id ELSE 0 END) " +
-//                        "FROM Friendship AS F " +
-//                        "WHERE F.user.id = ?1 OR F.friend.id = ?1 AND F.isAccepted = false) " +
-//            "ORDER BY U.id")
-//    Collection<User> getFriendshipRequestsIncomingByUserId(Long userId);
 
+    // kullanıcıya gelen ve bekleyen istekler ----
     @Query("SELECT F1 " +
             "From Friendship AS F1 " +
             "WHERE F1.id IN (" +
@@ -56,22 +33,6 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     Collection<Friendship> getFriendshipRequestsIncomingByUserId(Long userId);
     
     // kullanıcın gönderdiği bekleyen istekler ----
-    /*SELECT U.* 
-            From users AS U 
-            WHERE U.id IN (
-                        SELECT (CASE WHEN F.user_id=4 THEN F.friend_id ELSE 0 END)
-                        FROM friendships AS F
-                        WHERE ((F.user_id = 4 Or F.friend_id = 4) AND F.is_accepted = false))
-            ORDER BY U.id*/
-//    @Query("SELECT U " +
-//            "From User AS U " +
-//            "WHERE U.id IN (" +
-//                        "SELECT (CASE WHEN F.user.id= ?1 THEN F.friend.id ELSE 0 END) " +
-//                        "FROM Friendship AS F " +
-//                        "WHERE F.user.id = ?1 OR F.friend.id = ?1 AND F.isAccepted = false) " +
-//            "ORDER BY U.id")
-//    Collection<User> getFriendshipRequestsOutgoingByUserId(Long userId);
-
     @Query("SELECT F1 " +
             "From Friendship AS F1 " +
             "WHERE F1.id IN (" +

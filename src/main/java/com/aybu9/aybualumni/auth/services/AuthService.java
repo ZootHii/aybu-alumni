@@ -16,6 +16,6 @@ public interface AuthService {
     Result logout();
 
     User getCurrentUser(Authentication authentication);
-    
+
     User getCurrentUserAccessible(Authentication authentication, Long userId);
 }
