@@ -9,6 +9,7 @@ import com.aybu9.aybualumni.core.result.SuccessResult;
 import com.aybu9.aybualumni.core.utilities.storage.FileStorage;
 import com.aybu9.aybualumni.user.models.User;
 import com.aybu9.aybualumni.user.models.UserContactInfo;
+import com.aybu9.aybualumni.user.models.dtos.UpdateUserProfileDto;
 import com.aybu9.aybualumni.user.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,14 +114,6 @@ public class UserManager implements UserService {
 
     @Override
     @Transactional
-    public DataResult<String> updateAbout(Authentication authentication, Long userId, String about) {
-        var currentUser = authService.getCurrentUserAccessible(authentication, userId);
-        currentUser.setAbout(about);
-        return new SuccessDataResult<>(about, "update user about");
-    }
-
-    @Override
-    @Transactional
     public Result delete(Authentication authentication, Long userId) {
         authService.getCurrentUserAccessible(authentication, userId);
         try {
@@ -129,6 +122,25 @@ public class UserManager implements UserService {
             throw new CustomException("user delete error " + exception.getMessage());
         }
         return new SuccessResult(DeleteSuccess);
+    }
+
+    @Override
+    @Transactional
+    public DataResult<String> updateAbout(Authentication authentication, Long userId, String about) {
+        var currentUser = authService.getCurrentUserAccessible(authentication, userId);
+        currentUser.setAbout(about);
+        return new SuccessDataResult<>(about, "update user about");
+    }
+
+    @Override
+    @Transactional
+    public DataResult<User> updateUserProfile(Authentication authentication, Long userId,
+                                              UpdateUserProfileDto updateUserProfileDto) {
+        var currentUser = authService.getCurrentUserAccessible(authentication, userId);
+        currentUser.setName(updateUserProfileDto.getName());
+        currentUser.setSurname(updateUserProfileDto.getSurname());
+        currentUser.setHeadline(updateUserProfileDto.getHeadline());
+        return new SuccessDataResult<>(currentUser, "update user profile");
     }
 
     @Override

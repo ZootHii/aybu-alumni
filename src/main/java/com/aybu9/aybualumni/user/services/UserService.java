@@ -3,6 +3,7 @@ package com.aybu9.aybualumni.user.services;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.user.models.User;
+import com.aybu9.aybualumni.user.models.dtos.UpdateUserProfileDto;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,9 +29,12 @@ public interface UserService {
 
     DataResult<User> updateSave(User user);
 
+    Result delete(Authentication authentication, Long userId);
+
     DataResult<String> updateAbout(Authentication authentication, Long userId, String about);
 
-    Result delete(Authentication authentication, Long userId);
+    DataResult<User> updateUserProfile(Authentication authentication, Long userId,
+                                       UpdateUserProfileDto updateUserProfileDto);
 
     // Result updatePassword() todo dto old and new password al userid al kontrol et eski doğruysaa değiştir çıkış yap
 

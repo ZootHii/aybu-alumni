@@ -3,6 +3,7 @@ package com.aybu9.aybualumni.user.controllers;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.user.models.User;
+import com.aybu9.aybualumni.user.models.dtos.UpdateUserProfileDto;
 import com.aybu9.aybualumni.user.models.dtos.UserContactInfoDto;
 import com.aybu9.aybualumni.user.services.UserContactInfoService;
 import com.aybu9.aybualumni.user.services.UserService;
@@ -75,6 +76,17 @@ public class UserController {
                                                           @PathVariable Long userId,
                                                           @RequestBody String about) {
         var result = userService.updateAbout(authentication, userId, about);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PutMapping("{userId}/update-profile")
+    public ResponseEntity<DataResult<User>> updateUserProfile(Authentication authentication,
+                                                          @PathVariable Long userId,
+                                                          @RequestBody UpdateUserProfileDto updateUserProfileDto) {
+        var result = userService.updateUserProfile(authentication, userId, updateUserProfileDto);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
