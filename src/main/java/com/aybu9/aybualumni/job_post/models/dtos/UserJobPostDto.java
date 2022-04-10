@@ -14,7 +14,7 @@
 //@AllArgsConstructor
 //public class UserJobPostDto {
 //
-//    @Lob
+//    @Size(max = 1000)
 //    private String description;
 //
 //    @NotNull

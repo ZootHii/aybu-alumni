@@ -59,6 +59,9 @@ export default class Profile extends Component {
             <Card style={{ width: "18rem" }}>
               <Card.Body>
                 <Card.Title>{user.name + " " + user.surname}</Card.Title>
+                <Card.Subtitle className="mb-2 text">
+                  {user.headline}
+                </Card.Subtitle>
                 <Card.Subtitle className="mb-2 text-muted">
                   Ankara Yıldırım Beyazıt Üniversitesi
                 </Card.Subtitle>
@@ -70,13 +73,13 @@ export default class Profile extends Component {
 
         <div className="profile-container-friends">
           <List sx={{ width: "100%", maxWidth: 360, bgcolor: "white" }}>
-            {friends.map((item) => (
+            {friends.map((friend) => (
               <div className="friends-li">
                 <ListItem alignItems="flex-start">
                   <ListItemAvatar>
-                    <Avatar alt="Remy Sharp" src={item.profilePhotoUrl} />
+                    <Avatar alt="Remy Sharp" src={friend.profilePhotoUrl} />
                   </ListItemAvatar>
-                  <ListItemText primary={item.name + item.surname} />
+                  <ListItemText primary={friend.name + " " + friend.surname} />
                 </ListItem>
                 <Divider variant="inset" component="li" />
               </div>

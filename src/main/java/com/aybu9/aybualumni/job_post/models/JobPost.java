@@ -57,7 +57,7 @@ public class JobPost extends LongBaseModel {
     @Size(max = 2048)
     private String fileUrl; // pdf excel resim video falan gibi
 
-    @Lob
+    @Size(max = 1000)
     private String description;
 
     public JobPost(User ownerUser, String workplaceType, String jobType) {

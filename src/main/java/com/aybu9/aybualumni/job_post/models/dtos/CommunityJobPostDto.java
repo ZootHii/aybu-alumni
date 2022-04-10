@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Data
@@ -14,7 +15,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class CommunityJobPostDto {
 
-    @Lob
+    @Size(max = 1000)
     private String description;
 
     @NotNull

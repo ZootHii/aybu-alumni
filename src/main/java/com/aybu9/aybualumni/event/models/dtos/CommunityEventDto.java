@@ -20,7 +20,7 @@ public class CommunityEventDto {
     @Size(min = 2, max = 255)
     private String name;
 
-    @Lob
+    @Size(max = 1000)
     private String description;
 
 //    @Size(max = 2048)

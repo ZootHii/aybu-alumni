@@ -38,7 +38,7 @@ public class Event extends LongBaseModel {
 //    @URL
     private String fileUrl; // pdf excel resim video falan gibi
 
-    @Lob // size belirtmiyorsak lob
+    @Size(max = 1000)
     private String description;
 
     @Column(/*columnDefinition = "BOOLEAN DEFAULT false",*/ nullable = false)

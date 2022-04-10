@@ -34,8 +34,8 @@ public class Page extends LongBaseModel {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
     private User ownerUser;
-    
-    @Lob
+
+    @Size(max = 1000)
     private String about;
 
     @Column(length = 510)

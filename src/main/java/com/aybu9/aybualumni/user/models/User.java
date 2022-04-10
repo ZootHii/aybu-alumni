@@ -68,6 +68,9 @@ public class User extends LongBaseModel {
     @Size(max = 255)
     private String surname;
 
+    @Size(max = 255)
+    private String headline;
+
     @Column(nullable = false)
     @NotBlank
     @NotNull
@@ -80,7 +83,7 @@ public class User extends LongBaseModel {
     @Size(max = 255)
     private String surnameInCollege;
 
-    @Lob // size belirtmiyorsak lob
+    @Size(max = 1000)
     private String about;
 
     @Column(length = 2048, nullable = false)
