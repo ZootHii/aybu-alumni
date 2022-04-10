@@ -24,8 +24,6 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RequestMapping("/api/users")
 public class UserController {
 
-    // TODO: 1.11.2021 CONTROLLER RESPONSE ENTITIY DONECEK YADA DÖNMESEDE OLUR TARTIŞ İSMAİLLE
-
     private final UserService userService;
     private final UserContactInfoService userContactInfoService;
 
@@ -72,13 +70,24 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PutMapping("{userId}/about")
+    public ResponseEntity<DataResult<String>> updateAbout(Authentication authentication,
+                                                          @PathVariable Long userId,
+                                                          @RequestBody String about) {
+        var result = userService.updateAbout(authentication, userId, about);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PutMapping(
             path = "{userId}/profile-image",
             consumes = MULTIPART_FORM_DATA_VALUE,
             produces = APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Result> uploadProfileImage(@PathVariable Long userId,
-                                                     @RequestParam("file") MultipartFile multipartFile, Authentication authentication) {
+    public ResponseEntity<Result> uploadProfileImage(Authentication authentication, @PathVariable Long userId,
+                                                     @RequestParam("file") MultipartFile multipartFile) {
         var result = userService.uploadProfileImage(authentication, userId, multipartFile);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
@@ -101,7 +110,7 @@ public class UserController {
     }
 
     @PutMapping("{userId}/contact-info")
-    public ResponseEntity<Result> updateUserContactInfo(Authentication authentication, @PathVariable Long userId, 
+    public ResponseEntity<Result> updateUserContactInfo(Authentication authentication, @PathVariable Long userId,
                                                         @Valid @RequestBody UserContactInfoDto userContactInfoDto) {
         var result = userContactInfoService.update(authentication, userId, userContactInfoDto);
         if (!result.isSuccess()) {
@@ -110,7 +119,7 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PutMapping( // todo put post emin değilim
+    @PutMapping(
             path = "{userId}/contact-info/resume",
             consumes = MULTIPART_FORM_DATA_VALUE,
             produces = APPLICATION_JSON_VALUE
@@ -123,11 +132,4 @@ public class UserController {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
-    // todo fotoğraflar vesaire download gerek yok belgeler için olabilir url ile gösterme yapılacak picasso gibi
-//    @GetMapping(path = "{userId}/download/profile-photo", produces = APPLICATION_JSON_VALUE)
-//    public byte[] downloadProfilePhoto(@PathVariable Long userId) {
-//        return userService.downloadProfilePhoto(userId).getData();
-//    }
 }

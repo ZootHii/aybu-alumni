@@ -7,10 +7,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
-import java.util.Set;
 
 public interface UserService {
-    
+
     DataResult<Collection<User>> getAll();
 
     DataResult<User> get(Long userId);
@@ -18,7 +17,7 @@ public interface UserService {
     DataResult<User> getByProfileUrl(String profileUrl);
 
     DataResult<User> getByEmail(String email);
-    
+
     DataResult<Collection<User>> getAllByIdIn(Collection<Long> ids);
 
     Boolean existsByEmail(String email);
@@ -26,16 +25,16 @@ public interface UserService {
     Boolean existsByProfileUrl(String profileUrl);
 
     DataResult<User> create(User user);
-    
+
     DataResult<User> updateSave(User user);
 
+    DataResult<String> updateAbout(Authentication authentication, Long userId, String about);
+
     Result delete(Authentication authentication, Long userId);
-    
+
     // Result updatePassword() todo dto old and new password al userid al kontrol et eski doğruysaa değiştir çıkış yap
-    
+
     Result uploadProfileImage(Authentication authentication, Long userId, MultipartFile multipartFile);
 
     Result uploadCoverImage(Authentication authentication, Long userId, MultipartFile multipartFile);
-
-//    DataResult<byte[]> downloadProfilePhoto(Long userId);
 }

@@ -23,10 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
 import static com.aybu9.aybualumni.core.result.Constants.*;
-import static com.aybu9.aybualumni.core.utilities.storage.Constants.*;
 
 @Service
 public class UserManager implements UserService {
@@ -40,7 +38,8 @@ public class UserManager implements UserService {
 
     @Autowired
     @Lazy
-    public UserManager(UserRepository userRepository, FileStorage fileStorage, AuthService authService, UserContactInfoService userContactInfoService) {
+    public UserManager(UserRepository userRepository, FileStorage fileStorage, AuthService authService,
+                       UserContactInfoService userContactInfoService) {
         this.userRepository = userRepository;
         this.fileStorage = fileStorage;
         this.authService = authService;
@@ -114,8 +113,16 @@ public class UserManager implements UserService {
 
     @Override
     @Transactional
-    public Result delete(Authentication authentication, Long userId) {
+    public DataResult<String> updateAbout(Authentication authentication, Long userId, String about) {
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
+        currentUser.setAbout(about);
+        return new SuccessDataResult<>(about, "update user about");
+    }
+
+    @Override
+    @Transactional
+    public Result delete(Authentication authentication, Long userId) {
+        authService.getCurrentUserAccessible(authentication, userId);
         try {
             userRepository.deleteById(userId);
         } catch (Exception exception) {
@@ -148,55 +155,4 @@ public class UserManager implements UserService {
         userRepository.save(currentUser);
         return new SuccessResult("cover photo upload success");
     }
-
-
-//    private User checkIfAccessibleByUser(Authentication authentication, Long userId){
-//        var currentUser = authService.getCurrentUser(authentication);
-//        if (!Objects.equals(currentUser.getId(), userId)){
-//            throw new AccessDeniedException("Forbidden Access Denied");
-//        }
-//        return currentUser;
-//    }
-
-//    private String savePhoto(User user, MultipartFile multipartFile) {
-//        fileStorage.checkIfEmptyOrNull(multipartFile);
-//        fileStorage.checkIfImage(multipartFile);
-//        var path = fileStorage.createPath(FOLDER_NAME_IMAGES, user.getId());
-//        var fileName = fileStorage.createFileName(multipartFile);
-//        var metadata = fileStorage.createMetadata(multipartFile);
-//        var inputStream = fileStorage.getInputStream(multipartFile);
-//        fileStorage.save(path, fileName, inputStream, multipartFile, metadata);
-//        return String.format("%s/%s/%s/%s", STORAGE_BASE_URL, FOLDER_NAME_IMAGES, user.getId(), fileName);
-//    }
-
-//    private String saveFile(User user, MultipartFile multipartFile, String folderName) {
-//        fileStorage.checkIfEmptyOrNull(multipartFile);
-//        if(folderName.equals(FOLDER_NAME_IMAGES)){
-//            fileStorage.checkIfImage(multipartFile);
-//        } else if (folderName.equals(FOLDER_NAME_DOCUMENTS)){
-//            fileStorage.checkIfDocument(multipartFile);
-//        } else if (folderName.equals(FOLDER_NAME_VIDEOS)){
-//            fileStorage.checkIfVideo(multipartFile);
-//        }
-//        
-//        var path = fileStorage.createPath(folderName, user.getId());
-//        var fileName = fileStorage.createFileName(multipartFile);
-//        var metadata = fileStorage.createMetadata(multipartFile);
-//        var inputStream = fileStorage.getInputStream(multipartFile);
-//        fileStorage.save(path, fileName, inputStream, multipartFile, metadata);
-//        return String.format("%s/%s/%s/%s", STORAGE_BASE_URL, folderName, user.getId(), fileName);
-//    }
-
-//    @Override
-//    public DataResult<byte[]> downloadProfilePhoto(Long userId) {
-//        var userDataResult = get(userId);
-//        if (!userDataResult.isSuccess()){
-//            return new ErrorDataResult<>(userDataResult.getMessage());
-//        }
-//        var user = userDataResult.getData();
-//        var path = fileStorage.createPath(FOLDER_NAME_IMAGES, userId);
-//        var key = user.getProfilePhotoUrl();
-//        var image = fileStorage.download(path, key);
-//        return new SuccessDataResult<>(image, "profile photo download success");
-//    }
 }
