@@ -1,4 +1,4 @@
-FROM openjdk:17 AS build
+FROM openjdk:17-alpine AS build
 
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
