@@ -1,21 +1,32 @@
 version: '3.9'
 
 services:
-  app:
-    image: 'aybu-alumni:latest'
+  api:
+    image: 'aybu-alumni-api:latest'
+    container_name: aybu-alumni-api
     build:
-      context: .
-    container_name: aybu-alumni
+      context: ./api-java
+      dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "4024:4024"
     depends_on:
       - postgresqldb
   postgresqldb:
-      image: postgres:14.2-alpine
-      container_name: posgresqldb
-      ports:
-        - "5432:5432"
-      environment:
-            - POSTGRES_USER=aybualumni
-            - POSTGRES_PASSWORD=aybualumni
-            - POSTGRES_DB=aybualumni
+    image: postgres:14.2-alpine
+    container_name: posgresqldb
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=aybualumni
+      - POSTGRES_PASSWORD=aybualumni
+      - POSTGRES_DB=aybualumni
+  ui:
+    image: 'aybu-alumni-ui:latest'
+    container_name: aybu-alumni-ui
+    build:
+      context: ./ui-react
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"

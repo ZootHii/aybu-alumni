@@ -1,6 +1,6 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
+!api-java/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -34,5 +34,5 @@ build/
 .vscode/
 
 ### Node JS ###
-src/main/react/build/
-src/main/react/node_modules/
+ui-react/build/
+ui-react/node_modules/
