@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.aybu9</groupId>
-    <artifactId>aybu-alumni</artifactId>
+    <artifactId>api-java</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>aybu-alumni</name>
-    <description>aybu-alumni</description>
+    <name>api-java</name>
+    <description>Aybu Alumni Application</description>
     <properties>
         <java.version>17</java.version>
         <frontend-src-dir>${project.basedir}/ui-react/react</frontend-src-dir>
