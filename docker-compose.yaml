@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  app:
+    image: 'aybu-alumni:latest'
+    build:
+      context: .
+    container_name: aybu-alumni
+    ports:
+      - "4024:4024"
+    depends_on:
+      - postgresqldb
+  postgresqldb:
+      image: postgres:14.2-alpine
+      container_name: posgresqldb
+      ports:
+        - "5432:5432"
+      environment:
+            - POSTGRES_USER=aybualumni
+            - POSTGRES_PASSWORD=aybualumni
+            - POSTGRES_DB=aybualumni
