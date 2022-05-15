@@ -92,6 +92,12 @@ class ApiRequests {
       headers: AuthToken(),
     });
   }
+
+  getThreeUserPost(id) {
+    return axios.get(API_URL + `api/posts/user/${id}/last3`, {
+      headers: AuthToken(),
+    });
+  }
 }
 
 export default new ApiRequests();

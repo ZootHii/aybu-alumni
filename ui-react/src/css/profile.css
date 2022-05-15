@@ -1,4 +1,4 @@
-.profile-container {
+.profile-container-main .profile-container {
   width: 58%;
   margin-left: auto;
   margin-right: auto;
@@ -9,18 +9,18 @@
   display: flex;
 }
 
-.profile-container .profile-container-information {
+.profile-container-main .profile-container .profile-container-information {
   width: 70%;
 }
 
-.profile-container .profile-container-information .profile-container-header {
+.profile-container-main .profile-container .profile-container-information .profile-container-header {
   border-bottom: 1px solid #fff;
   border-radius: 10px;
   -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
           box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
-.profile-container .profile-container-information .profile-container-header img {
+.profile-container-main .profile-container .profile-container-information .profile-container-header img {
   border-radius: 10px;
   width: 100%;
   height: 125px;
@@ -28,12 +28,20 @@
      object-fit: cover;
 }
 
-.profile-container .profile-container-information .profile-container-body {
+.profile-container-main .profile-container .profile-container-information .profile-container-body {
   background-color: #1d2226;
   border-radius: 10px;
 }
 
-.profile-container .profile-container-information .profile-container-body .card {
+.profile-container-main .profile-container .profile-container-information .profile-container-body .profile-container-body-cards {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto;
+      grid-template-columns: auto auto;
+  gap: 50px 150px;
+}
+
+.profile-container-main .profile-container .profile-container-information .profile-container-body .profile-container-body-cards .card {
   border: none;
   position: relative;
   top: -80px;
@@ -43,15 +51,38 @@
   line-height: 3px;
 }
 
-.profile-container .profile-container-information .profile-container-body .card .card-title {
+.profile-container-main .profile-container .profile-container-information .profile-container-body .profile-container-body-cards .card .card-title {
   font-size: 24px;
 }
 
-.profile-container .profile-container-information .profile-container-body .card p {
+.profile-container-main .profile-container .profile-container-information .profile-container-body .profile-container-body-cards .card p {
   font-size: 13px;
 }
 
-.profile-container .profile-container-information .profile-container-body .MuiIconButton-root {
+.profile-container-main .profile-container .profile-container-information .profile-container-body .profile-container-body-cards .card .list-group .list-group-item {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 15px;
+}
+
+.profile-container-main .profile-container .profile-container-information .profile-container-body .profile-container-body-cards .card .list-group .list-group-item img {
+  border: 2px solid #fff;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  margin-right: 10px;
+}
+
+.profile-container-main .profile-container .profile-container-information .profile-container-body .profile-container-body-cards .card .profile-container-body-button {
+  padding: 0;
+}
+
+.profile-container-main .profile-container .profile-container-information .profile-container-body .profile-container-body-cards .card .profile-container-body-button:hover {
+  text-decoration: underline;
+}
+
+.profile-container-main .profile-container .profile-container-information .profile-container-body .MuiIconButton-root {
   position: relative;
   left: 180px;
   z-index: 9999;
@@ -59,13 +90,13 @@
   background-color: #000;
 }
 
-.profile-container .profile-container-information .profile-container-body .MuiIconButton-root svg {
+.profile-container-main .profile-container .profile-container-information .profile-container-body .MuiIconButton-root svg {
   color: #fff;
   width: 20px;
   height: 20px;
 }
 
-.profile-container .profile-container-information .profile-container-body .MuiAvatar-root {
+.profile-container-main .profile-container .profile-container-information .profile-container-body .MuiAvatar-root {
   width: 150px;
   height: 150px;
   position: relative;
@@ -75,13 +106,13 @@
   padding: 5px;
 }
 
-.profile-container .profile-container-information .profile-container-body .MuiAvatar-root img {
+.profile-container-main .profile-container .profile-container-information .profile-container-body .MuiAvatar-root img {
   border-radius: 50px;
   width: 150px;
   height: 150px;
 }
 
-.profile-container .profile-container-friends {
+.profile-container-main .profile-container .profile-container-friends {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -91,19 +122,19 @@
           justify-content: end;
 }
 
-.profile-container .profile-container-friends .MuiList-root {
+.profile-container-main .profile-container .profile-container-friends .MuiList-root {
   background-color: #1d2226;
   border-radius: 10px;
   width: 70%;
   color: #fff;
 }
 
-.profile-container .profile-container-friends .MuiList-root .MuiAvatar-root {
+.profile-container-main .profile-container .profile-container-friends .MuiList-root .MuiAvatar-root {
   width: 30px;
   height: 30px;
 }
 
-.profile-container .profile-container-friends .friends-li {
+.profile-container-main .profile-container .profile-container-friends .friends-li {
   background-color: white;
   margin-left: 5px;
   border-radius: 10px;
@@ -112,7 +143,62 @@
   margin-bottom: 5px;
 }
 
-.profile-container .profile-container-friends .friends-li .MuiListItemAvatar-root {
+.profile-container-main .profile-container .profile-container-friends .friends-li .MuiListItemAvatar-root {
   margin-top: 0 !important;
+}
+
+.profile-container-main .profile-container-body-about {
+  width: 58%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5%;
+  border-radius: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #fff;
+}
+
+.profile-container-main .profile-container-body-about .profile-container-body-about-box {
+  background-color: #1d2226;
+  border-radius: 10px;
+  width: 70%;
+  padding: 15px;
+}
+
+.profile-container-main .profile-container-body-post {
+  width: 58%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5%;
+  border-radius: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #fff;
+}
+
+.profile-container-main .profile-container-body-post .profile-container-body-post-box {
+  background-color: #1d2226;
+  border-radius: 10px;
+  width: 70%;
+  padding: 15px;
+}
+
+.profile-contact-modal .modal-content {
+  color: #fff;
+  background-color: #1d2226;
+}
+
+.profile-contact-modal .modal-content .MuiList-root {
+  background-color: transparent;
+}
+
+.profile-contact-modal .modal-content .MuiList-root .MuiTypography-root {
+  color: #fff;
+}
+
+.profile-contact-modal .modal-content .modal-header svg {
+  color: #fff;
 }
 /*# sourceMappingURL=profile.css.map */
