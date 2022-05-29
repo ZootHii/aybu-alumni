@@ -31,12 +31,12 @@ public class JobPost extends LongBaseModel {
     @JoinColumn(name = "job_title_id", referencedColumnName = "id")
     private JobTitle jobTitle;
 
-    @Column(/*columnDefinition = "VARCHAR DEFAULT 'OFFICE'",*/ nullable = false)
+    @Column(nullable = false)
     @NotBlank
     @NotNull
     private String workplaceType; // OFFICE, HYBRID, REMOTE
 
-    @Column(/*columnDefinition = "VARCHAR DEFAULT 'FULL TIME'",*/ nullable = false)
+    @Column(nullable = false)
     @NotBlank
     @NotNull
     private String jobType; // FULL TIME, PART TIME, INTERNSHIP, DAILY 

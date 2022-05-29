@@ -18,10 +18,7 @@ import javax.validation.constraints.Size;
 @Table(name = "community_events", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "event_id"
-        })/*,
-        @UniqueConstraint(columnNames = {
-                "owner_community_page_id"
-        })*/
+        })
 })
 public class CommunityEvent extends LongBaseModel {
 
@@ -33,8 +30,7 @@ public class CommunityEvent extends LongBaseModel {
     @JoinColumn(name = "owner_community_page_id", referencedColumnName = "id", nullable = false)
     private CommunityPage ownerCommunityPage;
 
-    // visible_to varchar // bağlantılar görebilir, herkes görebilir,
-    @Column(/*columnDefinition = "VARCHAR(255) DEFAULT 'EVERYONE'",*/ nullable = false)
+    @Column(nullable = false)
     @Size(max = 255)
     @NotBlank
     @NotNull

@@ -35,13 +35,12 @@ public class Event extends LongBaseModel {
 
     @Column(length = 2048)
     @Size(max = 2048) // max url 2048
-//    @URL
     private String fileUrl; // pdf excel resim video falan gibi
 
     @Size(max = 1000)
     private String description;
 
-    @Column(/*columnDefinition = "BOOLEAN DEFAULT false",*/ nullable = false)
+    @Column(nullable = false)
     @NotNull
     private Boolean isOnline;
 

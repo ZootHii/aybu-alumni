@@ -22,8 +22,4 @@ public class JobSkill extends IntegerBaseModel {
     @NotNull
     @Size(max = 255)
     private String name;
-//
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "owner_job_post_id", referencedColumnName = "id", nullable = false)
-//    private JobPost ownerJobPost;
 }
