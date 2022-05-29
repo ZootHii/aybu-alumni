@@ -3,7 +3,6 @@ package com.aybu9.aybualumni.post.controllers;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.post.models.CommunityPost;
-import com.aybu9.aybualumni.post.models.UserPost;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.services.CommunityPostService;
 import org.springframework.http.HttpStatus;

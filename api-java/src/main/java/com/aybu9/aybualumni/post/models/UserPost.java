@@ -24,10 +24,6 @@ public class UserPost extends LongBaseModel {
     @OneToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false, updatable = false)
     private Post post;
-    
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
-//    private User ownerUser;
 
     @Column(nullable = false)
     @Size(max = 255)
