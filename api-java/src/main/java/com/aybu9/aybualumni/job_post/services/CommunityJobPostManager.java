@@ -13,7 +13,9 @@ import com.aybu9.aybualumni.job_post.repositories.CommunityJobPostRepository;
 import com.aybu9.aybualumni.job_post.repositories.JobSkillRepository;
 import com.aybu9.aybualumni.job_post.repositories.JobTitleRepository;
 import com.aybu9.aybualumni.page.services.CityService;
+import com.aybu9.aybualumni.post.models.UserPost;
 import com.google.common.base.Strings;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +51,12 @@ public class CommunityJobPostManager implements CommunityJobPostService {
     @Override
     public DataResult<Collection<CommunityJobPost>> getAll() {
         return new SuccessDataResult<>(communityJobPostRepository.findAll(), "get all success");
+    }
+
+    @Override
+    public DataResult<Collection<CommunityJobPost>> getAllPageable(Pageable pageable) {
+        return new SuccessDataResult<>(communityJobPostRepository.findAll(pageable).getContent(),
+                "get all pageable success");
     }
 
     @Override

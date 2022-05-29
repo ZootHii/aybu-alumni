@@ -5,6 +5,8 @@ import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.job_post.models.CommunityJobPost;
 import com.aybu9.aybualumni.job_post.models.dtos.CommunityJobPostDto;
 import com.aybu9.aybualumni.job_post.services.CommunityJobPostService;
+import com.aybu9.aybualumni.post.models.UserPost;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,16 @@ public class CommunityJobPostController {
     @GetMapping
     public ResponseEntity<DataResult<Collection<CommunityJobPost>>> getAll() {
         var result = communityJobPostService.getAll();
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/pageable/{page}/{size}")
+    public ResponseEntity<DataResult<Collection<CommunityJobPost>>> getAllPageable(@PathVariable Integer page,
+                                                                           @PathVariable Integer size) {
+        var result = communityJobPostService.getAllPageable(PageRequest.of(page, size));
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
