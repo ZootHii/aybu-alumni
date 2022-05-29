@@ -42,6 +42,12 @@ public class UserPostManager implements UserPostService {
     }
 
     @Override
+    public DataResult<Collection<UserPost>> getAllPageable(Integer page, Integer size) {
+        return new SuccessDataResult<>(userPostRepository.findAll(PageRequest.of(page, size)).getContent(),
+                "get all pageable success");
+    }
+
+    @Override
     public DataResult<Collection<UserPost>> getLast3ByUser(Authentication authentication, Long userId) {
         authService.getCurrentUserAccessible(authentication, userId);
         var last3Post = userPostRepository
