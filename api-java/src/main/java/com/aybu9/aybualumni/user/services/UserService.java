@@ -4,6 +4,7 @@ import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.user.models.User;
 import com.aybu9.aybualumni.user.models.dtos.UpdateUserProfileDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +13,8 @@ import java.util.Collection;
 public interface UserService {
 
     DataResult<Collection<User>> getAll();
+
+    DataResult<Collection<User>> getAllPageable(Pageable pageable);
 
     DataResult<User> get(Long userId);
 
