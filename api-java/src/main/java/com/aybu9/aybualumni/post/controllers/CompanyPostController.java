@@ -5,6 +5,7 @@ import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.post.models.CompanyPost;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.services.CompanyPostService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,17 @@ public class CompanyPostController {
     @GetMapping
     public ResponseEntity<DataResult<Collection<CompanyPost>>> getAll() {
         var result = companyPostService.getAll();
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/pageable/{page}/{size}")
+    public ResponseEntity<DataResult<Collection<CompanyPost>>> getAllPageable(@PathVariable Integer page,
+                                                                           @PathVariable Integer size) {
+        var result = companyPostService.getAllPageable(PageRequest.of(page, size));
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }

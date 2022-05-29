@@ -14,6 +14,7 @@ import com.aybu9.aybualumni.job_post.repositories.JobSkillRepository;
 import com.aybu9.aybualumni.job_post.repositories.JobTitleRepository;
 import com.aybu9.aybualumni.page.services.CityService;
 import com.google.common.base.Strings;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +50,12 @@ public class CompanyJobPostManager implements CompanyJobPostService {
     @Override
     public DataResult<Collection<CompanyJobPost>> getAll() {
         return new SuccessDataResult<>(companyJobPostRepository.findAll(), "get all success");
+    }
+
+    @Override
+    public DataResult<Collection<CompanyJobPost>> getAllPageable(Pageable pageable) {
+        return new SuccessDataResult<>(companyJobPostRepository.findAll(pageable).getContent(),
+                "get all pageable success");
     }
 
     @Override
