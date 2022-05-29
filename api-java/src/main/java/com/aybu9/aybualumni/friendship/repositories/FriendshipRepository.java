@@ -53,46 +53,4 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     // todo ortada istek kabul edilmemiş veya edilmiş istek var mı arada friendship var mı onu kontrol et ona göre buton ayarla
     /* 1 4 e istek atmış kabul edilmemiş ve 4 1 e istek atmaya çalışıyor bu kez kabul et butonu çıkar */
     /* 1 4 e istek atmış kabul edilmiş ve 4 1 e istek atmaya çalışıyor bu kez buton gösterme */
-    
-    // how to make uneditable file in java spring 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-// , users.password, users.name, users.surname, users.about, users.profile_url, users.profile_photo_url, users.cover_photo_url, users.contact_info_id, users.company_page_id, users.community_page_id, users.created_at, users.updated_at
-//    @Query(value = "SELECT * /*NEW com.aybu9.aybualumni.user.models.User(users.id, users.email)*/ FROM users " +
-//            "WHERE users.id IN (SELECT (CASE WHEN user_id=?1 THEN friend_id ELSE user_id END) AS friend_id FROM friendships WHERE (user_id=?1 OR friend_id=?1) AND is_ac´´cepted = true) " +
-//            "ORDER BY users.id ASC;", nativeQuery = true)
-//    Collection<Object> getFriendsOfUserByUserId(Long userId);
-
-
-//    Query query = em.createNativeQuery("SELECT * FROM users \n" +
-//            "WHERE users.id IN (SELECT (CASE WHEN user_id=?1 THEN friend_id ELSE user_id END) AS friend_id FROM friendships WHERE (user_id=?1 OR friend_id=?1) AND is_accepted = true)\n" +
-//            "ORDER BY users.id ASC;", "friendsResult");
-    //@SuppressWarnings("unchecked")
-//Collection<User> friends = query.getResultList();
-
-
-//    Collection<User> getFriends(Long userId);
 }
