@@ -72,10 +72,6 @@ public class CompanyJobPostManager implements CompanyJobPostService {
 
         var jobPost = new JobPost(currentUser, workplaceType, jobType);
 
-//        if (Strings.isNullOrEmpty(visibility)) {
-//            visibility = VISIBILITY_EVERYONE;
-//        }
-
         var jobTitle = jobTitleRepository.findById(jobTitleId)
                 .orElseThrow(() -> new CustomException("not found job title"));
         jobPost.setJobTitle(jobTitle);
@@ -83,10 +79,6 @@ public class CompanyJobPostManager implements CompanyJobPostService {
         if (!Strings.isNullOrEmpty(fileUrl)) {
             jobPost.setFileUrl(fileUrl);
         }
-
-//        if (!isOnline && cityId == null) {
-//            throw new CustomException("City must be selected in face to face events");
-//        }
 
         if (cityId != null) {
             var city = cityService.get(cityId).getData();
