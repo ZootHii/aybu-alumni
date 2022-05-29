@@ -3,6 +3,7 @@ package com.aybu9.aybualumni.post.controllers;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.post.models.CommunityPost;
+import com.aybu9.aybualumni.post.models.UserPost;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.services.CommunityPostService;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,16 @@ public class CommunityPostController {
     @GetMapping
     public ResponseEntity<DataResult<Collection<CommunityPost>>> getAll() {
         var result = communityPostService.getAll();
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/last3")
+    public ResponseEntity<DataResult<Collection<CommunityPost>>> getLast3ByCommunity(Authentication authentication,
+                                                                           @PathVariable Long userId) {
+        var result = communityPostService.getLast3ByCommunity(authentication, userId);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }

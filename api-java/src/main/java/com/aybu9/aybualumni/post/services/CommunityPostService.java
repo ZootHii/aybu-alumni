@@ -13,6 +13,8 @@ public interface CommunityPostService {
 
     DataResult<Collection<CommunityPost>> getAll();
 
+    DataResult<Collection<CommunityPost>> getLast3ByCommunity(Authentication authentication, Long userId);
+
     DataResult<CommunityPost> create(Authentication authentication, Long userId, PostDto postDto,
                                    MultipartFile multipartFile);
 

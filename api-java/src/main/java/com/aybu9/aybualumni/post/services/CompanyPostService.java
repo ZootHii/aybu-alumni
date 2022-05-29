@@ -13,6 +13,8 @@ public interface CompanyPostService {
 
     DataResult<Collection<CompanyPost>> getAll();
 
+    DataResult<Collection<CompanyPost>> getLast3ByCompany(Authentication authentication, Long userId);
+
     DataResult<CompanyPost> create(Authentication authentication, Long userId, PostDto postDto,
                                     MultipartFile multipartFile);
 

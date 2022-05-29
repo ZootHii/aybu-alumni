@@ -11,6 +11,7 @@ import com.aybu9.aybualumni.post.models.Post;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.repositories.CompanyPostRepository;
 import com.google.common.base.Strings;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,15 @@ public class CompanyPostManager implements CompanyPostService {
     @Override
     public DataResult<Collection<CompanyPost>> getAll() {
         return new SuccessDataResult<>(companyPostRepository.findAll(), "get all success");
+    }
+
+    @Override
+    public DataResult<Collection<CompanyPost>> getLast3ByCompany(Authentication authentication, Long userId) {
+        var user = authService.getCurrentUserAccessible(authentication, userId);
+        var companyPageId = user.getCompanyPage().getId();
+        var last3Post = companyPostRepository
+                .getTopsByOwnerCompanyPage(companyPageId, PageRequest.of(0, 3)).getContent();
+        return new SuccessDataResult<>(last3Post, "last 3 post get success");
     }
 
     @Override

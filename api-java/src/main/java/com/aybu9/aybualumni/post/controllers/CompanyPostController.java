@@ -3,6 +3,7 @@ package com.aybu9.aybualumni.post.controllers;
 import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.post.models.CompanyPost;
+import com.aybu9.aybualumni.post.models.UserPost;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.services.CompanyPostService;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,16 @@ public class CompanyPostController {
     @GetMapping
     public ResponseEntity<DataResult<Collection<CompanyPost>>> getAll() {
         var result = companyPostService.getAll();
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/last3")
+    public ResponseEntity<DataResult<Collection<CompanyPost>>> getLast3ByCompany(Authentication authentication,
+                                                                           @PathVariable Long userId) {
+        var result = companyPostService.getLast3ByCompany(authentication, userId);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
