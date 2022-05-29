@@ -8,10 +8,12 @@ import com.aybu9.aybualumni.core.result.SuccessDataResult;
 import com.aybu9.aybualumni.core.utilities.storage.FileStorage;
 import com.aybu9.aybualumni.post.models.CommunityPost;
 import com.aybu9.aybualumni.post.models.Post;
+import com.aybu9.aybualumni.post.models.UserPost;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.repositories.CommunityPostRepository;
 import com.google.common.base.Strings;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +42,12 @@ public class CommunityPostManager implements CommunityPostService {
     @Override
     public DataResult<Collection<CommunityPost>> getAll() {
         return new SuccessDataResult<>(communityPostRepository.findAll(), "get all success");
+    }
+
+    @Override
+    public DataResult<Collection<CommunityPost>> getAllPageable(Pageable pageable) {
+        return new SuccessDataResult<>(communityPostRepository.findAll(pageable).getContent(),
+                "get all pageable success");
     }
 
     @Override
