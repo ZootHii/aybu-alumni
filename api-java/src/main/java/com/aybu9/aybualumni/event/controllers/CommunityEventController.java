@@ -4,6 +4,7 @@ import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.event.models.CommunityEvent;
 import com.aybu9.aybualumni.event.models.dtos.CommunityEventDto;
 import com.aybu9.aybualumni.event.services.CommunityEventService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,16 @@ public class CommunityEventController {
     @GetMapping
     public ResponseEntity<DataResult<Collection<CommunityEvent>>> getAll() {
         var result = communityEventService.getAll();
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/pageable/{page}/{size}")
+    public ResponseEntity<DataResult<Collection<CommunityEvent>>> getAllPageable(@PathVariable Integer page,
+                                                                           @PathVariable Integer size) {
+        var result = communityEventService.getAllPageable(PageRequest.of(page, size));
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
