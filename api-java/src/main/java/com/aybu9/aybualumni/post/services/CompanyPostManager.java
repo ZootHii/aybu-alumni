@@ -8,10 +8,12 @@ import com.aybu9.aybualumni.core.result.SuccessDataResult;
 import com.aybu9.aybualumni.core.utilities.storage.FileStorage;
 import com.aybu9.aybualumni.post.models.CompanyPost;
 import com.aybu9.aybualumni.post.models.Post;
+import com.aybu9.aybualumni.post.models.UserPost;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.repositories.CompanyPostRepository;
 import com.google.common.base.Strings;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +42,12 @@ public class CompanyPostManager implements CompanyPostService {
     @Override
     public DataResult<Collection<CompanyPost>> getAll() {
         return new SuccessDataResult<>(companyPostRepository.findAll(), "get all success");
+    }
+
+    @Override
+    public DataResult<Collection<CompanyPost>> getAllPageable(Pageable pageable) {
+        return new SuccessDataResult<>(companyPostRepository.findAll(pageable).getContent(),
+                "get all pageable success");
     }
 
     @Override
