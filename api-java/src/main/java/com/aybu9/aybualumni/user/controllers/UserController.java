@@ -8,6 +8,7 @@ import com.aybu9.aybualumni.user.models.dtos.UserContactInfoDto;
 import com.aybu9.aybualumni.user.services.UserContactInfoService;
 import com.aybu9.aybualumni.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -37,6 +38,16 @@ public class UserController {
     @GetMapping
     public ResponseEntity<DataResult<Collection<User>>> getAll() {
         var result = userService.getAll();
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/pageable/{page}/{size}")
+    public ResponseEntity<DataResult<Collection<User>>> getAllPageable(@PathVariable Integer page,
+                                                                       @PathVariable Integer size) {
+        var result = userService.getAllPageable(PageRequest.of(page, size));
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
@@ -84,8 +95,8 @@ public class UserController {
 
     @PutMapping("{userId}/update-profile")
     public ResponseEntity<DataResult<User>> updateUserProfile(Authentication authentication,
-                                                          @PathVariable Long userId,
-                                                          @RequestBody UpdateUserProfileDto updateUserProfileDto) {
+                                                              @PathVariable Long userId,
+                                                              @RequestBody UpdateUserProfileDto updateUserProfileDto) {
         var result = userService.updateUserProfile(authentication, userId, updateUserProfileDto);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);

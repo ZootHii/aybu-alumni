@@ -16,11 +16,13 @@ import com.aybu9.aybualumni.sector.services.CommunitySectorService;
 import com.aybu9.aybualumni.sector.services.CompanySectorService;
 import com.aybu9.aybualumni.user.services.UserService;
 import com.google.common.base.Strings;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 @Service
 public class PageManager implements PageService {
@@ -84,8 +86,31 @@ public class PageManager implements PageService {
     }
 
     @Override
+    public DataResult<Collection<CompanyPage>> getAllCompanyPageable(Pageable pageable) {
+        return new SuccessDataResult<>(companyPageRepository.findAll(pageable).getContent(),
+                "get all pageable success");
+    }
+
+    @Override
+    public DataResult<CompanyPage> getCompanyByPageUrl(String pageUrl) {
+        var page = getByPageUrl(pageUrl).getData();
+        var companyPage = companyPageRepository.getByPage(page);
+        return new SuccessDataResult<>(companyPage, "found company page by page url");
+    }
+
+    @Override // todo şimdilik gereksiz
+    public DataResult<CompanyPage> getCompanyByPage(Page page) {
+        var companyPage = companyPageRepository.getByPage(page);
+        if (companyPage == null) {
+            throw new CustomException("Page not found by page " + page.getName());
+        }
+        return new SuccessDataResult<>(companyPage, "company page found by page");
+    }
+
+    @Override
     @Transactional // biri bitmeden bir sorun çıkarsa diğerini geri alıyor
-    public DataResult<CompanyPage> createCompany(Authentication authentication, CompanyPageDto companyPageDto, Long userId) {
+    public DataResult<CompanyPage> createCompany(Authentication authentication, Long userId,
+                                                 CompanyPageDto companyPageDto) {
         // userId al ve user ı bul
         // companypagedto oluştur
         // page ve companypage içerisindeki gerekli bilgileri al dto için
@@ -120,25 +145,28 @@ public class PageManager implements PageService {
         return new SuccessDataResult<>(createdCompanyPage, "company page created for " + currentUser.getEmail());
     }
 
-    @Override // todo şimdilik gereksiz
-    public DataResult<CompanyPage> getCompanyByPage(Page page) {
-        var companyPage = companyPageRepository.getByPage(page);
-        if (companyPage == null) {
-            throw new CustomException("Page not found by page " + page.getName());
-        }
-        return new SuccessDataResult<>(companyPage, "company page found by page");
+    @Override
+    public DataResult<Collection<CommunityPage>> getAllCommunityPageable(Pageable pageable) {
+        return new SuccessDataResult<>(communityPageRepository.findAll(pageable).getContent(),
+                "get all pageable success");
     }
 
     @Override
-    public DataResult<CompanyPage> getCompanyByPageUrl(String pageUrl) {
+    public DataResult<CommunityPage> getCommunityByPageUrl(String pageUrl) {
         var page = getByPageUrl(pageUrl).getData();
-        var companyPage = companyPageRepository.getByPage(page);
-        return new SuccessDataResult<>(companyPage, "found company page by page url");
+        var communityPage = communityPageRepository.getByPage(page);
+        return new SuccessDataResult<>(communityPage, "found community page by page url");
+    }
+
+    @Override
+    public DataResult<CommunityPage> getCommunityByPage(Page page) {
+        return null;
     }
 
     @Override
     @Transactional
-    public DataResult<CommunityPage> createCommunity(Authentication authentication, CommunityPageDto communityPageDto, Long userId) {
+    public DataResult<CommunityPage> createCommunity(Authentication authentication, Long userId,
+                                                     CommunityPageDto communityPageDto) {
 
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
 
@@ -166,16 +194,5 @@ public class PageManager implements PageService {
         return new SuccessDataResult<>(createdCommunityPage, "community page created for " + currentUser.getEmail());
     }
 
-    @Override
-    public DataResult<CommunityPage> getCommunityByPage(Page page) {
-        return null;
-    }
-
-    @Override
-    public DataResult<CommunityPage> getCommunityByPageUrl(String pageUrl) {
-        var page = getByPageUrl(pageUrl).getData();
-        var communityPage = communityPageRepository.getByPage(page);
-        return new SuccessDataResult<>(communityPage, "found community page by page url");
-    }
 
 }
