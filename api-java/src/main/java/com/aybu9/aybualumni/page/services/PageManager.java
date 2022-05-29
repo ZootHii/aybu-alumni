@@ -24,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static com.aybu9.aybualumni.page.Constants.COMMUNITY_PAGE_URL;
+import static com.aybu9.aybualumni.page.Constants.COMPANY_PAGE_URL;
+
 @Service
 public class PageManager implements PageService {
 
@@ -53,12 +56,8 @@ public class PageManager implements PageService {
     public DataResult<Page> create(Page page) {
         // public olmaktan çıkarabiliriz gerek yok
         // gelen url ile başka bir page var mı yok mu kontrol et
-//        var existByPageUrl = existByPageUrl(page.getPageUrl());
-//        if (existByPageUrl){
-//            throw new CustomException("there is already a page with this page url");
-//        }
-
-        var uniqueName = Arrays.stream(page.getPageUrl().split("/")).reduce((first, second) -> second).orElseThrow();
+        var uniqueName = Arrays.stream(page.getPageUrl().split("/"))
+                .reduce((first, second) -> second).orElseThrow();
         var existByPageUrlUniqueName = existsByPageUrlIsEndingWith("/" + uniqueName);
         if (existByPageUrlUniqueName) {
             throw new CustomException("there is already a page with this page url");
@@ -87,8 +86,8 @@ public class PageManager implements PageService {
 
     @Override
     public DataResult<Collection<CompanyPage>> getAllCompanyPageable(Pageable pageable) {
-        return new SuccessDataResult<>(companyPageRepository.findAll(pageable).getContent(),
-                "get all pageable success");
+        var companyPages = companyPageRepository.findAll(pageable).getContent();
+        return new SuccessDataResult<>(companyPages, "get all pageable success");
     }
 
     @Override
@@ -108,7 +107,7 @@ public class PageManager implements PageService {
     }
 
     @Override
-    @Transactional // biri bitmeden bir sorun çıkarsa diğerini geri alıyor
+    @Transactional
     public DataResult<CompanyPage> createCompany(Authentication authentication, Long userId,
                                                  CompanyPageDto companyPageDto) {
         // userId al ve user ı bul
@@ -119,14 +118,13 @@ public class PageManager implements PageService {
         // önce page oluştur oluşan page i company page e set ederek oluştur
 
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
-        //var ownerUser = userService.get(userId).getData();
         var companySectorId = companyPageDto.getCompanySectorId();
         var cityId = companyPageDto.getCityId();
         var companySector = companySectorService.get(companySectorId).getData();
         var city = cityService.get(cityId).getData();
 
         var name = companyPageDto.getName();
-        var pageUrl = String.format("%s/%s", "http://localhost:4024/pages/company", companyPageDto.getPageUrl());
+        var pageUrl = String.format("%s/%s", COMPANY_PAGE_URL, companyPageDto.getPageUrl());
         var websiteUrl = companyPageDto.getWebsiteUrl();
         var slogan = companyPageDto.getSlogan();
 
@@ -142,7 +140,8 @@ public class PageManager implements PageService {
         var createdPage = create(page).getData();
         var companyPage = new CompanyPage(createdPage, companySector, city);
         var createdCompanyPage = companyPageRepository.save(companyPage);
-        return new SuccessDataResult<>(createdCompanyPage, "company page created for " + currentUser.getEmail());
+        return new SuccessDataResult<>(createdCompanyPage,
+                "company page created for " + currentUser.getEmail());
     }
 
     @Override
@@ -169,13 +168,11 @@ public class PageManager implements PageService {
                                                      CommunityPageDto communityPageDto) {
 
         var currentUser = authService.getCurrentUserAccessible(authentication, userId);
-
-        //var ownerUser = userService.get(userId).getData();
         var communitySectorId = communityPageDto.getCommunitySectorId();
         var communitySector = communitySectorService.get(communitySectorId).getData();
 
         var name = communityPageDto.getName();
-        var pageUrl = String.format("%s/%s", "http://localhost:4024/pages/community", communityPageDto.getPageUrl());
+        var pageUrl = String.format("%s/%s", COMMUNITY_PAGE_URL, communityPageDto.getPageUrl());
         var websiteUrl = communityPageDto.getWebsiteUrl();
         var slogan = communityPageDto.getSlogan();
 
@@ -191,8 +188,7 @@ public class PageManager implements PageService {
         var createdPage = create(page).getData();
         var communityPage = new CommunityPage(createdPage, communitySector);
         var createdCommunityPage = communityPageRepository.save(communityPage);
-        return new SuccessDataResult<>(createdCommunityPage, "community page created for " + currentUser.getEmail());
+        return new SuccessDataResult<>(createdCommunityPage,
+                "community page created for " + currentUser.getEmail());
     }
-
-
 }

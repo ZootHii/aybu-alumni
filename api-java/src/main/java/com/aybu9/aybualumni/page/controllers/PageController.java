@@ -39,11 +39,8 @@ public class PageController {
     @GetMapping("/company/{uniqueName}")
     public ResponseEntity<DataResult<CompanyPage>> getCompany(@PathVariable String uniqueName,
                                                               HttpServletRequest request) {
+
         var pageUrl = request.getRequestURL().toString();
-
-        // todo yada ihtiyaca göre karar ver
-        var pageUrl2 = String.format("%s/%s", "http://localhost:4024/pages/company", uniqueName);
-
         var result = pageService.getCompanyByPageUrl(pageUrl);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
@@ -75,8 +72,8 @@ public class PageController {
     @GetMapping("/community/{uniqueName}")
     public ResponseEntity<DataResult<CommunityPage>> getCommunity(@PathVariable String uniqueName,
                                                                   HttpServletRequest request) {
-        var pageUrl = request.getRequestURL().toString();
 
+        var pageUrl = request.getRequestURL().toString();
         var result = pageService.getCommunityByPageUrl(pageUrl);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
