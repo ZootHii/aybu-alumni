@@ -5,7 +5,6 @@ import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.job_post.models.CommunityJobPost;
 import com.aybu9.aybualumni.job_post.models.dtos.CommunityJobPostDto;
 import com.aybu9.aybualumni.job_post.services.CommunityJobPostService;
-import com.aybu9.aybualumni.post.models.UserPost;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

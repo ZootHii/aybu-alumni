@@ -8,7 +8,6 @@ import com.aybu9.aybualumni.core.result.SuccessDataResult;
 import com.aybu9.aybualumni.core.utilities.storage.FileStorage;
 import com.aybu9.aybualumni.post.models.CompanyPost;
 import com.aybu9.aybualumni.post.models.Post;
-import com.aybu9.aybualumni.post.models.UserPost;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.repositories.CompanyPostRepository;
 import com.google.common.base.Strings;

@@ -4,7 +4,6 @@ import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.job_post.models.CommunityJobPost;
 import com.aybu9.aybualumni.job_post.models.dtos.CommunityJobPostDto;
-import com.aybu9.aybualumni.post.models.UserPost;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;

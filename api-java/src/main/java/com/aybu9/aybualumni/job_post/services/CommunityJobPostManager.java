@@ -13,7 +13,6 @@ import com.aybu9.aybualumni.job_post.repositories.CommunityJobPostRepository;
 import com.aybu9.aybualumni.job_post.repositories.JobSkillRepository;
 import com.aybu9.aybualumni.job_post.repositories.JobTitleRepository;
 import com.aybu9.aybualumni.page.services.CityService;
-import com.aybu9.aybualumni.post.models.UserPost;
 import com.google.common.base.Strings;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
