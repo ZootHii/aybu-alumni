@@ -4,6 +4,7 @@ import com.aybu9.aybualumni.core.result.DataResult;
 import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.friendship.models.Friendship;
 import com.aybu9.aybualumni.user.models.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
@@ -23,6 +24,9 @@ public interface FriendshipService {
     Result deleteFriendshipRequest(Authentication authentication, Long receiverId, Long senderId);
 
     DataResult<Collection<User>> getFriendshipsByUserId(Authentication authentication, Long userId);
+
+    DataResult<Collection<User>> getFriendshipsByUserIdPageable(Authentication authentication,
+                                                                Long userId, Pageable pageable);
 
     DataResult<Long> getFriendsCountByUserId(Authentication authentication, Long userId);
 

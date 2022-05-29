@@ -2,6 +2,8 @@ package com.aybu9.aybualumni.friendship.repositories;
 
 import com.aybu9.aybualumni.friendship.models.Friendship;
 import com.aybu9.aybualumni.user.models.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +23,15 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
                             "WHERE ((F.sender.id = ?1 OR F.receiver.id = ?1) AND F.isAccepted = true)) " +
             "ORDER BY U.id")
     Collection<User> getFriendshipsByUserId(Long userId);
+
+    @Query("SELECT U " +
+            "From User AS U " +
+            "WHERE U.id IN (" +
+            "SELECT (CASE WHEN F.sender.id = ?1 THEN F.receiver.id ELSE F.sender.id END) " +
+            "FROM Friendship AS F " +
+            "WHERE ((F.sender.id = ?1 OR F.receiver.id = ?1) AND F.isAccepted = true)) " +
+            "ORDER BY U.id")
+    Page<User> getFriendshipsByUserIdPageable(Long userId, Pageable pageable);
 
     // kullanıcıya gelen ve bekleyen istekler ----
     @Query("SELECT F1 " +
