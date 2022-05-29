@@ -22,7 +22,6 @@ public class Post extends LongBaseModel {
 
     @Column(length = 2048)
     @Size(max = 2048) // max url 2048
-//    @URL
     private String fileUrl; // pdf excel resim video falan gibi
 
     @Size(max = 1000)

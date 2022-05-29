@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserPostRepository extends JpaRepository<UserPost, Long> {
 
-    @Query("select up from UserPost up where up.ownerUser.id = :userId order by up.id desc")
+    @Query("select up from UserPost up where up.post.ownerUser.id = :userId order by up.id desc")
     Page<UserPost> getTopsByOwnerUser(@Param("userId") Long userId, Pageable pageable);
 }
 

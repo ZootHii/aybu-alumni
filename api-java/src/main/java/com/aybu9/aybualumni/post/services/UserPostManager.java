@@ -75,7 +75,7 @@ public class UserPostManager implements UserPostService {
 
         var createdPost = postService.create(post).getData();
 
-        var userPost = new UserPost(createdPost, currentUser, visibility);
+        var userPost = new UserPost(createdPost, visibility);
 
         var createdUserPost = userPostRepository.save(userPost);
         return new SuccessDataResult<>(createdUserPost, "user post created success");

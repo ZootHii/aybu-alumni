@@ -90,7 +90,6 @@ public class User extends LongBaseModel {
     @NotBlank
     @NotNull
     @Size(max = 2048)
-//    @URL
     private String profileUrl;
     
     @Column(nullable = false)
@@ -111,31 +110,21 @@ public class User extends LongBaseModel {
 
     @Column(length = 2048)
     @Size(max = 2048) // max url 2048
-//    @URL
     private String profilePhotoUrl;
 
     @Column(length = 2048)
     @Size(max = 2048)
-//    @URL
     private String coverPhotoUrl;
 
     @JsonIgnore
-    // set owned pages;
     @OneToMany(mappedBy = "ownerUser")
     @ToString.Exclude
     private Set<Page> ownedPages = new HashSet<>();
 
     @JsonIgnore
-    // set owned pages;
     @OneToMany(mappedBy = "ownerUser")
     @ToString.Exclude
     private Set<Post> ownedPosts = new HashSet<>();
-
-    @JsonIgnore
-    // set owned pages;
-    @OneToMany(mappedBy = "ownerUser")
-    @ToString.Exclude
-    private Set<UserPost> ownedUserPosts = new HashSet<>();
     
     @OneToOne
     @JoinColumn(name = "company_page_id", referencedColumnName = "id")
