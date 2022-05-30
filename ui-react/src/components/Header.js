@@ -28,10 +28,10 @@ import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const pages = [
-  { name: "HOMEPAGE", icon: <HomeOutlinedIcon /> },
-  { name: "EVENTS", icon: <EventNoteIcon /> },
-  { name: "JOBS", icon: <WorkHistoryOutlinedIcon /> },
-  { name: "FRIENDS", icon: <PeopleOutlineIcon /> },
+  { name: "HOMEPAGE", icon: <HomeOutlinedIcon />, href: "/" },
+  { name: "EVENTS", icon: <EventNoteIcon />, href: "/events" },
+  { name: "JOB ADVERTS", icon: <WorkHistoryOutlinedIcon />, href: "/jobs" },
+  { name: "FRIENDS", icon: <PeopleOutlineIcon />, href: "/friends" },
 ];
 // ("HOMEPAGE", "EVENTS", "NETWORK", "JOBS")
 
@@ -128,7 +128,7 @@ export default function secondarySearchAppBar({ props }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem>Profile</MenuItem>
+      <MenuItem> <a className="menu-dropdown-item" href="profile"> Profile </a> </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
@@ -205,10 +205,13 @@ export default function secondarySearchAppBar({ props }) {
                 component="div"
                 sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
               >
-                <Avatar
-                  alt="Remy Sharp"
-                  src="https://img-s1.onedio.com/id-61dfdad347fb326c10161890/rev-0/w-1200/h-600/f-jpg/s-48e57905ee60f88011380e671456e630cf1ce30d.jpg"
-                />
+                <a href="/">
+                  <Avatar
+
+                    alt="Remy Sharp"
+                    src="https://img-s1.onedio.com/id-61dfdad347fb326c10161890/rev-0/w-1200/h-600/f-jpg/s-48e57905ee60f88011380e671456e630cf1ce30d.jpg"
+                  />
+                </a>
               </Typography>
             </IconButton>
             <Typography
@@ -238,7 +241,9 @@ export default function secondarySearchAppBar({ props }) {
                   </div>
                   <div className="navbar-nav-icons">
                     <Button
+                      href={page.href}
                       key={page.name}
+
                       sx={{ my: 2, color: "white", display: "block" }}
                     >
                       {page.name}

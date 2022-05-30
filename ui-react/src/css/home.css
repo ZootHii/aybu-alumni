@@ -214,4 +214,65 @@
 .home-container .home-container-right .profile-container-friends .friends-li .MuiListItemAvatar-root {
   margin-top: 0 !important;
 }
+
+.home-post-modal .modal-content {
+  color: #fff;
+  background-color: #1d2226;
+}
+
+.home-post-modal .modal-content .MuiList-root {
+  background-color: transparent;
+}
+
+.home-post-modal .modal-content .MuiList-root .MuiTypography-root {
+  color: #fff;
+}
+
+.home-post-modal .modal-content .modal-header svg {
+  color: #fff;
+}
+
+.home-post-modal .modal-content .modal-header .close-button {
+  color: #fff;
+}
+
+.home-post-modal .modal-body .home-post-modal-button {
+  float: right;
+  color: #fff;
+  border-radius: 20px;
+  border: 2px solid gray;
+}
+
+.home-post-modal .modal-body .home-post-modal-button:hover {
+  color: black;
+  background-color: #fff;
+  -webkit-transition: 1.2ms;
+  transition: 1.2ms;
+}
+
+.home-post-modal .modal-body .stack-row input[type="file"] {
+  display: none;
+}
+
+.home-post-modal .modal-body .stack-row .custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.home-post-modal .list-group .list-group-item {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 15px;
+}
+
+.home-post-modal .list-group .list-group-item img {
+  border: 2px solid #fff;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  margin-right: 10px;
+}
 /*# sourceMappingURL=home.css.map */

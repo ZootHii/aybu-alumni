@@ -98,6 +98,13 @@ class ApiRequests {
       headers: AuthToken(),
     });
   }
+
+  createUserPost = (id,formData) => {
+    console.log("api function");
+    return axios.post(API_URL + "api/posts/user/" + id , formData ,    { headers: AuthToken() } )
+  }
+
+
 }
 
 export default new ApiRequests();

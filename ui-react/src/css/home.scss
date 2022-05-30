@@ -184,3 +184,78 @@
     }
   }
 }
+
+.home-post-modal {
+  .modal-content {
+    color: #fff;
+    background-color: #1d2226;
+
+    .MuiList-root {
+      background-color: transparent;
+
+      .MuiTypography-root {
+        color: #fff;
+      }
+    }
+
+    .modal-header {
+      svg {
+        color: #fff;
+      }
+
+      .close-button {
+        color: #fff;
+      }
+    }
+  }
+
+  .modal-body {
+    .home-post-modal-button {
+      float: right;
+      color: #fff;
+      border-radius: 20px;
+      border: 2px solid gray;
+
+      &:hover {
+        color: black;
+        background-color: #fff;
+        transition: 1.2ms;
+      }
+    }
+
+
+    .stack-row {
+      input[type="file"] {
+        display: none;
+    }
+
+    .custom-file-upload {
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+  }
+  
+    }
+    
+  }
+  .list-group {
+    .list-group-item {
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 15px;
+  
+      img {
+        border: 2px solid #fff;
+        border-radius: 50%;
+        height: 35px;
+        width: 35px;
+        margin-right: 10px;
+  
+      }
+  
+    }
+  } 
+}
+

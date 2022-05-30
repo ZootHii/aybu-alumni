@@ -52,9 +52,9 @@ export default class Profile extends Component {
 
     ApiRequests.getThreeUserPost(userLocal.id).then((response) => {
       console.log(response.data.data);
-      // this.setState({
-      //   userThreePosts: response.data.data,
-      // });
+      this.setState({
+        userThreePosts: response.data.data,
+      });
     });
 
     ApiRequests.getFriends(userLocal.id)
@@ -75,6 +75,7 @@ export default class Profile extends Component {
       companyPage,
       showContactModal,
       userContact,
+      userThreePosts
     } = this.state;
     console.log(userContact.birthday);
 
@@ -250,17 +251,22 @@ export default class Profile extends Component {
                   bgcolor: "background.paper",
                 }}
               >
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="https://img-s1.onedio.com/id-61dfdad347fb326c10161890/rev-0/w-1200/h-600/f-jpg/s-48e57905ee60f88011380e671456e630cf1ce30d.jpg"
-                    />
-                  </ListItemAvatar>
-                  <ListItemText primary="Profile" secondary={user.profileUrl} />
-                </ListItem>
+                {
+                  userThreePosts.map(post_item => (
+
+                    <ListItem>
+                    <ListItemAvatar>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="https://img-s1.onedio.com/id-61dfdad347fb326c10161890/rev-0/w-1200/h-600/f-jpg/s-48e57905ee60f88011380e671456e630cf1ce30d.jpg"
+                      />
+                    </ListItemAvatar>
+                    <ListItemText primary={post_item.id} secondary={post_item.post.description} />
+                  </ListItem>
+                  ) )
+                }
               </List>
-              <p>about alumni</p>
+             
             </div>
           </div>
         </div>
