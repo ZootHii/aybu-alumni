@@ -10,6 +10,7 @@ import com.aybu9.aybualumni.friendship.models.Friendship;
 import com.aybu9.aybualumni.user.models.User;
 import com.aybu9.aybualumni.friendship.repositories.FriendshipRepository;
 import com.aybu9.aybualumni.user.services.UserService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -108,6 +109,14 @@ public class FriendshipManager implements FriendshipService {
     public DataResult<Collection<User>> getFriendshipsByUserId(Authentication authentication, Long userId) {
         authService.getCurrentUserAccessible(authentication, userId);
         return new SuccessDataResult<>(friendshipRepository.getFriendshipsByUserId(userId), "get friends");
+    }
+
+    @Override
+    public DataResult<Collection<User>> getFriendshipsByUserIdPageable(Authentication authentication,
+                                                                       Long userId, Pageable pageable) {
+        authService.getCurrentUserAccessible(authentication, userId);
+        var friendships = friendshipRepository.getFriendshipsByUserIdPageable(userId, pageable).getContent();
+        return new SuccessDataResult<>(friendships, "get friends pageable");
     }
 
     @Override

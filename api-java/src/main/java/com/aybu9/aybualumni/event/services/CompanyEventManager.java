@@ -12,6 +12,7 @@ import com.aybu9.aybualumni.event.repositories.CompanyEventRepository;
 import com.aybu9.aybualumni.page.services.CityService;
 import com.aybu9.aybualumni.user.services.UserService;
 import com.google.common.base.Strings;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,12 @@ public class CompanyEventManager implements CompanyEventService {
     @Override
     public DataResult<Collection<CompanyEvent>> getAll() {
         return new SuccessDataResult<>(companyEventRepository.findAll(), "get all success");
+    }
+
+    @Override
+    public DataResult<Collection<CompanyEvent>> getAllPageable(Pageable pageable) {
+        return new SuccessDataResult<>(companyEventRepository.findAll(pageable).getContent(),
+                "get all pageable success");
     }
 
     @Override

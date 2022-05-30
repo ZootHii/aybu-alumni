@@ -41,7 +41,7 @@ public class Friendship extends LongBaseModel {
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
-    @Column(/*columnDefinition = "BOOLEAN DEFAULT false", */nullable = false) // default does not work without insertable false just works in db not in programme
+    @Column(nullable = false)
     @NotNull
     private Boolean isAccepted;
     

@@ -30,8 +30,7 @@ public class CommunityPost extends LongBaseModel {
     @JoinColumn(name = "owner_community_page_id", referencedColumnName = "id", nullable = false)
     private CommunityPage ownerCommunityPage;
 
-    // visible_to varchar // bağlantılar görebilir, herkes görebilir,
-    @Column(/*columnDefinition = "VARCHAR(255) DEFAULT 'EVERYONE'",*/ nullable = false)
+    @Column(nullable = false)
     @Size(max = 255)
     @NotBlank
     @NotNull

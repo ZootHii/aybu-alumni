@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Lob;
 import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Date;
@@ -22,9 +21,6 @@ public class CommunityEventDto {
 
     @Size(max = 1000)
     private String description;
-
-//    @Size(max = 2048)
-//    private String fileUrl;
 
     @NotNull
     private Boolean isOnline;

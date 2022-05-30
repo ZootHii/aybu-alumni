@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,11 @@ public class UserManager implements UserService {
     @Override
     public DataResult<Collection<User>> getAll() {
         return new SuccessDataResult<>(userRepository.findAll(Sort.by("id")), GetAllSuccess);
+    }
+
+    @Override
+    public DataResult<Collection<User>> getAllPageable(Pageable pageable) {
+        return new SuccessDataResult<>(userRepository.findAll(pageable).getContent(), GetAllSuccess + " pageable");
     }
 
     @Override

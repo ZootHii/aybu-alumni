@@ -11,6 +11,7 @@ import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.repositories.UserPostRepository;
 import com.google.common.base.Strings;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,12 @@ public class UserPostManager implements UserPostService {
     @Override
     public DataResult<Collection<UserPost>> getAll() {
         return new SuccessDataResult<>(userPostRepository.findAll(), "get all success");
+    }
+
+    @Override
+    public DataResult<Collection<UserPost>> getAllPageable(Pageable pageable) {
+        return new SuccessDataResult<>(userPostRepository.findAll(pageable).getContent(),
+                "get all pageable success");
     }
 
     @Override
@@ -75,7 +82,7 @@ public class UserPostManager implements UserPostService {
 
         var createdPost = postService.create(post).getData();
 
-        var userPost = new UserPost(createdPost, currentUser, visibility);
+        var userPost = new UserPost(createdPost, visibility);
 
         var createdUserPost = userPostRepository.save(userPost);
         return new SuccessDataResult<>(createdUserPost, "user post created success");

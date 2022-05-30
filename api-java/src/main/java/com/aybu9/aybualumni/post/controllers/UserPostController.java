@@ -5,6 +5,7 @@ import com.aybu9.aybualumni.core.result.Result;
 import com.aybu9.aybualumni.post.models.UserPost;
 import com.aybu9.aybualumni.post.models.dtos.PostDto;
 import com.aybu9.aybualumni.post.services.UserPostService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -33,9 +34,19 @@ public class UserPostController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/pageable/{page}/{size}")
+    public ResponseEntity<DataResult<Collection<UserPost>>> getAllPageable(@PathVariable Integer page,
+                                                                           @PathVariable Integer size) {
+        var result = userPostService.getAllPageable(PageRequest.of(page, size));
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @GetMapping("/{userId}/last3")
     public ResponseEntity<DataResult<Collection<UserPost>>> getLast3ByUser(Authentication authentication,
-                                                                   @PathVariable Long userId) {
+                                                                           @PathVariable Long userId) {
         var result = userPostService.getLast3ByUser(authentication, userId);
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);

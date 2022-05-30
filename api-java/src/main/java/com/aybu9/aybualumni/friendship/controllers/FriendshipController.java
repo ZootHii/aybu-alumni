@@ -6,6 +6,7 @@ import com.aybu9.aybualumni.friendship.models.Friendship;
 import com.aybu9.aybualumni.friendship.models.dtos.FriendshipRequestDto;
 import com.aybu9.aybualumni.user.models.User;
 import com.aybu9.aybualumni.friendship.services.FriendshipService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,9 +26,22 @@ public class FriendshipController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<DataResult<Collection<User>>> getFriendsByUserId(Authentication authentication,
-                                                                           @PathVariable Long userId) {
+    public ResponseEntity<DataResult<Collection<User>>> getFriendshipsByUserId(Authentication authentication,
+                                                                               @PathVariable Long userId) {
         var result = friendshipService.getFriendshipsByUserId(authentication, userId);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/pageable/{page}/{size}")
+    public ResponseEntity<DataResult<Collection<User>>> getFriendshipsByUserIdPageable(Authentication authentication,
+                                                                                       @PathVariable Long userId,
+                                                                                       @PathVariable Integer page,
+                                                                                       @PathVariable Integer size) {
+        var result =
+                friendshipService.getFriendshipsByUserIdPageable(authentication, userId, PageRequest.of(page, size));
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }

@@ -14,6 +14,7 @@ import com.aybu9.aybualumni.job_post.repositories.JobSkillRepository;
 import com.aybu9.aybualumni.job_post.repositories.JobTitleRepository;
 import com.aybu9.aybualumni.page.services.CityService;
 import com.google.common.base.Strings;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +53,12 @@ public class CompanyJobPostManager implements CompanyJobPostService {
     }
 
     @Override
+    public DataResult<Collection<CompanyJobPost>> getAllPageable(Pageable pageable) {
+        return new SuccessDataResult<>(companyJobPostRepository.findAll(pageable).getContent(),
+                "get all pageable success");
+    }
+
+    @Override
     @Transactional
     public DataResult<CompanyJobPost> create(Authentication authentication, Long userId,
                                              CompanyJobPostDto companyJobPostDto, MultipartFile multipartFile) {
@@ -72,10 +79,6 @@ public class CompanyJobPostManager implements CompanyJobPostService {
 
         var jobPost = new JobPost(currentUser, workplaceType, jobType);
 
-//        if (Strings.isNullOrEmpty(visibility)) {
-//            visibility = VISIBILITY_EVERYONE;
-//        }
-
         var jobTitle = jobTitleRepository.findById(jobTitleId)
                 .orElseThrow(() -> new CustomException("not found job title"));
         jobPost.setJobTitle(jobTitle);
@@ -83,10 +86,6 @@ public class CompanyJobPostManager implements CompanyJobPostService {
         if (!Strings.isNullOrEmpty(fileUrl)) {
             jobPost.setFileUrl(fileUrl);
         }
-
-//        if (!isOnline && cityId == null) {
-//            throw new CustomException("City must be selected in face to face events");
-//        }
 
         if (cityId != null) {
             var city = cityService.get(cityId).getData();

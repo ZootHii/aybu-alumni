@@ -46,7 +46,8 @@ public class AuthManager implements AuthService, AuthenticationProvider {
     private final HttpServletResponse response;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthManager(UserService userService, TokenService tokenService, FakeOBSDataService fakeOBSDataService, HttpServletRequest request, HttpServletResponse response, PasswordEncoder passwordEncoder) {
+    public AuthManager(UserService userService, TokenService tokenService, FakeOBSDataService fakeOBSDataService,
+                       HttpServletRequest request, HttpServletResponse response, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.tokenService = tokenService;
         this.fakeOBSDataService = fakeOBSDataService;
