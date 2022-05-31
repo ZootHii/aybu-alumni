@@ -66,9 +66,9 @@ export class Home extends Component {
     const formData = new FormData();
 
     
-
-    // formData.append('file', file );
-    formData.append('postDto', description );
+    // https://stackoverflow.com/questions/59235491/react-ajax-request-with-multipart-file-and-json-data
+    formData.append('file', null);
+    formData.append('postDto', new Blob([JSON.stringify({description: description, visibility: null})], { type: "application/json" }));
 
     console.log(file);
     console.log(description);
