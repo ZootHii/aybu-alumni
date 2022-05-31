@@ -36,7 +36,6 @@ public class CompanyPage extends LongBaseModel {
     private City city;
 
     @JsonIgnore
-    // set owned pages;
     @OneToMany(mappedBy = "ownerCompanyPage")
     @ToString.Exclude
     private Set<CompanyPost> ownedCompanyPosts = new HashSet<>();

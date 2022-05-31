@@ -32,7 +32,6 @@ public class CommunityPage extends LongBaseModel {
     private CommunitySector communitySector;
 
     @JsonIgnore
-    // set owned pages;
     @OneToMany(mappedBy = "ownerCommunityPage")
     @ToString.Exclude
     private Set<CommunityPost> ownedCommunityPosts = new HashSet<>();

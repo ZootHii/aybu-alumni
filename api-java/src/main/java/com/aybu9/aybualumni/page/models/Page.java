@@ -58,17 +58,14 @@ public class Page extends LongBaseModel {
     @Size(max = 2048)
     @NotNull
     @NotBlank
-//    @URL
     private String pageUrl;
 
     @Column(length = 2048)
     @Size(max = 2048)
-//    @URL
     private String logoPhotoUrl;
 
     @Column(length = 2048)
     @Size(max = 2048)
-//    @URL
     private String coverPhotoUrl;
 
     public Page(String name, User ownerUser, String pageUrl) {
