@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
+import static com.aybu9.aybualumni.auth.Constants.USER_PROFILE_URL;
 import static com.aybu9.aybualumni.core.security.Constants.ACCESS_TOKEN;
 
 @Service
@@ -75,7 +76,7 @@ public class AuthManager implements AuthService, AuthenticationProvider {
         var grade = fakeOBSData.getGrade();
         var department = fakeOBSData.getDepartment();
 
-        var profileUrl = String.format("%s/%s", "http://localhost:4024/users/profile", authRegisterDto.getProfileUrl());
+        var profileUrl = String.format("%s/%s", USER_PROFILE_URL, authRegisterDto.getProfileUrl());
         var userToRegister = User.builder()
                 .name(name)
                 .surname(surname)
