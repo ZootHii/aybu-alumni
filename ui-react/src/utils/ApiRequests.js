@@ -105,6 +105,19 @@ class ApiRequests {
   }
 
 
+  getUserPosts = () => {
+    return axios.get(API_URL + "api/posts/user" , { headers: AuthToken() } )
+  }
+
+
+  getEvents = () => {
+    return axios.get(API_URL + "api/events/company" , {headers: AuthToken()}  )
+  }
+
+  createEvents = (id,formData) => {
+     return axios.post(API_URL + "api/events/company/" + id , formData ,    { headers: AuthToken() } )
+  }
+
 }
 
 export default new ApiRequests();

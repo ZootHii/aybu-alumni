@@ -30,6 +30,7 @@ export class Home extends Component {
     super(props);
     this.state = {
       friends: [],
+      posts: [],
       description: "",
       file: [],
       openPostDialog: false
@@ -57,34 +58,64 @@ export class Home extends Component {
       .catch((error) => {
         console.log(error.response);
       });
+
+
+    ApiRequests.getUserPosts().then(res => {
+      console.log(res);
+      this.setState({ posts: res.data.data });
+    }).catch(err => {
+      console.log(err.response);
+    })
   }
 
-  handlePostUpload = (e) => {
+
+  handleGetUserPosts = () => {
+    ApiRequests.getUserPosts().then(res => {
+      console.log(res);
+      this.setState({ posts: res.data.data });
+    }).catch(err => {
+      console.log(err.response);
+    })
+  }
+
+  timeOut(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  handlePostUpload = async (e) => {
     e.preventDefault();
+    var flag = false;
     const { file, description } = this.state;
 
     const formData = new FormData();
 
-    
+
     // https://stackoverflow.com/questions/59235491/react-ajax-request-with-multipart-file-and-json-data
     formData.append('file', null);
-    formData.append('postDto', new Blob([JSON.stringify({description: description, visibility: null})], { type: "application/json" }));
+    formData.append('postDto', new Blob([JSON.stringify({ description: description })], { type: "application/json" }));
 
     console.log(file);
     console.log(description);
 
     ApiRequests.createUserPost(userProfile.id, formData).then(res => {
       console.log(res);
+      flag = true;
+      this.setState({ openPostDialog: false })
     }).catch(error => {
       console.log(error.response);
     })
 
+    await this.timeOut(1000);
+
+    if (flag == true) {
+      this.handleGetUserPosts();
+    }
 
 
   }
 
   render() {
-    const { friends, openPostDialog } = this.state;
+    const { friends, openPostDialog, posts } = this.state;
     return (
       <div className="home-container">
         <div className="home-container-left">
@@ -154,32 +185,32 @@ export class Home extends Component {
 
                   <Row className="mt-3">
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                      <Form.Control as="textarea" onChange={(e) => {this.setState({description: e.target.value})}} placeholder="Ne hakkında konuşmak istiyorsun?" rows={3} />
+                      <Form.Control as="textarea" onChange={(e) => { this.setState({ description: e.target.value }) }} placeholder="Ne hakkında konuşmak istiyorsun?" rows={3} />
                     </Form.Group>
                   </Row>
 
                   <Row className="mt-3">
                     <Col xs={6}>
-                    <Stack className="stack-row" direction="row" spacing={1}>
-                    <label className="custom-file-upload">
-                    <input type="file" name="file" onChange={(e) => {this.setState({file: e.target.files[0]}) ; console.log(e.target.files[0])}} /> 
-                    <IconButton color="primary" aria-label="delete">
-                    
-                    <ImageIcon />
-                    </IconButton>
-                    </label>
- 
-                      <IconButton  aria-label="delete" color="secondary">
-                      <OndemandVideoIcon/>
-                      </IconButton>
-                    </Stack>
+                      <Stack className="stack-row" direction="row" spacing={1}>
+                        <label className="custom-file-upload">
+                          <input type="file" name="file" onChange={(e) => { this.setState({ file: e.target.files[0] }); console.log(e.target.files[0]) }} />
+                          <IconButton color="primary" aria-label="delete">
+
+                            <ImageIcon />
+                          </IconButton>
+                        </label>
+
+                        <IconButton aria-label="delete" color="secondary">
+                          <OndemandVideoIcon />
+                        </IconButton>
+                      </Stack>
                     </Col>
                     <Col xs={6}>
-                      <a 
-                      className="btn home-post-modal-button"
-                      onClick={(e) => { this.handlePostUpload(e)}}
+                      <a
+                        className="btn home-post-modal-button"
+                        onClick={(e) => { this.handlePostUpload(e) }}
                       >
-                          Yayınla
+                        Yayınla
                       </a>
                     </Col>
                   </Row>
@@ -206,6 +237,38 @@ export class Home extends Component {
               </Row>
             </Card.Body>
           </Card>
+
+          {posts.map(post_item => (
+            <Card className="home-post-card">
+              <Card.Body>
+                <Row>
+                  <Col xs={2}>
+                    {" "}
+                    <Avatar alt="Remy Sharp" src={post_item.post.ownerUser.profilePhotoUrl} />
+
+                  </Col>
+                  <Col xs={10}>
+                    <p className="name-p">
+                      {post_item.post.ownerUser.name + " " + post_item.post.ownerUser.surname}
+                    </p>
+                    <span className="name-p">
+                      {post_item.post.ownerUser.headline}
+                    </span>
+                  </Col>
+                </Row>
+                <Row className="mt-3">
+                  <Col xs={2}>
+
+                  </Col>
+                  <Col xs={10}>
+                    <p>
+                      {post_item.post.description}
+                    </p>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          ))}
         </div>
         <div className="home-container-right">
           <div className="profile-container-friends">

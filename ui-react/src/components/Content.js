@@ -8,6 +8,7 @@ import Profile from "./Profile";
 import Header from "./Header";
 import Utils from "../utils/Utils";
 import PublicRoute from "../utils/PublicRoute";
+import Events from "./Events";
 
 export default class Content extends Component {
   render() {
@@ -24,6 +25,7 @@ export default class Content extends Component {
             <PrivateRoute exact path="/" component={Home} />
             <PublicRoute exact path="/register" component={Register} />
             <PrivateRoute exact path="/profile" component={Profile} />
+            <PrivateRoute exact path="/events" component={Events} />
           </Switch>
         </BrowserRouter>
       </div>

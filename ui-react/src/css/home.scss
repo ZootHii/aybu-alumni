@@ -4,6 +4,14 @@
   --alumni-gray: #f3f3f3;
   --almuni-border-color: #acacac98;
 }
+
+*{
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
 .home-nav {
   background-color: #001126;
 }
@@ -20,6 +28,7 @@
     width: 25%;
     background-color: #00295a;
     border-radius: 10px;
+    height: 100px;
 
     .profile-container-header {
       border-bottom: 1px solid #fff;
@@ -81,6 +90,8 @@
     width: 50%;
     margin-left: 15px;
     margin-right: 15px;
+    max-height: 830px;
+    overflow: scroll;
 
     .card {
       background-color: #1d2226;
@@ -151,6 +162,24 @@
         svg {
           margin-right: 5px;
         }
+      }
+    }
+
+    .home-post-card {
+      margin-top: 10px;
+      p {
+        color: #fff;
+        margin-bottom: 0;
+       
+      }
+
+    span {
+      color: rgb(179, 179, 179);
+      font-size: 12px;
+    }
+
+      .col-10 {
+        padding-left: 0;
       }
     }
   }
