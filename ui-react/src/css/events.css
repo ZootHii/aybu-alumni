@@ -21,6 +21,11 @@
   float: right;
 }
 
+.events-page .events-page-left .job-lists-item:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+
 .events-page .events-page-right {
   width: 30%;
   height: 100px;

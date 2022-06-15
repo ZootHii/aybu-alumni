@@ -9,6 +9,8 @@ import Header from "./Header";
 import Utils from "../utils/Utils";
 import PublicRoute from "../utils/PublicRoute";
 import Events from "./Events";
+import JobAdverts from "./JobAdverts";
+import Friends from "./Friends";
 
 export default class Content extends Component {
   render() {
@@ -26,6 +28,8 @@ export default class Content extends Component {
             <PublicRoute exact path="/register" component={Register} />
             <PrivateRoute exact path="/profile" component={Profile} />
             <PrivateRoute exact path="/events" component={Events} />
+            <PrivateRoute exact path="/jobs" component={JobAdverts} />
+            <PrivateRoute exact path="/friends" component={Friends} />
           </Switch>
         </BrowserRouter>
       </div>

@@ -75,7 +75,7 @@ export default class Profile extends Component {
       companyPage,
       showContactModal,
       userContact,
-      userThreePosts
+      userThreePosts,
     } = this.state;
     console.log(userContact.birthday);
 
@@ -251,22 +251,24 @@ export default class Profile extends Component {
                   bgcolor: "background.paper",
                 }}
               >
-                {
-                  userThreePosts.map(post_item => (
-
+                {userThreePosts.map((post_item) => (
+                  <div>
                     <ListItem>
-                    <ListItemAvatar>
-                      <Avatar
-                        alt="Remy Sharp"
-                        src="https://img-s1.onedio.com/id-61dfdad347fb326c10161890/rev-0/w-1200/h-600/f-jpg/s-48e57905ee60f88011380e671456e630cf1ce30d.jpg"
+                      <ListItemAvatar>
+                        <Avatar
+                          alt="Remy Sharp"
+                          src="https://img-s1.onedio.com/id-61dfdad347fb326c10161890/rev-0/w-1200/h-600/f-jpg/s-48e57905ee60f88011380e671456e630cf1ce30d.jpg"
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={post_item.id}
+                        secondary={post_item.post.description}
                       />
-                    </ListItemAvatar>
-                    <ListItemText primary={post_item.id} secondary={post_item.post.description} />
-                  </ListItem>
-                  ) )
-                }
+                    </ListItem>
+                    <Divider />
+                  </div>
+                ))}
               </List>
-             
             </div>
           </div>
         </div>

@@ -99,25 +99,38 @@ class ApiRequests {
     });
   }
 
-  createUserPost = (id,formData) => {
+  createUserPost = (id, formData) => {
     console.log("api function");
-    return axios.post(API_URL + "api/posts/user/" + id , formData ,    { headers: AuthToken() } )
-  }
-
+    return axios.post(API_URL + "api/posts/user/" + id, formData, {
+      headers: AuthToken(),
+    });
+  };
 
   getUserPosts = () => {
-    return axios.get(API_URL + "api/posts/user" , { headers: AuthToken() } )
-  }
-
+    return axios.get(API_URL + "api/posts/user", { headers: AuthToken() });
+  };
 
   getEvents = () => {
-    return axios.get(API_URL + "api/events/company" , {headers: AuthToken()}  )
-  }
+    return axios.get(API_URL + "api/events/company", { headers: AuthToken() });
+  };
 
-  createEvents = (id,formData) => {
-     return axios.post(API_URL + "api/events/company/" + id , formData ,    { headers: AuthToken() } )
-  }
+  createEvents = (id, formData) => {
+    return axios.post(API_URL + "api/events/company/" + id, formData, {
+      headers: AuthToken(),
+    });
+  };
 
+  createJobs = (id, formData) => {
+    return axios.post(API_URL + "api/job-posts/company/" + id, formData, {
+      headers: AuthToken(),
+    });
+  };
+
+  getJobs = () => {
+    return axios.get(API_URL + "api/job-posts/company", {
+      headers: AuthToken(),
+    });
+  };
 }
 
 export default new ApiRequests();
