@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -22,10 +23,16 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import WorkHistoryOutlinedIcon from "@mui/icons-material/WorkHistoryOutlined";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Divider from "@mui/material/Divider";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
 import "../css/header.css";
 import { Avatar } from "@mui/material";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import ApiRequests from "../utils/ApiRequests";
 
 const pages = [
   { name: "HOMEPAGE", icon: <HomeOutlinedIcon />, href: "/" },
@@ -81,6 +88,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function secondarySearchAppBar({ props }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [searchResult, setSearchResult] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -111,6 +119,20 @@ export default function secondarySearchAppBar({ props }) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleGetSearch = (name) => {
+    setSearchResult(null);
+    if (name !== "") {
+      ApiRequests.search(name)
+        .then((res) => {
+          console.log(res);
+          setSearchResult(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
+  };
+
   const menuId = "secondary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -128,7 +150,13 @@ export default function secondarySearchAppBar({ props }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem> <a className="menu-dropdown-item" href="profile"> Profile </a> </MenuItem>
+      <MenuItem>
+        {" "}
+        <a className="menu-dropdown-item" href="profile">
+          {" "}
+          Profile{" "}
+        </a>{" "}
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
@@ -207,7 +235,6 @@ export default function secondarySearchAppBar({ props }) {
               >
                 <a href="/">
                   <Avatar
-
                     alt="Remy Sharp"
                     src="https://img-s1.onedio.com/id-61dfdad347fb326c10161890/rev-0/w-1200/h-600/f-jpg/s-48e57905ee60f88011380e671456e630cf1ce30d.jpg"
                   />
@@ -227,8 +254,25 @@ export default function secondarySearchAppBar({ props }) {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
+                onChange={(e) => {
+                  handleGetSearch(e.target.value);
+                }}
               />
             </Search>
+
+            {searchResult == null ? null : (
+              <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+                {searchResult.map((search) => (
+                  <div>
+                    <ListItem alignItems="flex-start">
+                      <ListItemText primary={search.name} />
+                    </ListItem>
+
+                    <Divider variant="inset" component="li" />
+                  </div>
+                ))}
+              </List>
+            )}
             <Box sx={{ flexGrow: 1 }} />
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -243,7 +287,6 @@ export default function secondarySearchAppBar({ props }) {
                     <Button
                       href={page.href}
                       key={page.name}
-
                       sx={{ my: 2, color: "white", display: "block" }}
                     >
                       {page.name}

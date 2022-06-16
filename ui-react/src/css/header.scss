@@ -10,6 +10,16 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 0.5%;
+
+  .MuiList-root {
+    position: absolute;
+    bottom: -200%;
+    z-index: 33;
+    width: 235px;
+    left: 80px;
+    color: black;
+  }
+
   .MuiBox-root {
     header {
       background-color: #001126;
@@ -28,13 +38,16 @@
 
   .navbar-nav-container {
     margin-right: 30px;
+
     .MuiButton-root {
       margin: 0;
       padding: 0;
     }
+
     .MuiIconButton-root {
       padding: 0;
     }
+
     .navbar-nav-icons {
       display: flex;
       justify-content: center;

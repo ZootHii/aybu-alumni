@@ -12,6 +12,15 @@
   margin-top: 0.5%;
 }
 
+.navbar-page .MuiList-root {
+  position: absolute;
+  bottom: -200%;
+  z-index: 33;
+  width: 235px;
+  left: 80px;
+  color: black;
+}
+
 .navbar-page .MuiBox-root header {
   background-color: #001126;
   -webkit-box-shadow: none;

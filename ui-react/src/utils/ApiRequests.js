@@ -131,6 +131,16 @@ class ApiRequests {
       headers: AuthToken(),
     });
   };
+
+  search = (name) => {
+    return axios.post(
+      API_URL + "api/search",
+      { name: name, size: 1 },
+      {
+        headers: AuthToken(),
+      }
+    );
+  };
 }
 
 export default new ApiRequests();
