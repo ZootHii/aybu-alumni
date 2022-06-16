@@ -6,10 +6,7 @@ import com.aybu9.aybualumni.search.models.SearchResult;
 import com.aybu9.aybualumni.search.services.SearchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -24,7 +21,7 @@ public class SearchController {
         this.searchService = searchService;
     }
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<DataResult<Collection<SearchResult>>> search(
             @Valid @RequestBody SearchRequest searchRequest) {
         var result = searchService.search(searchRequest);
